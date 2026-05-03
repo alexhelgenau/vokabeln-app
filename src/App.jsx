@@ -14,9 +14,9 @@ export default function App() {
     if (!input.trim()) return;
 
     if (input.toLowerCase().trim() === currentWord.translation.toLowerCase()) {
-      setResult("✅ Richtig!");
+      setResult("✅ Молодец!");
     } else {
-      setResult("❌ Falsch! Richtige Lösung: " + currentWord.translation);
+      setResult("❌ Не совсем! Правильно было бы: " + currentWord.translation);
     }
   }
 
@@ -34,7 +34,7 @@ export default function App() {
       <h2>{currentWord.word}</h2>
 
       <input
-        placeholder="Übersetzung eingeben..."
+        placeholder="Переведи словечко..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
         style={{ width: "100%", padding: 10, fontSize: 16 }}
