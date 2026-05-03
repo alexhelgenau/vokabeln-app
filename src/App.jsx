@@ -28,8 +28,8 @@ export default function App() {
   }
 
   return (
-    <div style={{ padding: 30, fontFamily: "sans-serif", maxWidth: 500, margin: "auto" }}>
-      <h1>Лебединый словарь 🦢    </h1>
+    <div style={{ padding: 30, fontFamily: "sans-serif", maxWidth: 800, margin: "auto" }}>
+      <h1>Лебединый словарь 🦢</h1>
 
       <h2>{currentWord.word}</h2>
 
