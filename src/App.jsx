@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <div style={{ padding: 30, fontFamily: "sans-serif", maxWidth: 500, margin: "auto" }}>
-      <h1>Лебединый словарь 🦢</h1>
+      <h1>Лебединый словарь 🦢    </h1>
 
       <h2>{currentWord.word}</h2>
 
@@ -41,7 +41,7 @@ export default function App() {
       />
 
       <div style={{ marginTop: 10 }}>
-        <button onClick={checkAnswer}>Prüfen</button>
+        <button onClick={checkAnswer}>Проверить</button>
         <button onClick={() => setShowHint(true)} style={{ marginLeft: 10 }}>
           Подсказка
         </button>
