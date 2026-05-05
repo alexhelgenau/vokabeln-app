@@ -57,6 +57,7 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [input, setInput] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
     const gemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
@@ -67,25 +68,28 @@ export default function App() {
 
   const currentWord = liste[currentIndex];
 
+  const goToNextWord = () => {
+    if (currentIndex < liste.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      const neuGemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
+      setListe(neuGemischt);
+      setCurrentIndex(0);
+    }
+    setInput("");
+    setFeedback("");
+    setShowHint(false);
+  };
+
   const checkAnswer = () => {
     const userBeantwortung = input.toLowerCase().trim();
     const loesung = currentWord.translation.toLowerCase().trim();
 
     if (loesung.includes(userBeantwortung) && userBeantwortung !== "") {
       setFeedback("Правильно! 🦢✨");
-      setTimeout(() => {
-        if (currentIndex < liste.length - 1) {
-          setCurrentIndex(currentIndex + 1);
-        } else {
-          const neuGemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
-          setListe(neuGemischt);
-          setCurrentIndex(0);
-        }
-        setInput("");
-        setFeedback("");
-      }, 1200);
+      setTimeout(goToNextWord, 1500);
     } else {
-      setFeedback("Не совсем! попробуй еще раз! ❌");
+      setFeedback("Не совсем! Попробуй еще раз! ❌");
     }
   };
 
@@ -97,9 +101,21 @@ export default function App() {
         <p style={{ color: "#888", fontSize: "0.9rem", marginBottom: 10 }}>Как это по-немецки?</p>
         <h2 style={{ fontSize: "2.2rem", color: "#222", margin: "10px 0" }}>{currentWord.word}</h2>
         
-        <p style={{ color: "#666", fontStyle: "italic", backgroundColor: "#fdfdfd", padding: "10px", borderRadius: "10px", borderLeft: "4px solid #eee", marginBottom: 20 }}>
-           {currentWord.hint}
-        </p>
+        {/* HINT BUTTON & TEXT */}
+        <div style={{ marginBottom: 20 }}>
+          {showHint ? (
+            <p style={{ color: "#666", fontStyle: "italic", backgroundColor: "#fdfdfd", padding: "10px", borderRadius: "10px", borderLeft: "4px solid #eee" }}>
+               {currentWord.hint}
+            </p>
+          ) : (
+            <button 
+              onClick={() => setShowHint(true)}
+              style={{ background: "none", border: "1px solid #ccc", borderRadius: "8px", padding: "5px 12px", cursor: "pointer", color: "#999", fontSize: "0.8rem" }}
+            >
+              Подсказка 💡
+            </button>
+          )}
+        </div>
 
         <input
           placeholder="Переведи словечко..."
@@ -117,24 +133,40 @@ export default function App() {
           }}
         />
 
-        <button 
-          onClick={checkAnswer}
-          style={{ 
-            marginTop: 15, 
-            width: "100%", 
-            padding: "15px", 
-            backgroundColor: "#222", 
-            color: "white", 
-            border: "none", 
-            borderRadius: "12px", 
-            fontSize: "16px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            transition: "background 0.3s"
-          }}
-        >
-          Проверить
-        </button>
+        <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+          <button 
+            onClick={checkAnswer}
+            style={{ 
+              flex: 2,
+              padding: "15px", 
+              backgroundColor: "#222", 
+              color: "white", 
+              border: "none", 
+              borderRadius: "12px", 
+              fontSize: "16px",
+              fontWeight: "bold",
+              cursor: "pointer"
+            }}
+          >
+            Проверить
+          </button>
+
+          <button 
+            onClick={goToNextWord}
+            style={{ 
+              flex: 1,
+              padding: "15px", 
+              backgroundColor: "#eee", 
+              color: "#555", 
+              border: "none", 
+              borderRadius: "12px", 
+              fontSize: "14px",
+              cursor: "pointer"
+            }}
+          >
+            Далее ➔
+          </button>
+        </div>
 
         <div style={{ minHeight: "30px", marginTop: "15px" }}>
            <p style={{ fontSize: "18px", fontWeight: "bold", color: feedback.includes("Правильно") ? "#27ae60" : "#e74c3c", margin: 0 }}>
