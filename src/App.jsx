@@ -1,76 +1,151 @@
-import { useState } from "react";
-import vocab from "./vocab.json";
+import React, { useState, useEffect } from 'react';
+
+// 1. Deine Vokabel-Liste
+const vokabelnOriginal = [
+  { "word": "mächtig", "translation": "сильный", "hint": "Rhysand ist sehr mächtig." },
+  { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
+  { "word": "retten", "translation": "спасать", "hint": "Menschen retten, Dinge jagen, the family business." },
+  { "word": "Angst", "translation": "страх", "hint": "Du hast Angst vor Schlangen🐍." },
+  { "word": "Entscheidung", "translation": "решение", "hint": "Elenas Entscheidung zwischen Stefan und Damon." },
+  { "word": "deshalb", "translation": "поэтому", "hint": "Warum machst du das?! Deshalb!" },
+  { "word": "übel", "translation": "плохо / тошно", "hint": "Если выпьешь слишком много соленой воды, тебе станет...?" },
+  { "word": "einfach", "translation": "просто", "hint": "есть schwer, а есть...?" },
+  { "word": "klingen", "translation": "звучать", "hint": "Die Musik klingt sehr schön." },
+  { "word": "offensichtlich", "translation": "очевидно", "hint": "Es ist offentsichtlich, dass wir heiraten werden😏." },
+  { "word": "Fest", "translation": "праздник / бал", "hint": "Der 09.05. ist ein großes Fest in Russland." },
+  { "word": "Festung", "translation": "крепость", "hint": "Basgiath ist eine große Festung." },
+  { "word": "Atem", "translation": "дыхание", "hint": "Rikki, Cleo und Emma können unter Wasser atmen." },
+  { "word": "Bewegung", "translation": "движение", "hint": "Der Körper bewegt sich viel, wenn man Sport macht." },
+  { "word": "schlafen", "translation": "спать", "hint": "Ich schlafe normalerweise 9 Stunden 😴." },
+  { "word": "Antwort", "translation": "ответ", "hint": "Есть Frage❓, а есть...?" },
+  { "word": "Anfang", "translation": "начало", "hint": "Есть Ende, а есть...?" },
+  { "word": "quälen", "translation": "мучить", "hint": "Klaus liebt es, andere zu quälen." },
+  { "word": "erlangen", "translation": "получать / достигать", "hint": "Feyre muss ihre Kräfte erlangen." },
+  { "word": "Witz", "translation": "шутка", "hint": "Synonym Anekdote." },
+  { "word": "Besitz", "translation": "владение / собственность", "hint": "Sofia ist Nicolos Besitz seit ihrer Kindheit." },
+  { "word": "früher", "translation": "раньше", "hint": "Früher hatte Russland einen Tzar; jetzt nicht mehr." },
+  { "word": "irgendetwas", "translation": "что-нибудь", "hint": " Irgendetwas, ich weiß nicht was." },
+  { "word": "schreien", "translation": "кричать", "hint": "Du schreist Persik an, weil er Issy anschreit." },
+  { "word": "aussehen", "translation": "выглядеть", "hint": "Die Kleid von Daphne sieht wunderschön aus." },
+  { "word": "erklären", "translation": "объяснять", "hint": "Ich erkläre dir den Protestantismus." },
+  { "word": "irgendwelche", "translation": "какие-нибудь", "hint": "Irgendwelche Leute." },
+  { "word": "zweifellos", "translation": "несомненно", "hint": "Ohne jeden Zweifel (ganz sicher)." },
+  { "word": "obwohl", "translation": "хотя", "hint": "Sie kämpft, obwohl sie schwach ist." },
+  { "word": "hinter", "translation": "позади", "hint": "Hermes steht hinter dir. " },
+  { "word": "gefährlich", "translation": "опасно", "hint": "Sonnenschein ist gefährlich für Vampire." },
+  { "word": "tief", "translation": "глубоко", "hint": "Salvatores Stimme ist sehr tief." },
+  { "word": "nun", "translation": "теперь / сейчас", "hint": "Synonym jetzt." },
+  { "word": "unantastbar", "translation": "неприкосновенный", "hint": "Mafiabosse sind unantastbar." },
+  { "word": "irrsinnig", "translation": "безумный", "hint": "Er ist verrückt! Er ist irrsinnig!" },
+  { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
+  { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
+  { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
+  { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
+  { "word": "beherrschen", "translation": "управлять / владеть", "hint": "Sie beherrschen den Norden von Palermo." },
+  { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
+  { "word": "müssen", "translation": "должен / обязана", "hint": "Ich muss mehr russische Klassik lesen! 😭" },
+  { "word": "während", "translation": "во время", "hint": "Du machst dir Essen, während wir reden." },
+  { "word": "wichtig", "translation": "важно", "hint": "Du bist mir sehr wichtig 🥺." },
+  { "word": "richtig", "translation": "правильно", "hint": "Есть falsch, а есть...?'." },
+  { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
+  { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." }
+];
 
 export default function App() {
-  const [index, setIndex] = useState(0);
+  const [liste, setListe] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [input, setInput] = useState("");
-  const [result, setResult] = useState("");
-  const [showHint, setShowHint] = useState(false);
-  const [showList, setShowList] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
-  const currentWord = vocab[index];
+  useEffect(() => {
+    const gemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
+    setListe(gemischt);
+  }, []);
 
-  function checkAnswer() {
-    if (!input.trim()) return;
+  if (liste.length === 0) return <div style={{ textAlign: "center", marginTop: "50px" }}>Загрузка...</div>;
 
-    if (input.toLowerCase().trim() === currentWord.translation.toLowerCase()) {
-      setResult("✅ Молодец!");
+  const currentWord = liste[currentIndex];
+
+  const checkAnswer = () => {
+    const userBeantwortung = input.toLowerCase().trim();
+    const loesung = currentWord.translation.toLowerCase().trim();
+
+    if (loesung.includes(userBeantwortung) && userBeantwortung !== "") {
+      setFeedback("Правильно! 🦢✨");
+      setTimeout(() => {
+        if (currentIndex < liste.length - 1) {
+          setCurrentIndex(currentIndex + 1);
+        } else {
+          const neuGemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
+          setListe(neuGemischt);
+          setCurrentIndex(0);
+        }
+        setInput("");
+        setFeedback("");
+      }, 1200);
     } else {
-      setResult("❌ Не совсем! Правильно было бы: " + currentWord.translation);
+      setFeedback("Не совсем! попробуй еще раз! ❌");
     }
-  }
-
-  function nextWord() {
-    setIndex((index + 1) % vocab.length);
-    setInput("");
-    setResult("");
-    setShowHint(false);
-  }
+  };
 
   return (
-    <div style={{ padding: 30, fontFamily: "sans-serif", maxWidth: 800, margin: "auto" }}>
-      <h1>Лебединый словарь 🦢</h1>
+    <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: 800, margin: "auto", textAlign: "center" }}>
+      <h1 style={{ marginBottom: 30, fontSize: "1.8rem" }}>Лебединый словарь 🦢</h1>
+      
+      <div style={{ background: "#ffffff", padding: 25, borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.1)", border: "1px solid #eee" }}>
+        <p style={{ color: "#888", fontSize: "0.9rem", marginBottom: 10 }}>Как это по-немецки?</p>
+        <h2 style={{ fontSize: "2.2rem", color: "#222", margin: "10px 0" }}>{currentWord.word}</h2>
+        
+        <p style={{ color: "#666", fontStyle: "italic", backgroundColor: "#fdfdfd", padding: "10px", borderRadius: "10px", borderLeft: "4px solid #eee", marginBottom: 20 }}>
+           {currentWord.hint}
+        </p>
 
-      <h2>{currentWord.word}</h2>
+        <input
+          placeholder="Переведи словечко..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          style={{ 
+            width: "100%", 
+            padding: "15px", 
+            fontSize: "16px", 
+            borderRadius: "12px", 
+            border: "2px solid #efefef",
+            outline: "none",
+            boxSizing: "border-box"
+          }}
+        />
 
-      <input
-        placeholder="Переведи словечко..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        style={{ width: "100%", padding: 10, fontSize: 16 }}
-      />
-
-      <div style={{ marginTop: 10 }}>
-        <button onClick={checkAnswer}>Проверить</button>
-        <button onClick={() => setShowHint(true)} style={{ marginLeft: 10 }}>
-          Подсказка
+        <button 
+          onClick={checkAnswer}
+          style={{ 
+            marginTop: 15, 
+            width: "100%", 
+            padding: "15px", 
+            backgroundColor: "#222", 
+            color: "white", 
+            border: "none", 
+            borderRadius: "12px", 
+            fontSize: "16px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "background 0.3s"
+          }}
+        >
+          Проверить
         </button>
-        <button onClick={nextWord} style={{ marginLeft: 10 }}>
-          Новое слово
-        </button>
+
+        <div style={{ minHeight: "30px", marginTop: "15px" }}>
+           <p style={{ fontSize: "18px", fontWeight: "bold", color: feedback.includes("Правильно") ? "#27ae60" : "#e74c3c", margin: 0 }}>
+            {feedback}
+          </p>
+        </div>
       </div>
-
-      {showHint && (
-        <p style={{ marginTop: 15 }}>💡 {currentWord.hint}</p>
-      )}
-
-      <h3>{result}</h3>
-
-      <hr />
-
-      <button onClick={() => setShowList(!showList)}>
-        Показать все слова
-      </button>
-
-      {showList && (
-        <ul>
-          {vocab.map((v, i) => (
-            <li key={i}>
-              {v.word} → {v.translation}
-            </li>
-          ))}
-        </ul>
-      )}
+      
+      <p style={{ marginTop: 25, color: "#aaa", fontSize: "0.85rem" }}>
+        Слово {currentIndex + 1} из {liste.length}
+      </p>
     </div>
   );
 }
