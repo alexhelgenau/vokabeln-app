@@ -49,7 +49,17 @@ const vokabelnOriginal = [
   { "word": "wichtig", "translation": "важно", "hint": "Du bist mir sehr wichtig 🥺." },
   { "word": "richtig", "translation": "правильно", "hint": "Есть falsch, а есть...?'." },
   { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
-  { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." }
+  { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." },
+  { "word": "bauen", "translation": "строить / создавать", "hint": "Алина und Тёма bauen ein Haus in сочи." },
+  { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Zeit des Mittelalters war vom Jahr 500 - 1500." },
+  { "word": "überall", "translation": "везде", "hint": "Hannahs Freunde und Jake suchen sie überall🔍." },
+  { "word": "Wache", "translation": "стража / охрана", "hint": "Die bewaffnete Wache steht regungslos." },
+  { "word": "gehören", "translation": "принадлежать", "hint": "Sofia gehört jetzt Nicolo." },
+  { "word": "holen", "translation": "взять / принести / забрать", "hint": "Du hast Persik für 4 Tage geholt." },
+  { "word": "beschlossen", "translation": "решил / постановил / решено", "hint": "Das Schicksal ist beschlossen! 🔒" },
+  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Найди слово: Вельзевул Бредовред, видимо, снова перепутал планы и устроил хаос там, где обещал порядок." },
+  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
+  { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Russland." }
 ];
 
 export default function App() {
