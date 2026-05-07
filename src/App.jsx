@@ -56,7 +56,7 @@ const vokabelnOriginal = [
   { "word": "Wache", "translation": "стража", "hint": "Die bewaffnete Wache steht regungslos." },
   { "word": "gehören", "translation": "принадлежать", "hint": "Sofia gehört jetzt Nicolo." },
   { "word": "holen", "translation": "взять / принести", "hint": "Du hast Persik für 4 Tage geholt." },
-  { "word": "beschlossen", "translation": "решил / постановил", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
+  { "word": "beschlossen", "translation": "решил / постановил / решено", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
   { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал планы и устроил хаос там, где обещал порядок." },
   { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
   { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." },
@@ -124,7 +124,7 @@ export default function App() {
 
   const getTitle = () => {
     const titles = [
-      "Смертная (Sterbliche) 🌱", "Тень Аида (Schatten des Hades) 🌑", "Лесная Нимфа (Waldnymphe) 🍃",
+      "Смертная (Sterbliche) 🌱", "Лесная Нимфа (Waldnymphe) 🍃",
       "Вестница Гермеса (Botin des Hermes) 🪽", "Воительница Спарты (Kriegerin Spartas) 🛡️", "Пифия Аполлона (Pythia des Apollon) ☀️",
       "Дочь Посейдона (Tochter des Poseidon) 🌊", "Охотница Артемиды (Jägerin der Artemis) 🏹", "Пламя Гестии (Flamme der Hestia) 🔥",
       "Героиня Олимпа (Heldin des Olymps) 🏛️", "Менада Диониса (Maenade des Dionysos) 🍷", "Ярость Эринии (Zorn der Erynie) ⚔️",
