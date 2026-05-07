@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Vokabel-Liste (gekürzt für die Übersicht, nimm deine volle Liste!)
 const vokabelnOriginal = [
   { "word": "mächtig", "translation": "сильный", "hint": "Rhysand ist sehr mächtig." },
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
@@ -69,8 +68,6 @@ export default function App() {
   const [feedback, setFeedback] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [fehlerListe, setFehlerListe] = useState([]);
-  
-  // LEVEL SYSTEM STATES
   const [xp, setXp] = useState(0);
 
   useEffect(() => {
@@ -80,15 +77,16 @@ export default function App() {
 
   if (liste.length === 0) return <div style={{ textAlign: "center", marginTop: "50px" }}>Загрузка...</div>;
 
-  const currentLevel = Math.floor(xp / 100) + 1;
-  const xpInLevel = xp % 100;
+  const xpPerLevel = 100;
+  const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
+  const xpInLevel = xp % xpPerLevel;
 
-  // Russischer Titel basierend auf dem Level
   const getTitle = () => {
-    if (currentLevel < 2) return "Новичок 🦢 (Anfänger)";
-    if (currentLevel < 3) return "Ученик ✨ (Schüler)";
-    if (currentLevel < 5) return "Знаток 📚 (Kenner)";
-    return "Королева слов 👑 (Wort-Königin)";
+    if (currentLevel === 20) return "Лебединая Императрица 👑";
+    if (currentLevel >= 15) return "Мастер языка ✨";
+    if (currentLevel >= 10) return "Принцесса знаний 📚";
+    if (currentLevel >= 5) return "Знаток 🦢";
+    return "Новичок 🌱";
   };
 
   const currentWord = liste[currentIndex];
@@ -112,10 +110,11 @@ export default function App() {
 
     if (loesung.includes(userBeantwortung) && userBeantwortung !== "") {
       setFeedback("Правильно! +10 XP 🦢✨");
-      setXp(prev => prev + 10); // 10 Punkte für richtiges Wort
+      setXp(prev => prev + 10);
       setTimeout(goToNextWord, 1200);
     } else {
-      setFeedback("Не совсем! Попробуй еще раз! ❌");
+      setFeedback("Не совсем! -10 XP ❌");
+      setXp(prev => Math.max(0, prev - 10)); // Keine negativen Gesamt-XP
       setFehlerListe(prev => {
         if (!prev.find(f => f.word === currentWord.word)) {
           return [currentWord, ...prev];
@@ -128,113 +127,116 @@ export default function App() {
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: 600, margin: "auto", textAlign: "center" }}>
       
-      {/* LEVEL HEADER - NEU GESTALTET */}
+      {/* ÜBERSCHRIFT GANZ OBEN */}
+      <h1 style={{ marginBottom: 20, fontSize: "2.2rem", color: "#222", fontWeight: "bold" }}>
+        Лебединый словарь 🦢
+      </h1>
+
+      {/* GROSSER PROGRESS BALKEN */}
       <div style={{ 
-        marginBottom: 30, 
+        marginBottom: 40, 
         background: "#ffffff", 
-        padding: "20px", 
-        borderRadius: "20px", 
-        boxShadow: "0 4px 15px rgba(0,0,0,0.05)",
-        border: "1px solid #ffd700" // Goldener Rand passend zum Schwan
+        padding: "25px", 
+        borderRadius: "25px", 
+        boxShadow: "0 10px 30px rgba(0,0,0,0.08)", 
+        border: "2px solid #ffd700" 
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
-          <span style={{ fontWeight: "bold", color: "#222", fontSize: "1.2rem" }}>
-            Уровень {currentLevel}
-          </span>
-          <span style={{ fontSize: "0.9rem", color: "#daa520", fontWeight: "600" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
+          <div style={{ textAlign: "left" }}>
+            <span style={{ display: "block", fontSize: "1.4rem", fontWeight: "900", color: "#333" }}>
+              Уровень {currentLevel} <span style={{fontSize: "1rem", color: "#999"}}>/ 20</span>
+            </span>
+          </div>
+          <span style={{ fontSize: "1.1rem", color: "#daa520", fontWeight: "bold", background: "#fffdf0", padding: "5px 15px", borderRadius: "10px" }}>
             {getTitle()}
           </span>
         </div>
         
-        {/* Der Balken-Container */}
+        {/* Größerer Balken */}
         <div style={{ 
           width: "100%", 
-          height: "15px", 
-          background: "#f0f0f0", 
-          borderRadius: "10px", 
+          height: "24px", 
+          background: "#eee", 
+          borderRadius: "12px", 
           overflow: "hidden",
-          border: "1px solid #eee"
+          border: "1px solid #ddd"
         }}>
-          {/* Der eigentliche Fortschritt */}
           <div style={{ 
             width: `${xpInLevel}%`, 
             height: "100%", 
-            background: "linear-gradient(90deg, #ffd700 0%, #ff8c00 100%)", 
-            transition: "width 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67)",
-            boxShadow: "0 0 10px rgba(255, 215, 0, 0.5)"
+            background: "linear-gradient(90deg, #ffd700 0%, #ffa500 100%)", 
+            transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+            boxShadow: "0 0 15px rgba(255, 215, 0, 0.6)"
           }}></div>
         </div>
         
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "5px" }}>
-          <p style={{ margin: 0, fontSize: "0.8rem", color: "#999", fontWeight: "bold" }}>
-            {xpInLevel} / 100 XP
-          </p>
-        </div>
+        <p style={{ marginTop: "10px", fontSize: "0.9rem", color: "#777", fontWeight: "600" }}>
+          {xpInLevel} / 100 XP до следующей ступени
+        </p>
       </div>
 
-      <h1 style={{ marginBottom: 20, fontSize: "1.5rem", color: "#444" }}>Лебединый словарь 🦢</h1>
-      
-      <div style={{ background: "#ffffff", padding: 25, borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.1)", border: "1px solid #eee" }}>
-        <p style={{ color: "#888", fontSize: "0.9rem", marginBottom: 10 }}>Как это по-немецки?</p>
-        <h2 style={{ fontSize: "2.2rem", color: "#222", margin: "10px 0" }}>{currentWord.word}</h2>
+      {/* HAUPT TRAINER BOX */}
+      <div style={{ background: "#ffffff", padding: 30, borderRadius: "25px", boxShadow: "0 8px 25px rgba(0,0,0,0.05)", border: "1px solid #eee" }}>
+        <p style={{ color: "#888", fontSize: "1rem", marginBottom: 10 }}>Как это по-немецки?</p>
+        <h2 style={{ fontSize: "2.8rem", color: "#222", margin: "10px 0" }}>{currentWord.word}</h2>
         
-        <div style={{ marginBottom: 20 }}>
+        <div style={{ marginBottom: 25 }}>
           {showHint ? (
-            <p style={{ color: "#666", fontStyle: "italic", backgroundColor: "#fdfdfd", padding: "10px", borderRadius: "10px", borderLeft: "4px solid #eee" }}>
+            <p style={{ color: "#666", fontStyle: "italic", backgroundColor: "#f9f9f9", padding: "15px", borderRadius: "15px", borderLeft: "5px solid #ffd700" }}>
                {currentWord.hint}
             </p>
           ) : (
-            <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px solid #ccc", borderRadius: "8px", padding: "5px 12px", cursor: "pointer", color: "#999", fontSize: "0.8rem" }}>
+            <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px solid #ccc", borderRadius: "10px", padding: "8px 16px", cursor: "pointer", color: "#999", fontSize: "0.9rem" }}>
               Подсказка 💡
             </button>
           )}
         </div>
 
         <input
-          placeholder="Переведи словечко..."
+          placeholder="Твой ответ..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
-          style={{ width: "100%", padding: "15px", fontSize: "16px", borderRadius: "12px", border: "2px solid #efefef", outline: "none", boxSizing: "border-box" }}
+          style={{ width: "100%", padding: "18px", fontSize: "18px", borderRadius: "15px", border: "2px solid #efefef", outline: "none", boxSizing: "border-box", textAlign: "center" }}
         />
 
-        <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
-          <button onClick={checkAnswer} style={{ flex: 2, padding: "15px", backgroundColor: "#222", color: "white", border: "none", borderRadius: "12px", fontSize: "16px", fontWeight: "bold", cursor: "pointer" }}>
+        <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
+          <button onClick={checkAnswer} style={{ flex: 2, padding: "18px", backgroundColor: "#222", color: "white", border: "none", borderRadius: "15px", fontSize: "18px", fontWeight: "bold", cursor: "pointer" }}>
             Проверить
           </button>
-          <button onClick={goToNextWord} style={{ flex: 1, padding: "15px", backgroundColor: "#eee", color: "#555", border: "none", borderRadius: "12px", fontSize: "14px", cursor: "pointer" }}>
-            Далее ➔
+          <button onClick={goToNextWord} style={{ flex: 1, padding: "18px", backgroundColor: "#eee", color: "#555", border: "none", borderRadius: "15px", fontSize: "16px", cursor: "pointer" }}>
+            ➜
           </button>
         </div>
 
-        <div style={{ minHeight: "30px", marginTop: "15px" }}>
-           <p style={{ fontSize: "18px", fontWeight: "bold", color: feedback.includes("Правильно") ? "#27ae60" : "#e74c3c", margin: 0 }}>
+        <div style={{ minHeight: "40px", marginTop: "20px" }}>
+           <p style={{ fontSize: "20px", fontWeight: "bold", color: feedback.includes("Правильно") ? "#27ae60" : "#e74c3c", margin: 0 }}>
             {feedback}
           </p>
         </div>
       </div>
       
-      <p style={{ marginTop: 20, color: "#aaa", fontSize: "0.85rem" }}>
-        Слово {currentIndex + 1} из {liste.length}
+      <p style={{ marginTop: 25, color: "#bbb", fontSize: "0.9rem" }}>
+        Карточка {currentIndex + 1} из {liste.length}
       </p>
 
-      {/* VERSTECKTE FEHLERLISTE */}
+      {/* FEHLERLISTE */}
       {fehlerListe.length > 0 && (
-        <div style={{ marginTop: 30, textAlign: "left", padding: "5px", background: "#fff5f5", borderRadius: "15px", border: "1px solid #feb2b2" }}>
-          <details style={{ cursor: "pointer", outline: "none" }}>
-            <summary style={{ color: "#c53030", fontWeight: "bold", fontSize: "1rem", padding: "10px" }}>
-              Список ошибок ({fehlerListe.length}) — Нажми
+        <div style={{ marginTop: 30, textAlign: "left", background: "#fff5f5", borderRadius: "20px", border: "1px solid #feb2b2", overflow: "hidden" }}>
+          <details style={{ outline: "none" }}>
+            <summary style={{ cursor: "pointer", color: "#c53030", fontWeight: "bold", fontSize: "1.1rem", padding: "15px" }}>
+              Список ошибок ({fehlerListe.length}) — Посмотреть
             </summary>
-            <div style={{ padding: "0 10px 10px 10px" }}>
-              <ul style={{ paddingLeft: "20px", fontSize: "0.9rem", color: "#444" }}>
+            <div style={{ padding: "0 15px 15px 15px" }}>
+              <ul style={{ paddingLeft: "20px", fontSize: "1.1rem", color: "#444" }}>
                 {fehlerListe.map((f, i) => (
-                  <li key={i} style={{ marginBottom: "5px" }}>
+                  <li key={i} style={{ marginBottom: "8px" }}>
                     <strong>{f.word}</strong> — {f.translation}
                   </li>
                 ))}
               </ul>
-              <button onClick={() => setFehlerListe([])} style={{ background: "none", border: "none", color: "#c53030", fontSize: "0.75rem", cursor: "pointer", textDecoration: "underline" }}>
-                Очистить список
+              <button onClick={() => setFehlerListe([])} style={{ background: "none", border: "none", color: "#c53030", fontSize: "0.85rem", cursor: "pointer", textDecoration: "underline" }}>
+                Очистить ошибки
               </button>
             </div>
           </details>
