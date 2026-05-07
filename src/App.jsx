@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// DEINE LISTE (jetzt 70 Wörter) inkl. der 12 neuen Begriffe
+// DEINE LISTE (70 Wörter)
 const vokabelnOriginal = [
   { "word": "mächtig", "translation": "сильный / властный / могучий", "hint": "Rhysand ist sehr mächtig." },
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
@@ -80,6 +80,7 @@ export default function App() {
   const [input, setInput] = useState("");
   const [feedback, setFeedback] = useState("");
   const [showHint, setShowHint] = useState(false);
+  const [showLevelAnim, setShowLevelAnim] = useState(false);
 
   const [xp, setXp] = useState(() => {
     const saved = localStorage.getItem('lebedi_xp');
@@ -90,6 +91,23 @@ export default function App() {
     const saved = localStorage.getItem('lebedi_fehler');
     return saved ? JSON.parse(saved) : [];
   });
+
+  // Level-Berechnung
+  const xpPerLevel = 100;
+  const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
+  const xpInLevel = xp % xpPerLevel;
+
+  // Animation Trigger bei Level-Up
+  useEffect(() => {
+    const lastXp = parseInt(localStorage.getItem('lebedi_xp_old') || "0");
+    const lastLevel = Math.floor(lastXp / xpPerLevel) + 1;
+    
+    if (currentLevel > lastLevel && lastLevel > 0) {
+      setShowLevelAnim(true);
+      setTimeout(() => setShowLevelAnim(false), 3000);
+    }
+    localStorage.setItem('lebedi_xp_old', xp.toString());
+  }, [currentLevel, xp]);
 
   useEffect(() => {
     localStorage.setItem('lebedi_xp', xp.toString());
@@ -102,10 +120,6 @@ export default function App() {
   }, []);
 
   if (liste.length === 0) return null;
-
-  const xpPerLevel = 100;
-  const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
-  const xpInLevel = xp % xpPerLevel;
 
   const getTitle = () => {
     const titles = [
@@ -138,7 +152,6 @@ export default function App() {
   const checkAnswer = () => {
     const userBeant = input.toLowerCase().trim();
     const loesung = currentWord.translation.toLowerCase().trim();
-
     const loesungsTeile = loesung.split('/').map(s => s.trim());
 
     if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") {
@@ -158,8 +171,40 @@ export default function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: 'Segoe UI, sans-serif', maxWidth: 600, margin: "auto", textAlign: "center", minHeight: "100vh", color: "#333" }}>
+    <div style={{ padding: "20px", fontFamily: 'Segoe UI, sans-serif', maxWidth: 600, margin: "auto", textAlign: "center", minHeight: "100vh", color: "#333", position: "relative", overflow: "hidden" }}>
       
+      {/* CSS für die Explosion */}
+      <style>{`
+        @keyframes particle {
+          0% { transform: translate(0,0) scale(1); opacity: 1; }
+          100% { transform: translate(var(--tw), var(--th)) scale(0); opacity: 0; }
+        }
+        .emoji-particle {
+          position: absolute; left: 50%; top: 50%; pointer-events: none;
+          animation: particle 1.5s ease-out forwards;
+        }
+      `}</style>
+
+      {/* Explosions-Container */}
+      {showLevelAnim && (
+        <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1000, pointerEvents: "none" }}>
+          {[...Array(30)].map((_, i) => {
+            const emojis = ["⚡", "✨", "👑", "🦢", "🏛️", "🔥"];
+            const angle = (i / 30) * Math.PI * 2;
+            const dist = 100 + Math.random() * 300;
+            return (
+              <div key={i} className="emoji-particle" style={{
+                "--tw": `${Math.cos(angle) * dist}px`,
+                "--th": `${Math.sin(angle) * dist}px`,
+                fontSize: "1.5rem"
+              }}>
+                {emojis[i % emojis.length]}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <h1 style={{ marginBottom: 20, fontSize: "2.4rem", fontWeight: "bold" }}>Лебединый словарь 🦢</h1>
 
       <div style={{ marginBottom: 40, background: "white", padding: "25px", borderRadius: "25px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)", border: "2px solid #ffd700" }}>
@@ -221,7 +266,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Anzeige der Wörteranzahl */}
       <div style={{ marginTop: "40px", fontSize: "0.9rem", color: "#666", fontWeight: "bold" }}>
         📜 Прогресс круга: {currentIndex + 1} / {liste.length} слов
       </div>
