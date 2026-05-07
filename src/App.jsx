@@ -62,7 +62,7 @@ const vokabelnOriginal = [
   { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." },
   { "word": "langweilig", "translation": "скучно", "hint": "Сериал Тьма был langweilig 🥱" },
   { "word": "nur", "translation": "только", "hint": "Du gehörst mir, Violet. NUR wenn du mir gehörst." },
-  { "word": "beobachten", "translation": "наблюдать", "hint": "Nicolo beobachtet Sofia, seit sie ein Kind war." },
+  { "word": "beobachten", "translation": "наблюдать", "hint": "Niccolo beobachtet Sofia, seit sie ein kein Kind war." },
   { "word": "riesig", "translation": "огромный", "hint": "Der Riese Gargantua ist riesig!." },
   { "word": "schenken", "translation": "дарить", "hint": "Was hast du Anya zum Geburstag geschenkt?" },
   { "word": "schreiten", "translation": "шагать / шествовать", "hint": "Durch den Saal schreiten." },
@@ -139,7 +139,6 @@ export default function App() {
     const userBeant = input.toLowerCase().trim();
     const loesung = currentWord.translation.toLowerCase().trim();
 
-    // Erkennt Antworten auch wenn mehrere Optionen mit / getrennt sind
     const loesungsTeile = loesung.split('/').map(s => s.trim());
 
     if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") {
@@ -222,9 +221,14 @@ export default function App() {
         </div>
       )}
 
+      {/* Anzeige der Wörteranzahl */}
+      <div style={{ marginTop: "40px", fontSize: "0.9rem", color: "#666", fontWeight: "bold" }}>
+        📜 Прогресс круга: {currentIndex + 1} / {liste.length} слов
+      </div>
+
       <button 
         onClick={() => { if(window.confirm("Стереть все божественные благословения и начать с нуля?")) { localStorage.clear(); window.location.reload(); } }} 
-        style={{ marginTop: "60px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+        style={{ marginTop: "20px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
       >
         Начать жизнь смертной заново
       </button>
