@@ -99,12 +99,13 @@ export default function App() {
 
   // Animation Trigger bei Level-Up
   useEffect(() => {
-    const lastXp = parseInt(localStorage.getItem('lebedi_xp_old') || "0");
+    const lastXpString = localStorage.getItem('lebedi_xp_old');
+    const lastXp = lastXpString ? parseInt(lastXpString) : xp;
     const lastLevel = Math.floor(lastXp / xpPerLevel) + 1;
     
-    if (currentLevel > lastLevel && lastLevel > 0) {
+    if (currentLevel > lastLevel) {
       setShowLevelAnim(true);
-      setTimeout(() => setShowLevelAnim(false), 3000);
+      setTimeout(() => setShowLevelAnim(false), 3000); // 3 Sekunden Dauer
     }
     localStorage.setItem('lebedi_xp_old', xp.toString());
   }, [currentLevel, xp]);
@@ -171,38 +172,43 @@ export default function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: 'Segoe UI, sans-serif', maxWidth: 600, margin: "auto", textAlign: "center", minHeight: "100vh", color: "#333", position: "relative", overflow: "hidden" }}>
+    <div style={{ padding: "20px", fontFamily: 'Segoe UI, sans-serif', maxWidth: 600, margin: "auto", textAlign: "center", minHeight: "100vh", color: "#333" }}>
       
-      {/* CSS für die Explosion */}
+      {/* CSS für die globale Explosion */}
       <style>{`
-        @keyframes particle {
-          0% { transform: translate(0,0) scale(1); opacity: 1; }
-          100% { transform: translate(var(--tw), var(--th)) scale(0); opacity: 0; }
+        @keyframes global-particle {
+          0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+          100% { transform: translate(var(--tw), var(--th)) scale(0) rotate(360deg); opacity: 0; }
         }
         .emoji-particle {
-          position: absolute; left: 50%; top: 50%; pointer-events: none;
-          animation: particle 1.5s ease-out forwards;
+          position: fixed; 
+          left: 50%; 
+          top: 50%; 
+          pointer-events: none;
+          z-index: 9999;
+          animation: global-particle 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
       `}</style>
 
-      {/* Explosions-Container */}
+      {/* Explosions-Container (Ganzbildschirm) */}
       {showLevelAnim && (
-        <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1000, pointerEvents: "none" }}>
-          {[...Array(30)].map((_, i) => {
-            const emojis = ["⚡", "✨", "👑", "🦢", "🏛️", "🔥"];
-            const angle = (i / 30) * Math.PI * 2;
-            const dist = 100 + Math.random() * 300;
+        <>
+          {[...Array(60)].map((_, i) => {
+            const emojis = ["⚡", "✨", "👑", "🦢", "🏛️", "🔥", "🕊️", "🏹", "🦉"];
+            const angle = (i / 60) * Math.PI * 2 + (Math.random() * 0.5);
+            // Zufällige Weite über den ganzen Bildschirm
+            const dist = 200 + Math.random() * 800; 
             return (
               <div key={i} className="emoji-particle" style={{
                 "--tw": `${Math.cos(angle) * dist}px`,
                 "--th": `${Math.sin(angle) * dist}px`,
-                fontSize: "1.5rem"
+                fontSize: `${1 + Math.random() * 1.5}rem`
               }}>
                 {emojis[i % emojis.length]}
               </div>
             );
           })}
-        </div>
+        </>
       )}
 
       <h1 style={{ marginBottom: 20, fontSize: "2.4rem", fontWeight: "bold" }}>Лебединый словарь 🦢</h1>
@@ -271,7 +277,7 @@ export default function App() {
       </div>
 
       <button 
-        onClick={() => { if(window.confirm("Стереть все божественные благословения и начать с нуля?")) { localStorage.clear(); window.location.reload(); } }} 
+        onClick={() => { if(window.confirm("Стереть все божественные благословения und nach dem Nullpunkt starten?")) { localStorage.clear(); window.location.reload(); } }} 
         style={{ marginTop: "20px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
       >
         Начать жизнь смертной заново
