@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+// VOLLSTÄNDIGE LISTE (58 Wörter)
 const vokabelnOriginal = [
   { "word": "mächtig", "translation": "сильный", "hint": "Rhysand ist sehr mächtig." },
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
@@ -7,57 +8,57 @@ const vokabelnOriginal = [
   { "word": "Angst", "translation": "страх", "hint": "Du hast Angst vor Schlangen🐍." },
   { "word": "Entscheidung", "translation": "решение", "hint": "Elenas Entscheidung zwischen Stefan und Damon." },
   { "word": "deshalb", "translation": "поэтому", "hint": "Warum machst du das?! Deshalb!" },
-  { "word": "übel", "translation": "плохо / тошно", "hint": "Если выпьешь слишком много соленой воды, тебе станет...?" },
-  { "word": "einfach", "translation": "просто", "hint": "есть schwer, а есть...?" },
+  { "word": "übel", "translation": "плохо / тошно", "hint": "Wenn man zu viel salziges Wasser trinkt..." },
+  { "word": "einfach", "translation": "просто", "hint": "Nicht schwer (schwer / einfach)." },
   { "word": "klingen", "translation": "звучать", "hint": "Die Musik klingt sehr schön." },
-  { "word": "offensichtlich", "translation": "очевидно", "hint": "Es ist offentsichtlich, dass wir heiraten werden😏." },
-  { "word": "Fest", "translation": "праздник / бал", "hint": "Der 09.05. ist ein großes Fest in Russland." },
+  { "word": "offensichtlich", "translation": "очевидно", "hint": "Es ist offensichtlich, dass wir heiraten werden😏." },
+  { "word": "Fest", "translation": "праздник / бал", "hint": "Ein großes Ereignis (wie der 09.05.)." },
   { "word": "Festung", "translation": "крепость", "hint": "Basgiath ist eine große Festung." },
-  { "word": "Atem", "translation": "дыхание", "hint": "Rikki, Cleo und Emma können unter Wasser atmen." },
-  { "word": "Bewegung", "translation": "движение", "hint": "Der Körper bewegt sich viel, wenn man Sport macht." },
-  { "word": "schlafen", "translation": "спать", "hint": "Ich schlafe normalerweise 9 Stunden 😴." },
-  { "word": "Antwort", "translation": "ответ", "hint": "Есть Frage❓, а есть...?" },
-  { "word": "Anfang", "translation": "начало", "hint": "Есть Ende, а есть...?" },
+  { "word": "Atem", "translation": "дыхание", "hint": "H2O: Rikki, Cleo und Emma können unter Wasser atmen." },
+  { "word": "Bewegung", "translation": "движение", "hint": "Sport ist viel Bewegung." },
+  { "word": "schlafen", "translation": "спать", "hint": "In der Nacht im Bett 😴." },
+  { "word": "Antwort", "translation": "ответ", "hint": "Gegenteil von Frage❓." },
+  { "word": "Anfang", "translation": "начало", "hint": "Gegenteil von Ende." },
   { "word": "quälen", "translation": "мучить", "hint": "Klaus liebt es, andere zu quälen." },
   { "word": "erlangen", "translation": "получать / достигать", "hint": "Feyre muss ihre Kräfte erlangen." },
   { "word": "Witz", "translation": "шутка", "hint": "Synonym Anekdote." },
-  { "word": "Besitz", "translation": "владение / собственность", "hint": "Sofia ist Nicolos Besitz seit ihrer Kindheit." },
-  { "word": "früher", "translation": "раньше", "hint": "Früher hatte Russland einen Tzar; jetzt nicht mehr." },
-  { "word": "irgendetwas", "translation": "что-нибудь", "hint": " Irgendetwas, ich weiß nicht was." },
-  { "word": "schreien", "translation": "кричать", "hint": "Du schreist Persik an, weil er Issy anschreit." },
-  { "word": "aussehen", "translation": "выглядеть", "hint": "Die Kleid von Daphne sieht wunderschön aus." },
+  { "word": "Besitz", "translation": "владение / собственность", "hint": "Sofia ist Nicolos Besitz." },
+  { "word": "früher", "translation": "раньше", "hint": "Früher hatte Russland einen Tzar." },
+  { "word": "irgendetwas", "translation": "что-нибудь", "hint": "Irgendetwas, ich weiß nicht was." },
+  { "word": "schreien", "translation": "кричать", "hint": "Sehr laut rufen (Persik vs Issy)." },
+  { "word": "aussehen", "translation": "выглядеть", "hint": "Das Kleid von Daphne sieht wunderschön aus." },
   { "word": "erklären", "translation": "объяснять", "hint": "Ich erkläre dir den Protestantismus." },
   { "word": "irgendwelche", "translation": "какие-нибудь", "hint": "Irgendwelche Leute." },
-  { "word": "zweifellos", "translation": "несомненно", "hint": "Ohne jeden Zweifel (ganz sicher)." },
+  { "word": "zweifellos", "translation": "несомненно", "hint": "Ganz sicher (ohne jeden Zweifel)." },
   { "word": "obwohl", "translation": "хотя", "hint": "Sie kämpft, obwohl sie schwach ist." },
-  { "word": "hinter", "translation": "позади", "hint": "Hermes steht hinter dir. " },
+  { "word": "hinter", "translation": "позади", "hint": "Hermes steht hinter dir." },
   { "word": "gefährlich", "translation": "опасно", "hint": "Sonnenschein ist gefährlich für Vampire." },
   { "word": "tief", "translation": "глубоко", "hint": "Salvatores Stimme ist sehr tief." },
   { "word": "nun", "translation": "теперь / сейчас", "hint": "Synonym jetzt." },
   { "word": "unantastbar", "translation": "неприкосновенный", "hint": "Mafiabosse sind unantastbar." },
-  { "word": "irrsinnig", "translation": "безумный", "hint": "Er ist verrückt! Er ist irrsinnig!" },
+  { "word": "irrsinnig", "translation": "безумный", "hint": "Verrückt / wahnsinnig." },
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
-  { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
-  { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
+  { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut." },
+  { "word": "plötzlich", "translation": "внезапно", "hint": "Auf einmal (l'amour de ma vie gefunden)." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ruhig und chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
-  { "word": "müssen", "translation": "должен / обязана", "hint": "Ich muss mehr russische Klassik lesen! 😭" },
-  { "word": "während", "translation": "во время", "hint": "Du machst dir Essen, während wir reden." },
+  { "word": "müssen", "translation": "должен / обязана", "hint": "Ich muss mehr Klassik lesen! 😭" },
+  { "word": "während", "translation": "во время", "hint": "Du machst Essen, während wir reden." },
   { "word": "wichtig", "translation": "важно", "hint": "Du bist mir sehr wichtig 🥺." },
-  { "word": "richtig", "translation": "правильно", "hint": "Есть falsch, а есть...?'." },
-  { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
+  { "word": "richtig", "translation": "правильно", "hint": "Gegenteil von falsch." },
+  { "word": "sondern", "translation": "а / но", "hint": "Nicht Dean, sondern Sam." },
   { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." },
-  { "word": "bauen", "translation": "строить", "hint": "Ein Haus bauen oder ein Imperium." },
-  { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Zeit von Rittern und Burgen." },
+  { "word": "bauen", "translation": "строить", "hint": "Ein Haus oder ein Imperium bauen." },
+  { "word": "Mittelalter", "translation": "средневековье", "hint": "Zeit von Rittern und Burgen." },
   { "word": "überall", "translation": "везде", "hint": "Ich habe dich überall gesucht." },
-  { "word": "Wache", "translation": "стража", "hint": "Die Wache steht vor dem Palast von Velaris." },
+  { "word": "Wache", "translation": "стража", "hint": "Steht vor dem Palast von Velaris." },
   { "word": "gehören", "translation": "принадлежать", "hint": "Du gehörst zu mir." },
-  { "word": "holen", "translation": "взять / принести", "hint": "Kannst du mir bitte ein Glas Wasser holen?" },
-  { "word": "beschlossen", "translation": "решил / постановил", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
-  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Anscheinend hast du recht." },
-  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Ein Leben ohne Sorgen ist unbeschwert." },
+  { "word": "holen", "translation": "взять / принести", "hint": "Ein Glas Wasser holen." },
+  { "word": "beschlossen", "translation": "решил / постановил", "hint": "Eine Entscheidung getroffen." },
+  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Es sieht so aus, als ob." },
+  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Ein Leben ohne Sorgen." },
   { "word": "noch", "translation": "еще", "hint": "Ich liebe dich noch immer." }
 ];
 
@@ -67,26 +68,46 @@ export default function App() {
   const [input, setInput] = useState("");
   const [feedback, setFeedback] = useState("");
   const [showHint, setShowHint] = useState(false);
-  const [fehlerListe, setFehlerListe] = useState([]);
-  const [xp, setXp] = useState(0);
+
+  // Speicher-Logik (LocalStorage)
+  const [xp, setXp] = useState(() => {
+    const saved = localStorage.getItem('lebedi_xp');
+    return saved ? parseInt(saved) : 0;
+  });
+
+  const [fehlerListe, setFehlerListe] = useState(() => {
+    const saved = localStorage.getItem('lebedi_fehler');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('lebedi_xp', xp.toString());
+    localStorage.setItem('lebedi_fehler', JSON.stringify(fehlerListe));
+  }, [xp, fehlerListe]);
 
   useEffect(() => {
     const gemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
     setListe(gemischt);
   }, []);
 
-  if (liste.length === 0) return <div style={{ textAlign: "center", marginTop: "50px" }}>Загрузка...</div>;
+  if (liste.length === 0) return null;
 
   const xpPerLevel = 100;
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const xpInLevel = xp % xpPerLevel;
 
+  // Weibliche Titel der griechischen Mythologie
   const getTitle = () => {
-    if (currentLevel === 20) return "Лебединая Императрица 👑";
-    if (currentLevel >= 15) return "Мастер языка ✨";
-    if (currentLevel >= 10) return "Принцесса знаний 📚";
-    if (currentLevel >= 5) return "Знаток 🦢";
-    return "Новичок 🌱";
+    const titles = [
+      "Смертная (Sterbliche) 🌱", "Тень Аида (Schatten des Hades) 🌑", "Лесная Нимфа (Waldnymphe) 🍃",
+      "Вестница Гермеса (Botin des Hermes) 🪽", "Воительница Спарты (Kriegerin Spartas) 🛡️", "Пифия Аполлона (Pythia des Apollon) ☀️",
+      "Дочь Посейдона (Tochter des Poseidon) 🌊", "Охотница Артемиды (Jägerin der Artemis) 🏹", "Пламя Гестии (Flamme der Hestia) 🔥",
+      "Героиня Олимпа (Heldin des Olymps) 🏛️", "Менада Диониса (Maenade des Dionysos) 🍷", "Ярость Эринии (Zorn der Erynie) ⚔️",
+      "Мастерица Гефеста (Meisterin des Hephaistos) ⚒️", "Красота Афродиты (Schönheit der Aphrodite) 🕊️", "Мудрость Афины (Weisheit der Athene) 🦉",
+      "Титанида знаний (Titanin des Wissens) 🌍", "Наперсница Геры (Vertraute der Hera) 🦚", "Молния Персефоны (Blitz der Persephone) ⚡",
+      "Пряха Мойр (Spinnerin der Moiren) 🎡", "Богиня Слов (Göttin der Worte) 👑"
+    ];
+    return titles[currentLevel - 1] || titles[titles.length - 1];
   };
 
   const currentWord = liste[currentIndex];
@@ -105,16 +126,16 @@ export default function App() {
   };
 
   const checkAnswer = () => {
-    const userBeantwortung = input.toLowerCase().trim();
+    const userBeant = input.toLowerCase().trim();
     const loesung = currentWord.translation.toLowerCase().trim();
 
-    if (loesung.includes(userBeantwortung) && userBeantwortung !== "") {
-      setFeedback("Правильно! +10 XP 🦢✨");
+    if (loesung.includes(userBeant) && userBeant !== "") {
+      setFeedback("Достойна богов! +10 XP 🦢✨");
       setXp(prev => prev + 10);
       setTimeout(goToNextWord, 1200);
     } else {
-      setFeedback("Не совсем! -10 XP ❌");
-      setXp(prev => Math.max(0, prev - 10)); // Keine negativen Gesamt-XP
+      setFeedback("Гнев Зевса! -10 XP ❌");
+      setXp(prev => Math.max(0, prev - 10));
       setFehlerListe(prev => {
         if (!prev.find(f => f.word === currentWord.word)) {
           return [currentWord, ...prev];
@@ -125,123 +146,79 @@ export default function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: 600, margin: "auto", textAlign: "center" }}>
+    <div style={{ padding: "20px", fontFamily: 'Segoe UI, sans-serif', maxWidth: 600, margin: "auto", textAlign: "center", minHeight: "100vh", color: "#333" }}>
       
-      {/* ÜBERSCHRIFT GANZ OBEN */}
-      <h1 style={{ marginBottom: 20, fontSize: "2.2rem", color: "#222", fontWeight: "bold" }}>
-        Лебединый словарь 🦢
-      </h1>
+      <h1 style={{ marginBottom: 20, fontSize: "2.4rem", fontWeight: "bold" }}>Лебединый словарь 🦢</h1>
 
-      {/* GROSSER PROGRESS BALKEN */}
-      <div style={{ 
-        marginBottom: 40, 
-        background: "#ffffff", 
-        padding: "25px", 
-        borderRadius: "25px", 
-        boxShadow: "0 10px 30px rgba(0,0,0,0.08)", 
-        border: "2px solid #ffd700" 
-      }}>
+      {/* GROSSER LEVEL HEADER */}
+      <div style={{ marginBottom: 40, background: "white", padding: "25px", borderRadius: "25px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)", border: "2px solid #ffd700" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
-          <div style={{ textAlign: "left" }}>
-            <span style={{ display: "block", fontSize: "1.4rem", fontWeight: "900", color: "#333" }}>
-              Уровень {currentLevel} <span style={{fontSize: "1rem", color: "#999"}}>/ 20</span>
-            </span>
-          </div>
-          <span style={{ fontSize: "1.1rem", color: "#daa520", fontWeight: "bold", background: "#fffdf0", padding: "5px 15px", borderRadius: "10px" }}>
-            {getTitle()}
-          </span>
+          <span style={{ fontSize: "1.3rem", fontWeight: "bold" }}>Уровень {currentLevel}</span>
+          <span style={{ fontSize: "0.95rem", color: "#daa520", fontWeight: "bold", background: "#fffdf0", padding: "5px 12px", borderRadius: "10px" }}>{getTitle()}</span>
         </div>
-        
-        {/* Größerer Balken */}
-        <div style={{ 
-          width: "100%", 
-          height: "24px", 
-          background: "#eee", 
-          borderRadius: "12px", 
-          overflow: "hidden",
-          border: "1px solid #ddd"
-        }}>
-          <div style={{ 
-            width: `${xpInLevel}%`, 
-            height: "100%", 
-            background: "linear-gradient(90deg, #ffd700 0%, #ffa500 100%)", 
-            transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-            boxShadow: "0 0 15px rgba(255, 215, 0, 0.6)"
-          }}></div>
+        <div style={{ width: "100%", height: "24px", background: "#eee", borderRadius: "12px", overflow: "hidden", border: "1px solid #ddd" }}>
+          <div style={{ width: `${xpInLevel}%`, height: "100%", background: "linear-gradient(90deg, #ffd700, #ffa500)", transition: "width 0.5s ease-out", boxShadow: "0 0 10px rgba(255,215,0,0.5)" }}></div>
         </div>
-        
-        <p style={{ marginTop: "10px", fontSize: "0.9rem", color: "#777", fontWeight: "600" }}>
-          {xpInLevel} / 100 XP до следующей ступени
-        </p>
+        <p style={{ marginTop: "10px", fontSize: "0.8rem", color: "#999" }}>{xpInLevel} / 100 XP до следующей ступени</p>
       </div>
 
-      {/* HAUPT TRAINER BOX */}
-      <div style={{ background: "#ffffff", padding: 30, borderRadius: "25px", boxShadow: "0 8px 25px rgba(0,0,0,0.05)", border: "1px solid #eee" }}>
-        <p style={{ color: "#888", fontSize: "1rem", marginBottom: 10 }}>Как это по-немецки?</p>
-        <h2 style={{ fontSize: "2.8rem", color: "#222", margin: "10px 0" }}>{currentWord.word}</h2>
+      {/* QUIZ BOX */}
+      <div style={{ background: "white", padding: "30px", borderRadius: "25px", boxShadow: "0 5px 20px rgba(0,0,0,0.05)", border: "1px solid #f0f0f0" }}>
+        <p style={{ color: "#888", marginBottom: "5px" }}>Wie übersetzt man...</p>
+        <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: "#111" }}>{currentWord.word}</h2>
         
-        <div style={{ marginBottom: 25 }}>
+        <div style={{ minHeight: "60px" }}>
           {showHint ? (
-            <p style={{ color: "#666", fontStyle: "italic", backgroundColor: "#f9f9f9", padding: "15px", borderRadius: "15px", borderLeft: "5px solid #ffd700" }}>
-               {currentWord.hint}
-            </p>
+            <p style={{ color: "#666", fontStyle: "italic", background: "#fdfdf0", padding: "12px", borderRadius: "12px", borderLeft: "5px solid #ffd700" }}>{currentWord.hint}</p>
           ) : (
-            <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px solid #ccc", borderRadius: "10px", padding: "8px 16px", cursor: "pointer", color: "#999", fontSize: "0.9rem" }}>
-              Подсказка 💡
-            </button>
+            <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px solid #ccc", borderRadius: "8px", padding: "6px 16px", cursor: "pointer", color: "#aaa", fontSize: "0.85rem" }}>Озарение (Hinweis) 💡</button>
           )}
         </div>
 
-        <input
-          placeholder="Твой ответ..."
+        <input 
+          placeholder="Переведи словечко..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
-          style={{ width: "100%", padding: "18px", fontSize: "18px", borderRadius: "15px", border: "2px solid #efefef", outline: "none", boxSizing: "border-box", textAlign: "center" }}
+          style={{ width: "100%", padding: "18px", borderRadius: "15px", border: "2px solid #efefef", fontSize: "1.2rem", textAlign: "center", outline: "none", marginBottom: "20px", boxSizing: "border-box" }}
         />
 
-        <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
-          <button onClick={checkAnswer} style={{ flex: 2, padding: "18px", backgroundColor: "#222", color: "white", border: "none", borderRadius: "15px", fontSize: "18px", fontWeight: "bold", cursor: "pointer" }}>
-            Проверить
-          </button>
-          <button onClick={goToNextWord} style={{ flex: 1, padding: "18px", backgroundColor: "#eee", color: "#555", border: "none", borderRadius: "15px", fontSize: "16px", cursor: "pointer" }}>
-            ➜
-          </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={checkAnswer} style={{ flex: 2, padding: "18px", borderRadius: "15px", border: "none", background: "#222", color: "white", fontWeight: "bold", fontSize: "1.1rem", cursor: "pointer" }}>Проверить</button>
+          <button onClick={goToNextWord} style={{ flex: 1, padding: "18px", borderRadius: "15px", border: "none", background: "#eee", fontSize: "1.2rem", cursor: "pointer" }}>➜</button>
         </div>
 
         <div style={{ minHeight: "40px", marginTop: "20px" }}>
-           <p style={{ fontSize: "20px", fontWeight: "bold", color: feedback.includes("Правильно") ? "#27ae60" : "#e74c3c", margin: 0 }}>
-            {feedback}
-          </p>
+          <p style={{ fontSize: "1.2rem", fontWeight: "bold", color: feedback.includes("Достойна") ? "#27ae60" : "#e74c3c", margin: 0 }}>{feedback}</p>
         </div>
       </div>
-      
-      <p style={{ marginTop: 25, color: "#bbb", fontSize: "0.9rem" }}>
-        Карточка {currentIndex + 1} из {liste.length}
-      </p>
 
-      {/* FEHLERLISTE */}
+      {/* AUFKLAPPBARE FEHLERLISTE */}
       {fehlerListe.length > 0 && (
-        <div style={{ marginTop: 30, textAlign: "left", background: "#fff5f5", borderRadius: "20px", border: "1px solid #feb2b2", overflow: "hidden" }}>
+        <div style={{ marginTop: 40, textAlign: "left", background: "#fff5f5", borderRadius: "20px", border: "1px solid #feb2b2" }}>
           <details style={{ outline: "none" }}>
-            <summary style={{ cursor: "pointer", color: "#c53030", fontWeight: "bold", fontSize: "1.1rem", padding: "15px" }}>
-              Список ошибок ({fehlerListe.length}) — Посмотреть
+            <summary style={{ cursor: "pointer", color: "#c53030", fontWeight: "bold", padding: "15px", fontSize: "1.1rem" }}>
+              Твои испытания ({fehlerListe.length}) — Нажми
             </summary>
             <div style={{ padding: "0 15px 15px 15px" }}>
               <ul style={{ paddingLeft: "20px", fontSize: "1.1rem", color: "#444" }}>
                 {fehlerListe.map((f, i) => (
-                  <li key={i} style={{ marginBottom: "8px" }}>
-                    <strong>{f.word}</strong> — {f.translation}
-                  </li>
+                  <li key={i} style={{ marginBottom: "8px" }}><strong>{f.word}</strong> — {f.translation}</li>
                 ))}
               </ul>
-              <button onClick={() => setFehlerListe([])} style={{ background: "none", border: "none", color: "#c53030", fontSize: "0.85rem", cursor: "pointer", textDecoration: "underline" }}>
-                Очистить ошибки
-              </button>
+              <button onClick={() => setFehlerListe([])} style={{ background: "none", border: "none", color: "#c53030", fontSize: "0.85rem", cursor: "pointer", textDecoration: "underline", padding: 0 }}>Очистить свиток ошибок</button>
             </div>
           </details>
         </div>
       )}
+
+      {/* RESET BUTTON */}
+      <button 
+        onClick={() => { if(window.confirm("Alle Götter-Segen löschen und von vorne anfangen?")) { localStorage.clear(); window.location.reload(); } }} 
+        style={{ marginTop: "60px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+      >
+        Начать жизнь смертной заново (Reset Progress)
+      </button>
     </div>
   );
 }
