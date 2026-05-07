@@ -51,15 +51,15 @@ const vokabelnOriginal = [
   { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
   { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." },
   { "word": "bauen", "translation": "строить", "hint": "Ein Haus bauen oder ein Imperium." },
-  { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Zeit von Rittern und Burgen." },
-  { "word": "überall", "translation": "везде", "hint": "Ich habe dich überall gesucht." },
-  { "word": "Wache", "translation": "стража", "hint": "Die Wache steht vor dem Palast von Velaris." },
-  { "word": "gehören", "translation": "принадлежать", "hint": "Du gehörst zu mir." },
-  { "word": "holen", "translation": "взять / принести", "hint": "Kannst du mir bitte ein Glas Wasser holen?" },
+  { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Epoche war vom Jahr 500-1500." },
+  { "word": "überall", "translation": "везде", "hint": "Hannahs Freunde und Jake suchen Hannah überall." },
+  { "word": "Wache", "translation": "стража", "hint": "Die bewaffnete Wache steht regungslos." },
+  { "word": "gehören", "translation": "принадлежать", "hint": "Sofia gehört jetzt Nicolo." },
+  { "word": "holen", "translation": "взять / принести", "hint": "Du hast Persik für 4 Tage geholt." },
   { "word": "beschlossen", "translation": "решил / постановил", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
-  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Anscheinend hast du recht." },
-  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Ein Leben ohne Sorgen ist unbeschwert." },
-  { "word": "noch", "translation": "еще", "hint": "Ich liebe dich noch immer." }
+  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал планы и устроил хаос там, где обещал порядок." },
+  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
+  { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." }
 ];
 
 export default function App() {
@@ -160,7 +160,7 @@ export default function App() {
       </div>
 
       <div style={{ background: "white", padding: "30px", borderRadius: "25px", boxShadow: "0 5px 20px rgba(0,0,0,0.05)", border: "1px solid #f0f0f0" }}>
-        <p style={{ color: "#888", marginBottom: "5px" }}>Wie übersetzt man...</p>
+        <p style={{ color: "#888", marginBottom: "5px" }}>Как перевести?...</p>
         <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: "#111" }}>{currentWord.word}</h2>
         
         <div style={{ minHeight: "60px" }}>
@@ -172,7 +172,7 @@ export default function App() {
         </div>
 
         <input 
-          placeholder="Твой ответ..."
+          placeholder="Переведи словечко..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
@@ -211,7 +211,7 @@ export default function App() {
         onClick={() => { if(window.confirm("Alle Götter-Segen löschen und von vorne anfangen?")) { localStorage.clear(); window.location.reload(); } }} 
         style={{ marginTop: "60px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
       >
-        Начать жизнь смертной заново (Reset Progress)
+        Начать жизнь смертной заново
       </button>
     </div>
   );
