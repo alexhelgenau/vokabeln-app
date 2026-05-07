@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-// DEINE ORIGINAL-LISTE (58 Wörter) mit allen persönlichen Insider-Hints
+// DEINE LISTE (jetzt 70 Wörter) inkl. der 12 neuen Begriffe
 const vokabelnOriginal = [
-  { "word": "mächtig", "translation": "сильный", "hint": "Rhysand ist sehr mächtig." },
+  { "word": "mächtig", "translation": "сильный / властный / могучий", "hint": "Rhysand ist sehr mächtig." },
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
   { "word": "retten", "translation": "спасать", "hint": "Menschen retten, Dinge jagen, the family business." },
   { "word": "Angst", "translation": "страх", "hint": "Du hast Angst vor Schlangen🐍." },
@@ -24,7 +24,7 @@ const vokabelnOriginal = [
   { "word": "Witz", "translation": "шутка", "hint": "Synonym Anekdote." },
   { "word": "Besitz", "translation": "владение / собственность", "hint": "Sofia ist Nicolos Besitz seit ihrer Kindheit." },
   { "word": "früher", "translation": "раньше", "hint": "Früher hatte Russland einen Tzar, jetzt nicht mehr." },
-  { "word": "irgendetwas", "translation": "что-нибудь", "hint": " Irgendetwas, ich weiß nicht was." },
+  { "word": "irgendetwas", "translation": "что-нибудь / что-то", "hint": " Irgendetwas, ich weiß nicht was." },
   { "word": "schreien", "translation": "кричать", "hint": "Du schreist Persik an, weil er Issy anschreit." },
   { "word": "aussehen", "translation": "выглядеть", "hint": "Die Kleid von Daphne sieht wunderschön aus." },
   { "word": "erklären", "translation": "объяснять", "hint": "Ich erkläre dir den Protestantismus." },
@@ -33,7 +33,7 @@ const vokabelnOriginal = [
   { "word": "obwohl", "translation": "хотя", "hint": "Sie kämpft, obwohl sie schwach ist." },
   { "word": "hinter", "translation": "позади", "hint": "Hermes steht hinter dir." },
   { "word": "gefährlich", "translation": "опасно", "hint": "Sonnenschein ist gefährlich für Vampire." },
-  { "word": "tief", "translation": "глубоко", "hint": "Salvatores Stimme ist sehr tief." },
+  { "word": "tief", "translation": "глубоко / низкий", "hint": "Salvatores Stimme ist sehr tief." },
   { "word": "nun", "translation": "теперь / сейчас", "hint": "Synonym jetzt." },
   { "word": "unantastbar", "translation": "неприкосновенный", "hint": "Mafiabosse sind unantastbar." },
   { "word": "irrsinnig", "translation": "безумный", "hint": "Er ist verrückt! Er ist irrsinnig!" },
@@ -42,15 +42,15 @@ const vokabelnOriginal = [
   { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
   { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
-  { "word": "beherrschen", "translation": "управлять / владеть", "hint": "Sie beherrschen den Norden von Palermo." },
+  { "word": "beherrschen", "translation": "управлять / владеть / контролировать", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
   { "word": "müssen", "translation": "должен / обязана", "hint": "Ich muss mehr russische Klassik lesen! 😭" },
-  { "word": "während", "translation": "во время", "hint": "Du machst dir Essen, während wir reden." },
+  { "word": "während", "translation": "во время / в то время как", "hint": "Du machst dir Essen, während wir reden." },
   { "word": "wichtig", "translation": "важно", "hint": "Du bist mir sehr wichtig 🥺." },
   { "word": "richtig", "translation": "правильно", "hint": "Есть falsch, а есть...?'" },
   { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
   { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." },
-  { "word": "bauen", "translation": "строить", "hint": "Ein Haus bauen oder ein Imperium." },
+  { "word": "bauen", "translation": "строить", "hint": "Wir bauen ein Haus am Meer." },
   { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Epoche war vom Jahr 500-1500." },
   { "word": "überall", "translation": "везде", "hint": "Hannahs Freunde und Jake suchen Hannah überall." },
   { "word": "Wache", "translation": "стража", "hint": "Die bewaffnete Wache steht regungslos." },
@@ -59,7 +59,19 @@ const vokabelnOriginal = [
   { "word": "beschlossen", "translation": "решил / постановил", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
   { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал планы и устроил хаос там, где обещал порядок." },
   { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
-  { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." }
+  { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." },
+  { "word": "langweilig", "translation": "скучно", "hint": "Сериал Тьма был langweilig 🥱" },
+  { "word": "nur", "translation": "только", "hint": "Du gehörst mir, Violet. NUR wenn du mir gehörst." },
+  { "word": "beobachten", "translation": "наблюдать", "hint": "Nicolo beobachtet Sofia, seit sie ein Kind war." },
+  { "word": "riesig", "translation": "огромный", "hint": "Der Riese Gargantua ist riesig!." },
+  { "word": "schenken", "translation": "дарить", "hint": "Was hast du Anya zum Geburstag geschenkt?" },
+  { "word": "schreiten", "translation": "шагать / шествовать", "hint": "Durch den Saal schreiten." },
+  { "word": "später", "translation": "позже / потом", "hint": "Nicht jetzt, sondern später." },
+  { "word": "verteidigen", "translation": "защищать", "hint": "Edward verteidigt Bella vor einem Auto." },
+  { "word": "hassen", "translation": "ненавидеть", "hint": "Есть lieben, а есть...?" },
+  { "word": "faszinieren", "translation": "очаровывать", "hint": "Du bist fasziniert von Kai Parker 😍" },
+  { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale und Crowley sind ein ungewöhnliches Paar 🤨" },
+  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau und Berlin liegt Minsk." }
 ];
 
 export default function App() {
@@ -127,7 +139,10 @@ export default function App() {
     const userBeant = input.toLowerCase().trim();
     const loesung = currentWord.translation.toLowerCase().trim();
 
-    if (loesung.includes(userBeant) && userBeant !== "") {
+    // Erkennt Antworten auch wenn mehrere Optionen mit / getrennt sind
+    const loesungsTeile = loesung.split('/').map(s => s.trim());
+
+    if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") {
       setFeedback("Достойна богов! +10 XP 🦢✨");
       setXp(prev => prev + 10);
       setTimeout(goToNextWord, 1200);
@@ -208,7 +223,7 @@ export default function App() {
       )}
 
       <button 
-        onClick={() => { if(window.confirm("Alle Götter-Segen löschen und von vorne anfangen?")) { localStorage.clear(); window.location.reload(); } }} 
+        onClick={() => { if(window.confirm("Стереть все божественные благословения и начать с нуля?")) { localStorage.clear(); window.location.reload(); } }} 
         style={{ marginTop: "60px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
       >
         Начать жизнь смертной заново
