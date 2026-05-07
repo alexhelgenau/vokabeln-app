@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// VOLLSTÄNDIGE LISTE (58 Wörter)
+// DEINE ORIGINAL-LISTE (58 Wörter) mit allen persönlichen Insider-Hints
 const vokabelnOriginal = [
   { "word": "mächtig", "translation": "сильный", "hint": "Rhysand ist sehr mächtig." },
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
@@ -8,57 +8,57 @@ const vokabelnOriginal = [
   { "word": "Angst", "translation": "страх", "hint": "Du hast Angst vor Schlangen🐍." },
   { "word": "Entscheidung", "translation": "решение", "hint": "Elenas Entscheidung zwischen Stefan und Damon." },
   { "word": "deshalb", "translation": "поэтому", "hint": "Warum machst du das?! Deshalb!" },
-  { "word": "übel", "translation": "плохо / тошно", "hint": "Wenn man zu viel salziges Wasser trinkt..." },
-  { "word": "einfach", "translation": "просто", "hint": "Nicht schwer (schwer / einfach)." },
+  { "word": "übel", "translation": "плохо / тошно", "hint": "Если выпьешь слишком много соленой воды, тебе станет...?" },
+  { "word": "einfach", "translation": "просто", "hint": "Есть schwer, а есть...?" },
   { "word": "klingen", "translation": "звучать", "hint": "Die Musik klingt sehr schön." },
-  { "word": "offensichtlich", "translation": "очевидно", "hint": "Es ist offensichtlich, dass wir heiraten werden😏." },
-  { "word": "Fest", "translation": "праздник / бал", "hint": "Ein großes Ereignis (wie der 09.05.)." },
+  { "word": "offensichtlich", "translation": "очевидно", "hint": "Es ist offentsichtlich, dass wir heiraten werden😏." },
+  { "word": "Fest", "translation": "праздник / бал", "hint": "Der 09.05. ist ein großes Fest in Russland." },
   { "word": "Festung", "translation": "крепость", "hint": "Basgiath ist eine große Festung." },
-  { "word": "Atem", "translation": "дыхание", "hint": "H2O: Rikki, Cleo und Emma können unter Wasser atmen." },
-  { "word": "Bewegung", "translation": "движение", "hint": "Sport ist viel Bewegung." },
-  { "word": "schlafen", "translation": "спать", "hint": "In der Nacht im Bett 😴." },
-  { "word": "Antwort", "translation": "ответ", "hint": "Gegenteil von Frage❓." },
-  { "word": "Anfang", "translation": "начало", "hint": "Gegenteil von Ende." },
+  { "word": "Atem", "translation": "дыхание", "hint": "Rikki, Cleo und Emma können unter Wasser atmen." },
+  { "word": "Bewegung", "translation": "движение", "hint": "Der Körper bewegt sich viel, wenn man Sport macht." },
+  { "word": "schlafen", "translation": "спать", "hint": "Ich schlafe normalerweise 9 Stunden 😴." },
+  { "word": "Antwort", "translation": "ответ", "hint": "Есть Frage❓, а есть...?" },
+  { "word": "Anfang", "translation": "начало", "hint": "Есть Ende, а есть...?" },
   { "word": "quälen", "translation": "мучить", "hint": "Klaus liebt es, andere zu quälen." },
   { "word": "erlangen", "translation": "получать / достигать", "hint": "Feyre muss ihre Kräfte erlangen." },
   { "word": "Witz", "translation": "шутка", "hint": "Synonym Anekdote." },
-  { "word": "Besitz", "translation": "владение / собственность", "hint": "Sofia ist Nicolos Besitz." },
-  { "word": "früher", "translation": "раньше", "hint": "Früher hatte Russland einen Tzar." },
-  { "word": "irgendetwas", "translation": "что-нибудь", "hint": "Irgendetwas, ich weiß nicht was." },
-  { "word": "schreien", "translation": "кричать", "hint": "Sehr laut rufen (Persik vs Issy)." },
-  { "word": "aussehen", "translation": "выглядеть", "hint": "Das Kleid von Daphne sieht wunderschön aus." },
+  { "word": "Besitz", "translation": "владение / собственность", "hint": "Sofia ist Nicolos Besitz seit ihrer Kindheit." },
+  { "word": "früher", "translation": "раньше", "hint": "Früher hatte Russland einen Tzar, jetzt nicht mehr." },
+  { "word": "irgendetwas", "translation": "что-нибудь", "hint": " Irgendetwas, ich weiß nicht was." },
+  { "word": "schreien", "translation": "кричать", "hint": "Du schreist Persik an, weil er Issy anschreit." },
+  { "word": "aussehen", "translation": "выглядеть", "hint": "Die Kleid von Daphne sieht wunderschön aus." },
   { "word": "erklären", "translation": "объяснять", "hint": "Ich erkläre dir den Protestantismus." },
   { "word": "irgendwelche", "translation": "какие-нибудь", "hint": "Irgendwelche Leute." },
-  { "word": "zweifellos", "translation": "несомненно", "hint": "Ganz sicher (ohne jeden Zweifel)." },
+  { "word": "zweifellos", "translation": "несомненно", "hint": "Ohne jeden Zweifel (ganz sicher)." },
   { "word": "obwohl", "translation": "хотя", "hint": "Sie kämpft, obwohl sie schwach ist." },
   { "word": "hinter", "translation": "позади", "hint": "Hermes steht hinter dir." },
   { "word": "gefährlich", "translation": "опасно", "hint": "Sonnenschein ist gefährlich für Vampire." },
   { "word": "tief", "translation": "глубоко", "hint": "Salvatores Stimme ist sehr tief." },
   { "word": "nun", "translation": "теперь / сейчас", "hint": "Synonym jetzt." },
   { "word": "unantastbar", "translation": "неприкосновенный", "hint": "Mafiabosse sind unantastbar." },
-  { "word": "irrsinnig", "translation": "безумный", "hint": "Verrückt / wahnsinnig." },
+  { "word": "irrsinnig", "translation": "безумный", "hint": "Er ist verrückt! Er ist irrsinnig!" },
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
-  { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut." },
-  { "word": "plötzlich", "translation": "внезапно", "hint": "Auf einmal (l'amour de ma vie gefunden)." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ruhig und chill 😊." },
+  { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
+  { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
-  { "word": "müssen", "translation": "должен / обязана", "hint": "Ich muss mehr Klassik lesen! 😭" },
-  { "word": "während", "translation": "во время", "hint": "Du machst Essen, während wir reden." },
+  { "word": "müssen", "translation": "должен / обязана", "hint": "Ich muss mehr russische Klassik lesen! 😭" },
+  { "word": "während", "translation": "во время", "hint": "Du machst dir Essen, während wir reden." },
   { "word": "wichtig", "translation": "важно", "hint": "Du bist mir sehr wichtig 🥺." },
-  { "word": "richtig", "translation": "правильно", "hint": "Gegenteil von falsch." },
-  { "word": "sondern", "translation": "а / но", "hint": "Nicht Dean, sondern Sam." },
+  { "word": "richtig", "translation": "правильно", "hint": "Есть falsch, а есть...?'" },
+  { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
   { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." },
-  { "word": "bauen", "translation": "строить", "hint": "Ein Haus oder ein Imperium bauen." },
-  { "word": "Mittelalter", "translation": "средневековье", "hint": "Zeit von Rittern und Burgen." },
+  { "word": "bauen", "translation": "строить", "hint": "Ein Haus bauen oder ein Imperium." },
+  { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Zeit von Rittern und Burgen." },
   { "word": "überall", "translation": "везде", "hint": "Ich habe dich überall gesucht." },
-  { "word": "Wache", "translation": "стража", "hint": "Steht vor dem Palast von Velaris." },
+  { "word": "Wache", "translation": "стража", "hint": "Die Wache steht vor dem Palast von Velaris." },
   { "word": "gehören", "translation": "принадлежать", "hint": "Du gehörst zu mir." },
-  { "word": "holen", "translation": "взять / принести", "hint": "Ein Glas Wasser holen." },
-  { "word": "beschlossen", "translation": "решил / постановил", "hint": "Eine Entscheidung getroffen." },
-  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Es sieht so aus, als ob." },
-  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Ein Leben ohne Sorgen." },
+  { "word": "holen", "translation": "взять / принести", "hint": "Kannst du mir bitte ein Glas Wasser holen?" },
+  { "word": "beschlossen", "translation": "решил / постановил", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
+  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Anscheinend hast du recht." },
+  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Ein Leben ohne Sorgen ist unbeschwert." },
   { "word": "noch", "translation": "еще", "hint": "Ich liebe dich noch immer." }
 ];
 
@@ -69,7 +69,6 @@ export default function App() {
   const [feedback, setFeedback] = useState("");
   const [showHint, setShowHint] = useState(false);
 
-  // Speicher-Logik (LocalStorage)
   const [xp, setXp] = useState(() => {
     const saved = localStorage.getItem('lebedi_xp');
     return saved ? parseInt(saved) : 0;
@@ -96,7 +95,6 @@ export default function App() {
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const xpInLevel = xp % xpPerLevel;
 
-  // Weibliche Titel der griechischen Mythologie
   const getTitle = () => {
     const titles = [
       "Смертная (Sterbliche) 🌱", "Тень Аида (Schatten des Hades) 🌑", "Лесная Нимфа (Waldnymphe) 🍃",
@@ -150,7 +148,6 @@ export default function App() {
       
       <h1 style={{ marginBottom: 20, fontSize: "2.4rem", fontWeight: "bold" }}>Лебединый словарь 🦢</h1>
 
-      {/* GROSSER LEVEL HEADER */}
       <div style={{ marginBottom: 40, background: "white", padding: "25px", borderRadius: "25px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)", border: "2px solid #ffd700" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
           <span style={{ fontSize: "1.3rem", fontWeight: "bold" }}>Уровень {currentLevel}</span>
@@ -162,7 +159,6 @@ export default function App() {
         <p style={{ marginTop: "10px", fontSize: "0.8rem", color: "#999" }}>{xpInLevel} / 100 XP до следующей ступени</p>
       </div>
 
-      {/* QUIZ BOX */}
       <div style={{ background: "white", padding: "30px", borderRadius: "25px", boxShadow: "0 5px 20px rgba(0,0,0,0.05)", border: "1px solid #f0f0f0" }}>
         <p style={{ color: "#888", marginBottom: "5px" }}>Wie übersetzt man...</p>
         <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: "#111" }}>{currentWord.word}</h2>
@@ -176,7 +172,7 @@ export default function App() {
         </div>
 
         <input 
-          placeholder="Переведи словечко..."
+          placeholder="Твой ответ..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
@@ -193,7 +189,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* AUFKLAPPBARE FEHLERLISTE */}
       {fehlerListe.length > 0 && (
         <div style={{ marginTop: 40, textAlign: "left", background: "#fff5f5", borderRadius: "20px", border: "1px solid #feb2b2" }}>
           <details style={{ outline: "none" }}>
@@ -212,7 +207,6 @@ export default function App() {
         </div>
       )}
 
-      {/* RESET BUTTON */}
       <button 
         onClick={() => { if(window.confirm("Alle Götter-Segen löschen und von vorne anfangen?")) { localStorage.clear(); window.location.reload(); } }} 
         style={{ marginTop: "60px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
