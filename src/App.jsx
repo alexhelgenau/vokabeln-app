@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// DEINE LISTE (70 Wörter)
 const vokabelnOriginal = [
   { "word": "mächtig", "translation": "сильный / властный / могучий", "hint": "Rhysand ist sehr mächtig." },
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
@@ -53,7 +52,7 @@ const vokabelnOriginal = [
   { "word": "bauen", "translation": "строить", "hint": "Wir bauen ein Haus am Meer." },
   { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Epoche war vom Jahr 500-1500." },
   { "word": "überall", "translation": "везде", "hint": "Hannahs Freunde und Jake suchen Hannah überall." },
-  { "word": "Wache", "translation": "стража", "hint": "Die bewaffnete Wache steht regungslos." },
+  { "word": "Wache", "translation": "стража / страж", "hint": "Die bewaffnete Wache steht regungslos." },
   { "word": "gehören", "translation": "принадлежать", "hint": "Sofia gehört jetzt Nicolo." },
   { "word": "holen", "translation": "взять / принести", "hint": "Du hast Persik für 4 Tage geholt." },
   { "word": "beschlossen", "translation": "решил / постановил / решено", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
@@ -71,10 +70,31 @@ const vokabelnOriginal = [
   { "word": "hassen", "translation": "ненавидеть", "hint": "Есть lieben, а есть...?" },
   { "word": "faszinieren", "translation": "очаровывать", "hint": "Du bist fasziniert von Kai Parker 😍" },
   { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale und Crowley sind ein ungewöhnliches Paar 🤨" },
-  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau und Berlin liegt Minsk." }
+  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau und Berlin liegt Minsk." },
+  { "word": "Drohung", "translation": "угроза", "hint": "„Если ты решишь меня подставить, я вырву твоё сердце и засуну тебе в глотку.“ - как такое называется?" },
+  { "word": "Anruf", "translation": "звонок", "hint": " „Do you like scary movies?“ 📱👻" },
+  { "word": "etwas", "translation": "что-то / немного", "hint": "Etwas hier, etwas da 🤏" },
+  { "word": "sanft", "translation": "нежный / мягкий", "hint": "Есть hart, а есть...?" },
+  { "word": "fügsam", "translation": "покорный / послушный", "hint": "Sofia muss fügsam sein." },
+  { "word": "wollen", "translation": "хотеть", "hint": "Ich will dich heiraten." },
+  { "word": "schlagen", "translation": "бить / ударять", "hint": "Im Boxen schlägt man andere." },
+  { "word": "leise", "translation": "тихо", "hint": "In der Bibliothek muss man leise sein 🤫" },
+  { "word": "durcheinanderrennen", "translation": "бегать вперемешку / суетиться", "hint": "🏃🏃🏃😵‍💫😵‍💫😵‍💫" },
+  { "word": "Erfolg", "translation": "успех", "hint": "Erfolg im Sport haben 🏅🏆" },
+  { "word": "bestrafen", "translation": "наказывать / карать", "hint": "Verbrechen und Strafe von Fyodor Dostoyevsky." },
+  { "word": "Nachtisch", "translation": "десерт / сладкое", "hint": "Marzipan ist ein guter Nachtisch 😋" },
+  { "word": "klar", "translation": "ясный / понятный / конечно", "hint": "Alles klar, kein Problem!" },
+  { "word": "verbergen", "translation": "скрывать / прятать", "hint": "Synonym verstecken 🙈" },
+  { "word": "höflich", "translation": "вежливый", "hint": "Aristokraten müssen höflich sein." },
+  { "word": "jung", "translation": "молодой", "hint": "Lika ist die Jüngste in der Familie." },
+  { "word": "natürlich", "translation": "конечно / естественно", "hint": "Kannst du mir helfen? Natürlich!" },
+  { "word": "bleiben", "translation": "оставаться", "hint": "Wir bleiben in Russland für 1 Jahr, danach gehen wir nach Deutschland." },
+  { "word": "gegen", "translation": "против", "hint": "Power Rangers gegen Lord Zedd 👊" },
+  { "word": "böse", "translation": "злой / плохой / шестокий", "hint": "Kai Parker ist vielleicht böse, aber heiß 😉" }
 ];
 
 export default function App() {
+  const [isBookOpen, setIsBookOpen] = useState(false);
   const [liste, setListe] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [input, setInput] = useState("");
@@ -92,12 +112,10 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Level-Berechnung
   const xpPerLevel = 100;
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const xpInLevel = xp % xpPerLevel;
 
-  // Animation Trigger bei Level-Up
   useEffect(() => {
     const lastXpString = localStorage.getItem('lebedi_xp_old');
     const lastXp = lastXpString ? parseInt(lastXpString) : xp;
@@ -105,7 +123,7 @@ export default function App() {
     
     if (currentLevel > lastLevel) {
       setShowLevelAnim(true);
-      setTimeout(() => setShowLevelAnim(false), 3000); // 3 Sekunden Dauer
+      setTimeout(() => setShowLevelAnim(false), 3000);
     }
     localStorage.setItem('lebedi_xp_old', xp.toString());
   }, [currentLevel, xp]);
@@ -124,13 +142,11 @@ export default function App() {
 
   const getTitle = () => {
     const titles = [
-      "Смертная (Sterbliche) 🌱", "Лесная Нимфа (Waldnymphe) 🍃",
-      "Вестница Гермеса (Botin des Hermes) 🪽", "Воительница Спарты (Kriegerin Spartas) 🛡️", "Пифия Аполлона (Pythia des Apollon) ☀️",
-      "Дочь Посейдона (Tochter des Poseidon) 🌊", "Охотница Артемиды (Jägerin der Artemis) 🏹", "Пламя Гестии (Flamme der Hestia) 🔥",
-      "Героиня Олимпа (Heldin des Olymps) 🏛️", "Менада Диониса (Maenade des Dionysos) 🍷", "Ярость Эринии (Zorn der Erynie) ⚔️",
-      "Мастерица Гефеста (Meisterin des Hephaistos) ⚒️", "Красота Афродиты (Schönheit der Aphrodite) 🕊️", "Мудрость Афины (Weisheit der Athene) 🦉",
-      "Титанида знаний (Titanin des Wissens) 🌍", "Наперсница Геры (Vertraute der Hera) 🦚", "Молния Персефоны (Blitz der Persephone) ⚡",
-      "Пряха Мойр (Spinnerin der Moiren) 🎡", "Богиня Слов (Göttin der Worte) 👑"
+      "Смертная 🌱", "Лесная Нимфа 🍃", "Вестница Гермеса 🪽", "Воительница Спарты 🛡️", 
+      "Пифия Аполлона ☀️", "Дочь Посейдона 🌊", "Охотница Артемиды 🏹", "Пламя Гестии 🔥",
+      "Героиня Олимпа 🏛️", "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️",
+      "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры 🦚",
+      "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"
     ];
     return titles[currentLevel - 1] || titles[titles.length - 1];
   };
@@ -156,11 +172,11 @@ export default function App() {
     const loesungsTeile = loesung.split('/').map(s => s.trim());
 
     if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") {
-      setFeedback("Достойна богов! +10 XP 🦢✨");
+      setFeedback("Достойна богов! +10 XP 🌿");
       setXp(prev => prev + 10);
       setTimeout(goToNextWord, 1200);
     } else {
-      setFeedback("Гнев Зевса! -10 XP ❌");
+      setFeedback("Гнев Зевса! -10 XP ⚡");
       setXp(prev => Math.max(0, prev - 10));
       setFehlerListe(prev => {
         if (!prev.find(f => f.word === currentWord.word)) {
@@ -171,117 +187,194 @@ export default function App() {
     }
   };
 
+  // VINTAGE STYLES
+  const vintageTheme = {
+    bg: "#f4f1ea",
+    paper: "#fffcf5",
+    ink: "#4a3f35",
+    accent: "#8c7e6d",
+    leafColor: "rgba(139, 157, 131, 0.15)",
+    serif: "'Georgia', 'Times New Roman', serif"
+  };
+
   return (
-    <div style={{ padding: "20px", fontFamily: 'Segoe UI, sans-serif', maxWidth: 600, margin: "auto", textAlign: "center", minHeight: "100vh", color: "#333" }}>
+    <div style={{ 
+      minHeight: "100vh", 
+      backgroundColor: vintageTheme.bg, 
+      display: "flex", 
+      justifyContent: "center", 
+      alignItems: "center",
+      fontFamily: vintageTheme.serif,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c0 10-10 20-10 20s10 0 20-10 0-20 0-20zM70 60c0 10-10 20-10 20s10 0 20-10 0-20 0-20z' fill='${vintageTheme.leafColor}' /%3E%3C/svg%3E")`,
+      padding: "20px"
+    }}>
       
-      {/* CSS für die globale Explosion */}
       <style>{`
+        @keyframes openBook {
+          from { transform: rotateY(0deg); }
+          to { transform: rotateY(-180deg); }
+        }
         @keyframes global-particle {
           0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
           100% { transform: translate(var(--tw), var(--th)) scale(0) rotate(360deg); opacity: 0; }
         }
-        .emoji-particle {
-          position: fixed; 
-          left: 50%; 
-          top: 50%; 
-          pointer-events: none;
-          z-index: 9999;
-          animation: global-particle 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
+        .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
+        input::placeholder { color: #b5a48b; font-style: italic; opacity: 0.7; }
       `}</style>
 
-      {/* Explosions-Container (Ganzbildschirm) */}
+      {/* LEVEL ANIMATION */}
       {showLevelAnim && (
         <>
           {[...Array(60)].map((_, i) => {
-            const emojis = ["⚡", "✨", "👑", "🦢", "🏛️", "🔥", "🕊️", "🏹", "🦉"];
-            const angle = (i / 60) * Math.PI * 2 + (Math.random() * 0.5);
-            // Zufällige Weite über den ganzen Bildschirm
-            const dist = 200 + Math.random() * 800; 
+            const emojis = ["🌿", "📜", "🕊️", "🏛️", "✨"];
+            const angle = (i / 60) * Math.PI * 2;
+            const dist = 200 + Math.random() * 600; 
             return (
               <div key={i} className="emoji-particle" style={{
                 "--tw": `${Math.cos(angle) * dist}px`,
                 "--th": `${Math.sin(angle) * dist}px`,
-                fontSize: `${1 + Math.random() * 1.5}rem`
-              }}>
-                {emojis[i % emojis.length]}
-              </div>
+                fontSize: "1.5rem"
+              }}>{emojis[i % emojis.length]}</div>
             );
           })}
         </>
       )}
 
-      <h1 style={{ marginBottom: 20, fontSize: "2.4rem", fontWeight: "bold" }}>Лебединый словарь 🦢</h1>
-
-      <div style={{ marginBottom: 40, background: "white", padding: "25px", borderRadius: "25px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)", border: "2px solid #ffd700" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
-          <span style={{ fontSize: "1.3rem", fontWeight: "bold" }}>Уровень {currentLevel}</span>
-          <span style={{ fontSize: "0.95rem", color: "#daa520", fontWeight: "bold", background: "#fffdf0", padding: "5px 12px", borderRadius: "10px" }}>{getTitle()}</span>
+      {!isBookOpen ? (
+        /* BUCH COVER */
+        <div 
+          onClick={() => setIsBookOpen(true)}
+          style={{
+            width: "300px",
+            height: "450px",
+            background: "#5d3a1a",
+            borderRadius: "5px 20px 20px 5px",
+            boxShadow: "15px 15px 40px rgba(0,0,0,0.4), inset 5px 0 10px rgba(0,0,0,0.5)",
+            cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderLeft: "10px solid #3e2711",
+            transition: "transform 0.5s ease",
+            transform: "perspective(1000px) rotateY(-5deg)"
+          }}
+        >
+          <div style={{ border: "2px solid #c5a059", padding: "20px", margin: "10px", textAlign: "center", height: "80%", width: "70%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h1 style={{ color: "#c5a059", fontSize: "1.8rem", margin: 0, textTransform: "uppercase", letterSpacing: "2px" }}>
+              Лебединый словарь 🦢
+            </h1>
+            <div style={{ height: "2px", background: "#c5a059", width: "50px", margin: "20px auto" }}></div>
+            <p style={{ color: "#c5a059", fontSize: "0.8rem", fontStyle: "italic" }}>Нажми, чтобы открыть</p>
+          </div>
         </div>
-        <div style={{ width: "100%", height: "24px", background: "#eee", borderRadius: "12px", overflow: "hidden", border: "1px solid #ddd" }}>
-          <div style={{ width: `${xpInLevel}%`, height: "100%", background: "linear-gradient(90deg, #ffd700, #ffa500)", transition: "width 0.5s ease-out", boxShadow: "0 0 10px rgba(255,215,0,0.5)" }}></div>
-        </div>
-        <p style={{ marginTop: "10px", fontSize: "0.8rem", color: "#999" }}>{xpInLevel} / 100 XP до следующей ступени</p>
-      </div>
+      ) : (
+        /* OFFENES BUCH / INTERFACE */
+        <div style={{
+          width: "100%",
+          maxWidth: "600px",
+          background: vintageTheme.paper,
+          minHeight: "500px",
+          borderRadius: "2px",
+          boxShadow: "0 0 20px rgba(0,0,0,0.1), 5px 5px 2px #d1ccc0",
+          border: "1px solid #d4cbb3",
+          padding: "40px 30px",
+          position: "relative",
+          backgroundImage: "linear-gradient(to right, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.05) 100%)"
+        }}>
+          {/* ESELSOHR OPTIK */}
+          <div style={{ position: "absolute", top: 0, right: 0, width: "40px", height: "40px", background: `linear-gradient(225deg, ${vintageTheme.bg} 50%, #d4cbb3 50%)` }}></div>
 
-      <div style={{ background: "white", padding: "30px", borderRadius: "25px", boxShadow: "0 5px 20px rgba(0,0,0,0.05)", border: "1px solid #f0f0f0" }}>
-        <p style={{ color: "#888", marginBottom: "5px" }}>Как перевести?...</p>
-        <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: "#111" }}>{currentWord.word}</h2>
-        
-        <div style={{ minHeight: "60px" }}>
-          {showHint ? (
-            <p style={{ color: "#666", fontStyle: "italic", background: "#fdfdf0", padding: "12px", borderRadius: "12px", borderLeft: "5px solid #ffd700" }}>{currentWord.hint}</p>
-          ) : (
-            <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px solid #ccc", borderRadius: "8px", padding: "6px 16px", cursor: "pointer", color: "#aaa", fontSize: "0.85rem" }}>Озарение (Hinweis) 💡</button>
-          )}
-        </div>
-
-        <input 
-          placeholder="Переведи словечко..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
-          style={{ width: "100%", padding: "18px", borderRadius: "15px", border: "2px solid #efefef", fontSize: "1.2rem", textAlign: "center", outline: "none", marginBottom: "20px", boxSizing: "border-box" }}
-        />
-
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button onClick={checkAnswer} style={{ flex: 2, padding: "18px", borderRadius: "15px", border: "none", background: "#222", color: "white", fontWeight: "bold", fontSize: "1.1rem", cursor: "pointer" }}>Проверить</button>
-          <button onClick={goToNextWord} style={{ flex: 1, padding: "18px", borderRadius: "15px", border: "none", background: "#eee", fontSize: "1.2rem", cursor: "pointer" }}>➜</button>
-        </div>
-
-        <div style={{ minHeight: "40px", marginTop: "20px" }}>
-          <p style={{ fontSize: "1.2rem", fontWeight: "bold", color: feedback.includes("Достойна") ? "#27ae60" : "#e74c3c", margin: 0 }}>{feedback}</p>
-        </div>
-      </div>
-
-      {fehlerListe.length > 0 && (
-        <div style={{ marginTop: 40, textAlign: "left", background: "#fff5f5", borderRadius: "20px", border: "1px solid #feb2b2" }}>
-          <details style={{ outline: "none" }}>
-            <summary style={{ cursor: "pointer", color: "#c53030", fontWeight: "bold", padding: "15px", fontSize: "1.1rem" }}>
-              Твои испытания ({fehlerListe.length}) — Нажми
-            </summary>
-            <div style={{ padding: "0 15px 15px 15px" }}>
-              <ul style={{ paddingLeft: "20px", fontSize: "1.1rem", color: "#444" }}>
-                {fehlerListe.map((f, i) => (
-                  <li key={i} style={{ marginBottom: "8px" }}><strong>{f.word}</strong> — {f.translation}</li>
-                ))}
-              </ul>
-              <button onClick={() => setFehlerListe([])} style={{ background: "none", border: "none", color: "#c53030", fontSize: "0.85rem", cursor: "pointer", textDecoration: "underline", padding: 0 }}>Очистить свиток ошибок</button>
+          {/* HEADER / LEVEL */}
+          <div style={{ marginBottom: "30px", borderBottom: "1px solid #d4cbb3", paddingBottom: "15px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
+              <span style={{ fontSize: "1.2rem", fontWeight: "bold", color: vintageTheme.ink }}>Level {currentLevel}</span>
+              <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{getTitle()}</span>
             </div>
-          </details>
+            <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px" }}>
+              <div style={{ width: `${xpInLevel}%`, height: "100%", background: vintageTheme.accent, borderRadius: "4px", transition: "width 0.5s" }}></div>
+            </div>
+          </div>
+
+          {/* HAUPTINHALT */}
+          <div style={{ textAlign: "center" }}>
+            <p style={{ color: vintageTheme.accent, fontSize: "0.9rem", fontStyle: "italic" }}>Как перевести?...</p>
+            <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: vintageTheme.ink, letterSpacing: "-1px" }}>{currentWord.word}</h2>
+            
+            <div style={{ minHeight: "80px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {showHint ? (
+                <p style={{ color: vintageTheme.ink, fontStyle: "italic", padding: "10px", borderLeft: `2px solid ${vintageTheme.accent}`, background: "rgba(0,0,0,0.02)" }}>
+                  {currentWord.hint}
+                </p>
+              ) : (
+                <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px dashed #b5a48b", color: "#b5a48b", padding: "5px 15px", cursor: "pointer", fontSize: "0.8rem" }}>
+                  Озарение 💡
+                </button>
+              )}
+            </div>
+
+            <input 
+              placeholder="Переведи..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+              style={{ 
+                width: "80%", 
+                padding: "12px", 
+                border: "none", 
+                borderBottom: `1px solid ${vintageTheme.ink}`, 
+                background: "transparent", 
+                fontSize: "1.4rem", 
+                textAlign: "center", 
+                outline: "none",
+                marginBottom: "30px",
+                color: vintageTheme.ink,
+                fontFamily: vintageTheme.serif
+              }}
+            />
+
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button onClick={checkAnswer} style={{ background: vintageTheme.ink, color: "#fff", border: "none", padding: "12px 30px", cursor: "pointer", fontSize: "1rem", textTransform: "uppercase", letterSpacing: "1px" }}>
+                Проверить
+              </button>
+              <button onClick={goToNextWord} style={{ background: "none", border: `1px solid ${vintageTheme.ink}`, color: vintageTheme.ink, padding: "12px 20px", cursor: "pointer" }}>
+                ➜
+              </button>
+            </div>
+
+            <p style={{ marginTop: "20px", fontWeight: "bold", fontStyle: "italic", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>
+              {feedback}
+            </p>
+          </div>
+
+          {/* FEHLER LISTE */}
+          {fehlerListe.length > 0 && (
+            <div style={{ marginTop: "40px", textAlign: "left" }}>
+              <details>
+                <summary style={{ cursor: "pointer", color: vintageTheme.accent, fontSize: "0.9rem" }}>📜 Свиток ошибок ({fehlerListe.length})</summary>
+                <div style={{ padding: "10px", fontSize: "0.9rem", maxHeight: "150px", overflowY: "auto" }}>
+                  {fehlerListe.map((f, i) => (
+                    <div key={i} style={{ borderBottom: "1px solid #eee", padding: "5px 0" }}>
+                      <strong>{f.word}</strong>: {f.translation}
+                    </div>
+                  ))}
+                </div>
+              </details>
+            </div>
+          )}
+
+          {/* FOOTER */}
+          <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between" }}>
+            <span>Стр. {currentIndex + 1} / {liste.length}</span>
+            <span 
+              onClick={() => { if(window.confirm("Стереть прогресс?")) { localStorage.clear(); window.location.reload(); } }} 
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              Сжечь дневник
+            </span>
+          </div>
         </div>
       )}
-
-      <div style={{ marginTop: "40px", fontSize: "0.9rem", color: "#666", fontWeight: "bold" }}>
-        📜 Прогресс круга: {currentIndex + 1} / {liste.length} слов
-      </div>
-
-      <button 
-        onClick={() => { if(window.confirm("Стереть все божественные благословения und nach dem Nullpunkt starten?")) { localStorage.clear(); window.location.reload(); } }} 
-        style={{ marginTop: "20px", fontSize: "0.75rem", color: "#ccc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
-      >
-        Начать жизнь смертной заново
-      </button>
     </div>
   );
 }
