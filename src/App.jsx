@@ -39,7 +39,7 @@ const vokabelnOriginal = [
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
   { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
   { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig and chill 😊." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть / контролировать", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
@@ -168,7 +168,8 @@ export default function App() {
 
   const checkAnswer = () => {
     const userBeant = input.toLowerCase().trim();
-    const loesungsTeile = currentWord.translation.toLowerCase().split('/').map(s => s.trim());
+    const loesung = currentWord.translation.toLowerCase().trim();
+    const loesungsTeile = loesung.split('/').map(s => s.trim());
 
     if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") {
       setFeedback("Достойна богов! +10 XP 🌿");
@@ -203,68 +204,50 @@ export default function App() {
       justifyContent: "center", 
       alignItems: "center",
       fontFamily: vintageTheme.serif,
-      perspective: "1500px",
-      overflow: "hidden"
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c0 10-10 20-10 20s10 0 20-10 0-20 0-20zM70 60c0 10-10 20-10 20s10 0 20-10 0-20 0-20z' fill='${vintageTheme.leafColor}' /%3E%3C/svg%3E")`,
+      padding: "20px",
+      perspective: "2000px"
     }}>
       
       <style>{`
-        .book-container {
+        .book-wrapper {
           position: relative;
-          width: 350px;
-          height: 500px;
+          width: 100%;
+          maxWidth: 600px;
+          minHeight: 500px;
           transform-style: preserve-3d;
           transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-          transform: ${isBookOpen ? 'translateX(50%)' : 'translateX(0)'};
+          transform: ${isBookOpen ? "translateX(20px)" : "translateX(0)"};
         }
-
-        .book-cover {
+        .book-cover-animated {
           position: absolute;
-          width: 100%;
-          height: 100%;
+          top: 0; left: 0; width: 100%; height: 100%;
           background: #5d3a1a;
-          border-radius: 5px 15px 15px 5px;
+          border-radius: 5px 20px 20px 5px;
           box-shadow: 15px 15px 40px rgba(0,0,0,0.4);
           z-index: 10;
           transform-origin: left;
-          transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
           cursor: pointer;
           backface-visibility: hidden;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          display: flex; flex-direction: column; justify-content: center; alignItems: center;
           border-left: 10px solid #3e2711;
-          transform: ${isBookOpen ? 'rotateY(-160deg)' : 'rotateY(0deg)'};
+          transform: ${isBookOpen ? "rotateY(-140deg)" : "rotateY(-5deg)"};
         }
-
-        .inner-page {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          background: ${vintageTheme.paper};
-          padding: 30px;
-          box-sizing: border-box;
-          z-index: 1;
-          box-shadow: inset 5px 0 20px rgba(0,0,0,0.1);
-          display: flex;
-          flex-direction: column;
-          color: ${vintageTheme.ink};
-          border-radius: 2px 10px 10px 2px;
-          border: 1px solid #d4cbb3;
-        }
-
         @keyframes global-particle {
           0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
           100% { transform: translate(var(--tw), var(--th)) scale(0) rotate(360deg); opacity: 0; }
         }
-        .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
+        .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
+        input::placeholder { color: #b5a48b; font-style: italic; opacity: 0.7; }
       `}</style>
 
       {showLevelAnim && (
         <>
-          {[...Array(40)].map((_, i) => {
-            const emojis = ["🌿", "📜", "✨"];
-            const angle = (i / 40) * Math.PI * 2;
-            const dist = 300 + Math.random() * 300; 
+          {[...Array(60)].map((_, i) => {
+            const emojis = ["🌿", "📜", "🕊️", "🏛️", "✨"];
+            const angle = (i / 60) * Math.PI * 2;
+            const dist = 200 + Math.random() * 600; 
             return (
               <div key={i} className="emoji-particle" style={{
                 "--tw": `${Math.cos(angle) * dist}px`,
@@ -276,73 +259,121 @@ export default function App() {
         </>
       )}
 
-      <div className="book-container">
-        {/* COVER */}
-        <div className="book-cover" onClick={() => setIsBookOpen(true)}>
-          <div style={{ border: "2px solid #c5a059", padding: "20px", textAlign: "center", width: "70%" }}>
-            <h1 style={{ color: "#c5a059", fontSize: "1.4rem", margin: 0, textTransform: "uppercase" }}>
+      <div className="book-wrapper">
+        {/* BUCH COVER */}
+        <div className="book-cover-animated" onClick={() => setIsBookOpen(true)}>
+          <div style={{ border: "2px solid #c5a059", padding: "20px", margin: "10px", textAlign: "center", height: "80%", width: "70%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h1 style={{ color: "#c5a059", fontSize: "1.8rem", margin: 0, textTransform: "uppercase", letterSpacing: "2px" }}>
               Лебединый словарь 🦢
             </h1>
-            <p style={{ color: "#c5a059", fontSize: "0.7rem", fontStyle: "italic", marginTop: "15px" }}>Нажми, чтобы открыть</p>
+            <div style={{ height: "2px", background: "#c5a059", width: "50px", margin: "20px auto" }}></div>
+            <p style={{ color: "#c5a059", fontSize: "0.8rem", fontStyle: "italic" }}>Нажми, чтобы открыть</p>
           </div>
         </div>
 
-        {/* INHALT (SEITE) */}
-        <div className="inner-page">
-          <div style={{ marginBottom: "20px", borderBottom: "1px solid #d4cbb3", paddingBottom: "10px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem" }}>
-              <span style={{ fontWeight: "bold" }}>Level {currentLevel}</span>
-              <span style={{ fontStyle: "italic", color: vintageTheme.accent }}>{getTitle()}</span>
+        {/* OFFENES BUCH / INTERFACE (Genau wie dein Original) */}
+        <div style={{
+          width: "100%",
+          background: vintageTheme.paper,
+          minHeight: "500px",
+          borderRadius: "2px",
+          boxShadow: "0 0 20px rgba(0,0,0,0.1), 5px 5px 2px #d1ccc0",
+          border: "1px solid #d4cbb3",
+          padding: "40px 30px",
+          position: "relative",
+          backgroundImage: "linear-gradient(to right, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.05) 100%)",
+          zIndex: 1
+        }}>
+          {/* ESELSOHR OPTIK */}
+          <div style={{ position: "absolute", top: 0, right: 0, width: "40px", height: "40px", background: `linear-gradient(225deg, ${vintageTheme.bg} 50%, #d4cbb3 50%)` }}></div>
+
+          {/* HEADER / LEVEL */}
+          <div style={{ marginBottom: "30px", borderBottom: "1px solid #d4cbb3", paddingBottom: "15px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
+              <span style={{ fontSize: "1.2rem", fontWeight: "bold", color: vintageTheme.ink }}>Level {currentLevel}</span>
+              <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{getTitle()}</span>
             </div>
-            <div style={{ width: "100%", height: "4px", background: "#e8e4d9", marginTop: "5px" }}>
-              <div style={{ width: `${xpInLevel}%`, height: "100%", background: vintageTheme.accent, transition: "width 0.5s" }}></div>
+            <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px" }}>
+              <div style={{ width: `${xpInLevel}%`, height: "100%", background: vintageTheme.accent, borderRadius: "4px", transition: "width 0.5s" }}></div>
             </div>
           </div>
 
-          <div style={{ textAlign: "center", flex: 1 }}>
-            <p style={{ color: vintageTheme.accent, fontSize: "0.8rem" }}>Wie heißt...</p>
-            <h2 style={{ fontSize: "2.2rem", margin: "10px 0" }}>{currentWord.word}</h2>
+          {/* HAUPTINHALT */}
+          <div style={{ textAlign: "center" }}>
+            <p style={{ color: vintageTheme.accent, fontSize: "0.9rem", fontStyle: "italic" }}>Как перевести?...</p>
+            <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: vintageTheme.ink, letterSpacing: "-1px" }}>{currentWord.word}</h2>
             
-            <div style={{ minHeight: "60px", marginBottom: "10px" }}>
+            <div style={{ minHeight: "80px", display: "flex", alignItems: "center", justifyContent: "center" }}>
               {showHint ? (
-                <p style={{ fontSize: "0.85rem", fontStyle: "italic", background: "rgba(0,0,0,0.03)", padding: "8px" }}>{currentWord.hint}</p>
+                <p style={{ color: vintageTheme.ink, fontStyle: "italic", padding: "10px", borderLeft: `2px solid ${vintageTheme.accent}`, background: "rgba(0,0,0,0.02)" }}>
+                  {currentWord.hint}
+                </p>
               ) : (
-                <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px dashed #b5a48b", color: "#b5a48b", cursor: "pointer", fontSize: "0.7rem", padding: "4px 10px" }}>
-                  Озарение?
+                <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px dashed #b5a48b", color: "#b5a48b", padding: "5px 15px", cursor: "pointer", fontSize: "0.8rem" }}>
+                  Озарение 💡
                 </button>
               )}
             </div>
 
             <input 
+              placeholder="Переведи..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
-              placeholder="Переведи..."
-              style={{ width: "90%", background: "transparent", border: "none", borderBottom: `1px solid ${vintageTheme.ink}`, textAlign: "center", fontSize: "1.2rem", outline: "none", marginBottom: "20px", fontFamily: vintageTheme.serif }}
+              style={{ 
+                width: "80%", 
+                padding: "12px", 
+                border: "none", 
+                borderBottom: `1px solid ${vintageTheme.ink}`, 
+                background: "transparent", 
+                fontSize: "1.4rem", 
+                textAlign: "center", 
+                outline: "none",
+                marginBottom: "30px",
+                color: vintageTheme.ink,
+                fontFamily: vintageTheme.serif
+              }}
             />
 
             <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-              <button onClick={checkAnswer} style={{ background: vintageTheme.ink, color: "white", border: "none", padding: "10px 20px", cursor: "pointer", textTransform: "uppercase", fontSize: "0.8rem" }}>Проверить</button>
-              <button onClick={goToNextWord} style={{ background: "none", border: `1px solid ${vintageTheme.ink}`, cursor: "pointer", padding: "0 15px" }}>➜</button>
+              <button onClick={checkAnswer} style={{ background: vintageTheme.ink, color: "#fff", border: "none", padding: "12px 30px", cursor: "pointer", fontSize: "1rem", textTransform: "uppercase", letterSpacing: "1px" }}>
+                Проверить
+              </button>
+              <button onClick={goToNextWord} style={{ background: "none", border: `1px solid ${vintageTheme.ink}`, color: vintageTheme.ink, padding: "12px 20px", cursor: "pointer" }}>
+                ➜
+              </button>
             </div>
 
-            <p style={{ marginTop: "15px", fontSize: "0.9rem", fontWeight: "bold", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>{feedback}</p>
+            <p style={{ marginTop: "20px", fontWeight: "bold", fontStyle: "italic", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>
+              {feedback}
+            </p>
           </div>
 
-          {/* FEHLER & FOOTER */}
-          <div style={{ fontSize: "0.7rem" }}>
-            {fehlerListe.length > 0 && (
-              <details style={{ marginBottom: "10px" }}>
-                <summary style={{ cursor: "pointer", color: vintageTheme.accent }}>📜 Ошибки ({fehlerListe.length})</summary>
-                <div style={{ maxHeight: "80px", overflowY: "auto", padding: "5px" }}>
-                  {fehlerListe.slice(0, 5).map((f, i) => <div key={i}>{f.word}: {f.translation}</div>)}
+          {/* FEHLER LISTE */}
+          {fehlerListe.length > 0 && (
+            <div style={{ marginTop: "40px", textAlign: "left" }}>
+              <details>
+                <summary style={{ cursor: "pointer", color: vintageTheme.accent, fontSize: "0.9rem" }}>📜 Свиток ошибок ({fehlerListe.length})</summary>
+                <div style={{ padding: "10px", fontSize: "0.9rem", maxHeight: "150px", overflowY: "auto" }}>
+                  {fehlerListe.map((f, i) => (
+                    <div key={i} style={{ borderBottom: "1px solid #eee", padding: "5px 0" }}>
+                      <strong>{f.word}</strong>: {f.translation}
+                    </div>
+                  ))}
                 </div>
               </details>
-            )}
-            <div style={{ display: "flex", justifyContent: "space-between", opacity: 0.6 }}>
-              <span>{currentIndex + 1} / {liste.length}</span>
-              <span onClick={() => { if(window.confirm("Стереть прогресс?")) { localStorage.clear(); window.location.reload(); } }} style={{ cursor: "pointer", textDecoration: "underline" }}>Сжечь дневник</span>
             </div>
+          )}
+
+          {/* FOOTER */}
+          <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between" }}>
+            <span>Стр. {currentIndex + 1} / {liste.length}</span>
+            <span 
+              onClick={() => { if(window.confirm("Стереть прогресс?")) { localStorage.clear(); window.location.reload(); } }} 
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              Сжечь дневник
+            </span>
           </div>
         </div>
       </div>
