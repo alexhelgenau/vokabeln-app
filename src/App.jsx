@@ -39,7 +39,7 @@ const vokabelnOriginal = [
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
   { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
   { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig and chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть / контролировать", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
@@ -211,24 +211,25 @@ export default function App() {
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
         .speech-bubble {
           position: absolute;
-          top: -70px;
-          right: 50px;
+          top: -160px;
+          right: 30px;
           background: #fff;
           border: 2px solid #4a3f35;
-          border-radius: 12px;
-          padding: 8px 12px;
-          width: 160px;
-          font-size: 0.8rem;
+          border-radius: 15px;
+          padding: 10px 15px;
+          width: 200px;
+          font-size: 0.85rem;
+          line-height: 1.2;
           color: #4a3f35;
-          box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
-          z-index: 25;
+          box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
+          z-index: 20;
         }
         .speech-bubble::after {
           content: '';
           position: absolute;
-          bottom: -8px;
-          right: 20px;
-          border-width: 8px 8px 0 0;
+          bottom: -10px;
+          right: 30px;
+          border-width: 10px 10px 0 0;
           border-style: solid;
           border-color: #4a3f35 transparent;
         }
@@ -252,7 +253,7 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
-          {/* HERMES - DEINE ORIGINALWERTE */}
+          {/* HERMES - DEINE GEWÜNSCHTEN WERTE */}
           <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
             <div className="speech-bubble"><b>Hermes:</b><br/>{hermesTalk}</div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
