@@ -39,7 +39,7 @@ const vokabelnOriginal = [
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
   { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
   { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig and chill 😊." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть / контролировать", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
@@ -209,26 +209,43 @@ export default function App() {
       <style>{`
         @keyframes global-particle { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tw), var(--th)) scale(0); opacity: 0; } }
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
-        .speech-bubble {
+        
+        .hermes-container {
           position: absolute;
-          top: -160px;
-          right: 30px;
+          top: -177px;
+          right: -140px;
+          width: 450px;
+          height: 450px;
+          z-index: 10;
+          pointer-events: none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+        }
+
+        .speech-bubble {
+          position: relative;
           background: #fff;
           border: 2px solid #4a3f35;
           border-radius: 15px;
           padding: 10px 15px;
-          width: 200px;
-          font-size: 0.85rem;
-          line-height: 1.2;
+          width: 220px;
+          font-size: 0.9rem;
+          line-height: 1.3;
           color: #4a3f35;
           box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
+          margin-bottom: -40px; /* Schiebt Bubble über Hermes */
+          margin-right: 120px; /* Positioniert Bubble etwas seitlich */
           z-index: 20;
+          pointer-events: auto;
         }
+
         .speech-bubble::after {
           content: '';
           position: absolute;
           bottom: -10px;
-          right: 30px;
+          right: 40px;
           border-width: 10px 10px 0 0;
           border-style: solid;
           border-color: #4a3f35 transparent;
@@ -253,10 +270,22 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
-          {/* HERMES - DEINE GEWÜNSCHTEN WERTE */}
-          <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-            <div className="speech-bubble"><b>Hermes:</b><br/>{hermesTalk}</div>
-            <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
+          {/* HERMES CONTAINER MIT BUBBLE */}
+          <div className="hermes-container">
+            <div className="speech-bubble">
+              <b>Hermes:</b><br/>{hermesTalk}
+            </div>
+            <img 
+              src={hermesUrl} 
+              alt="Hermes" 
+              style={{ 
+                width: "100%", 
+                height: "auto", 
+                objectFit: "contain", 
+                transform: "rotate(-5deg)", 
+                filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" 
+              }} 
+            />
           </div>
 
           <div style={{ position: "absolute", bottom: "-60px", left: "-50px", width: "180px", height: "180px", zIndex: 10, pointerEvents: "none" }}>
