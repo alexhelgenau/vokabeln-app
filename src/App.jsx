@@ -39,7 +39,7 @@ const vokabelnOriginal = [
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
   { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
   { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig and chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть / контролировать", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
@@ -57,7 +57,7 @@ const vokabelnOriginal = [
   { "word": "holen", "translation": "взять / принести", "hint": "Du hast Persik für 4 Tage geholt." },
   { "word": "beschlossen", "translation": "решил / постановил / решено", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
   { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал planen и устроил хаос там, где обещал порядок." },
-  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
+  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön and unbeschwert." },
   { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." },
   { "word": "langweilig", "translation": "скучно", "hint": "Сериал Тьма был langweilig 🥱" },
   { "word": "nur", "translation": "только", "hint": "Du gehörst mir, Violet. NUR wenn du mir gehörst." },
@@ -69,9 +69,9 @@ const vokabelnOriginal = [
   { "word": "verteidigen", "translation": "защищать", "hint": "Edward verteidigt Bella vor einem Auto." },
   { "word": "hassen", "translation": "ненавидеть", "hint": "Есть lieben, а есть...?" },
   { "word": "faszinieren", "translation": "очаровывать", "hint": "Du bist fasziniert von Kai Parker 😍" },
-  { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale und Crowley sind ein ungewöhnliches Paar 🤨" },
-  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau und Berlin liegt Minsk." },
-  { "word": "Drohung", "translation": "угроза", "hint": "„Если ты решишь меня подставить, я вырву твоё сердце и засуну тебе в глотку.“ - как такое называется?" },
+  { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale and Crowley sind ein ungewöhnliches Paar 🤨" },
+  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau and Berlin liegt Minsk." },
+  { "word": "Drohung", "translation": "угроза", "hint": "„Если ты решишь меня подставить, я вырву твоё сердце and засуну тебе в глотку.“ - как такое называется?" },
   { "word": "Anruf", "translation": "звонок", "hint": " „Do you like scary movies?“ 📱👻" },
   { "word": "etwas", "translation": "что-то / немного", "hint": "Etwas hier, etwas da 🤏" },
   { "word": "sanft", "translation": "нежный / мягкий", "hint": "Есть hart, а есть...?" },
@@ -81,7 +81,7 @@ const vokabelnOriginal = [
   { "word": "leise", "translation": "тихо", "hint": "In der Bibliothek muss man leise sein 🤫" },
   { "word": "durcheinanderrennen", "translation": "бегать вперемешку / суетиться", "hint": "🏃🏃🏃😵‍💫😵‍💫😵‍💫" },
   { "word": "Erfolg", "translation": "успех", "hint": "Erfolg im Sport haben 🏅🏆" },
-  { "word": "bestrafen", "translation": "наказывать / карать", "hint": "Verbrechen und Strafe von Fyodor Dostoyevsky." },
+  { "word": "bestrafen", "translation": "наказывать / карать", "hint": "Verbrechen and Strafe von Fyodor Dostoyevsky." },
   { "word": "Nachtisch", "translation": "десерт / сладкое", "hint": "Marzipan ist ein guter Nachtisch 😋" },
   { "word": "klar", "translation": "ясный / понятный / конечно", "hint": "Alles klar, kein Problem!" },
   { "word": "verbergen", "translation": "скрывать / прятать", "hint": "Synonym verstecken 🙈" },
@@ -110,7 +110,7 @@ export default function App() {
   const [showHint, setShowHint] = useState(false);
   const [showLevelAnim, setShowLevelAnim] = useState(false);
   const [mode, setMode] = useState("write");
-  const [hermesTalk, setHermesTalk] = useState("Приветик, доченька! Готова попотеть?");
+  const [hermesTalk, setHermesTalk] = useState("Ну что, доченька, готова показать этим смертным, как нужно учиться?");
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -123,27 +123,96 @@ export default function App() {
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const currentTitle = titles[currentLevel-1] || titles[titles.length-1];
 
-  // LEVEL UP & INITIAL SPEECH
+  // LEVEL SPEECH LOGIC (6 per Level)
+  const getLevelSass = (level, type) => {
+    const pool = {
+      1: { // Смертная
+        correct: [
+          "Неплохо для начала. Видимо, мои гены всё-таки работают.",
+          "Ха! Смертные так быстро не соображают. Молодец.",
+          "Ты точно не подглядываешь в мои записи?",
+          "Ого, ты действительно стараешься. Я впечатлен (совсем чуть-чуть).",
+          "Правильно. Но не расслабляйся, это только разминка.",
+          "Доченька, ты движешься быстрее, чем Ахиллес за черепахой!"
+        ],
+        wrong: [
+          "Даже боги начинали с ошибок. Попробуй еще раз, радость моя.",
+          "Не вешай нос! Это слово просто хитрое, как Одиссей.",
+          "Ничего, доченька. Вдохни поглубже и сосредоточься.",
+          "Ошибки — это просто ступеньки к Олимпу. Ты справишься!",
+          "Эй, даже я иногда путаю дороги. Просто повтори еще раз.",
+          "Главное — не сдаваться. Я верю в тебя больше, чем в прогноз погоды от Зевса!"
+        ]
+      },
+      2: { // Лесная Нимфа
+        correct: [
+          "Ого, нимфа за работой! Лес гордится тобой.",
+          "Твои знания растут быстрее, чем священные лавры!",
+          "Ха! Ты щелкаешь эти слова как орехи.",
+          "Молодец, доченька. Твой интеллект становится... божественным?",
+          "Правильно! Кажется, скоро тебе понадобятся крылатые сандалии.",
+          "Ты всё еще не устала превосходить ожидания? Прекрасно."
+        ],
+        wrong: [
+          "Даже самая мудрая нимфа может оступиться. Не страшно!",
+          "Это слово было замаскировано, как Зевс. Попробуй снова.",
+          "Не переживай, доченька. Твой прогресс всё равно огромен.",
+          "Смотри на это как на тренировку перед битвой с титанами!",
+          "Спокойно, радость моя. Ты на верном пути.",
+          "Хм, хитрое слово. Но ты хитрее! Давай еще раз."
+        ]
+      },
+      default: {
+        correct: [
+          "Блестяще! Ты вся в отца.",
+          "Ха! Снова в точку. Ты меня пугаешь своей скоростью.",
+          "Доченька, ты сегодня просто в ударе! Зевс кусает локти.",
+          "Правильно. Признайся, ты пьешь амброзию по утрам?",
+          "Твои успехи — лучшая реклама для моей семьи.",
+          "Великолепно! Ты уже почти профи."
+        ],
+        wrong: [
+          "Спокойно, доченька. Ты справишься, я знаю.",
+          "Это просто временная заминка. Продолжай!",
+          "Ты уже прошла такой путь, одна ошибка тебя не остановит!",
+          "Всё в порядке, радость моя. Боги тоже учатся.",
+          "Не дай этому слову сбить тебя с толку. Ты сильнее!",
+          "Я здесь, я верю в тебя. Просто попробуй снова."
+        ]
+      }
+    };
+    const currentPool = pool[level] || pool.default;
+    const selected = currentPool[type];
+    return selected[Math.floor(Math.random() * selected.length)];
+  };
+
+  const handleCorrect = () => {
+    setHermesTalk(getLevelSass(currentLevel, 'correct'));
+    setFeedback("Достойна богов! +10 XP 🌿");
+    setXp(prev => prev + 10);
+    setTimeout(goToNextWord, 1200);
+  };
+
+  const handleWrong = () => {
+    setHermesTalk(getLevelSass(currentLevel, 'wrong'));
+    setFeedback("Гнев Зевса! -10 XP ⚡");
+    setXp(prev => Math.max(0, prev - 10));
+  };
+
+  // --- Restliche Logik ---
   useEffect(() => {
     const lastLevelSaved = localStorage.getItem('lebedi_last_level');
     const lastLevel = lastLevelSaved ? parseInt(lastLevelSaved) : 1;
-
     if (currentLevel > lastLevel) {
-      const levelUpSpeeches = {
-        2: "Ого, доченька, теперь ты Лесная Нимфа? Твой отец гордится тобой! 🍃",
-        3: "Вестница Гермеса? Истинная дочь своего отца! Эти крылья тебе к лицу. 🪽",
-        4: "Воительница Спарты! С таким напором ты скоро завоюешь весь мир. 🛡️",
-        9: "Героиня Олимпа! Моя кровь дает о себе знать, ты великолепна! 🏛️",
-        14: "Мудрость Афины? Ты становишься умнее с каждым днем, радость моя. 🦉",
-        19: "Богиня Слов! Ты превзошла даже меня. Я в восторге! 👑"
-      };
-      
-      setHermesTalk(levelUpSpeeches[currentLevel] || `Поздравляю, доченька! Теперь ты — ${currentTitle}! ✨`);
+      setHermesTalk(`Ого! Новый статус: ${currentTitle}! Ты просто легенда, доченька! ✨`);
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
       localStorage.setItem('lebedi_last_level', currentLevel.toString());
     }
   }, [currentLevel, currentTitle]);
+
+  useEffect(() => { localStorage.setItem('lebedi_xp', xp.toString()); }, [xp]);
+  useEffect(() => { setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5)); }, []);
 
   const toRoman = (num) => {
     const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
@@ -153,16 +222,7 @@ export default function App() {
     }, "");
   };
 
-  useEffect(() => {
-    localStorage.setItem('lebedi_xp', xp.toString());
-  }, [xp]);
-
-  useEffect(() => {
-    setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5));
-  }, []);
-
   const currentWord = liste[currentIndex];
-
   const options = useMemo(() => {
     if (!currentWord || mode !== "choice") return [];
     const correct = currentWord.translation;
@@ -172,37 +232,8 @@ export default function App() {
 
   const goToNextWord = () => {
     if (currentIndex < liste.length - 1) setCurrentIndex(currentIndex + 1);
-    else {
-      setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5));
-      setCurrentIndex(0);
-    }
+    else { setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5)); setCurrentIndex(0); }
     setInput(""); setFeedback(""); setShowHint(false);
-  };
-
-  const handleCorrect = () => {
-    const sassByLevel = {
-      1: ["Для начала очень неплохо, доченька!", "Умница, маленькая смертная!"],
-      2: ["Моя нимфа делает успехи!", "Лес шепчет о твоем таланте, радость моя!"],
-      default: ["Блестяще, доченька!", "Ты вся в отца!", "Прямо в яблочко! Золотое, конечно.", "Твои знания растут, я в восторге!"]
-    };
-    const pool = sassByLevel[currentLevel] || sassByLevel.default;
-    setHermesTalk(pool[Math.floor(Math.random() * pool.length)]);
-    setFeedback("Достойна богов! +10 XP 🌿");
-    setXp(prev => prev + 10);
-    setTimeout(goToNextWord, 1200);
-  };
-
-  const handleWrong = () => {
-    const encourage = [
-      "Ничего страшного, доченька, даже боги ошибаются!",
-      "Не сдавайся, радость моя, ты обязательно запомнишь это.",
-      "Попробуй еще раз, я верю в тебя больше всех на Олимпе!",
-      "Это просто маленькая заминка на твоем великом пути.",
-      "Вдохни поглубже, доченька, ты справишься с этим словом!"
-    ];
-    setHermesTalk(encourage[Math.floor(Math.random() * encourage.length)]);
-    setFeedback("Гнев Зевса! -10 XP ⚡");
-    setXp(prev => Math.max(0, prev - 10));
   };
 
   const vintageTheme = { bg: "#f4f1ea", paper: "#fffcf5", ink: "#4a3f35", accent: "#8c7e6d", serif: "'Georgia', serif" };
@@ -234,14 +265,14 @@ export default function App() {
           background: #fff;
           border: 2px solid #4a3f35;
           border-radius: 15px;
-          padding: 12px 18px;
-          width: 250px;
+          padding: 14px 20px;
+          width: 260px;
           font-size: 0.95rem;
           line-height: 1.4;
           color: #4a3f35;
           box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
-          margin-bottom: -35px;
-          margin-right: 230px; /* NOCHMAL 10PX WEITER LINKS (vorher 220px) */
+          margin-bottom: -30px;
+          margin-right: 280px; /* WEITER LINKS PLATZIERT */
           z-index: 20;
           pointer-events: auto;
         }
@@ -250,7 +281,7 @@ export default function App() {
           content: '';
           position: absolute;
           bottom: -10px;
-          right: 15px;
+          right: 10px;
           border-width: 10px 10px 0 0;
           border-style: solid;
           border-color: #4a3f35 transparent;
@@ -269,7 +300,7 @@ export default function App() {
         <div onClick={() => setIsBookOpen(true)} style={{ width: "300px", height: "450px", background: "#5d3a1a", borderRadius: "5px 20px 20px 5px", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", borderLeft: "10px solid #3e2711", boxShadow: "15px 15px 40px rgba(0,0,0,0.4)" }}>
           <div style={{ border: "2px solid #c5a059", padding: "20px", textAlign: "center", color: "#c5a059" }}>
             <h1 style={{ fontSize: "1.5rem" }}>ЛЕБЕДИНЫЙ СЛОВАРЬ 🦢</h1>
-            <p>Нажми, чтобы открыть, доченька</p>
+            <p>Нажми, чтобы открыть</p>
           </div>
         </div>
       ) : (
@@ -277,12 +308,12 @@ export default function App() {
           
           <div className="hermes-container">
             <div className="speech-bubble">
-              <b>Твой отец Гермес:</b><br/>{hermesTalk}
+              <b>Гермес:</b><br/>{hermesTalk}
             </div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
-          <div style={{ position: "relative", background: vintageTheme.paper, minHeight: "600px", border: "1px solid #d4cbb3", padding: "40px 30px", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", zIndex: 5 }}>
+          <div style={{ relative: "relative", background: vintageTheme.paper, minHeight: "600px", border: "1px solid #d4cbb3", padding: "40px 30px", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", zIndex: 5 }}>
             
             <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "20px" }}>
                <button onClick={() => setMode("write")} style={{ background: mode === "write" ? vintageTheme.ink : "transparent", color: mode === "write" ? "#fff" : vintageTheme.ink, border: `1px solid ${vintageTheme.ink}`, padding: "5px 15px", cursor: "pointer", borderRadius: "20px" }}>Писать ✍️</button>
