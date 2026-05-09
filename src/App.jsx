@@ -102,6 +102,7 @@ export default function App() {
   const [showHint, setShowHint] = useState(false);
   const [showLevelAnim, setShowLevelAnim] = useState(false);
   const [mode, setMode] = useState("write");
+  const [hermesTalk, setHermesTalk] = useState("Приветик! Готова попотеть?");
 
   const atlasUrl = ""; 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
@@ -119,6 +120,19 @@ export default function App() {
   const xpPerLevel = 100;
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const xpInLevel = xp % xpPerLevel;
+
+  const getHermesSass = (level) => {
+    if (level <= 1) return "О, смертная пытается читать... Мило.";
+    if (level === 3) return "Вестница Гермеса? Ну, посмотрим, не перепутаешь ли ты письма.";
+    if (level === 9) return "Героиня Олимпа? Не задирай нос, сандалии натри!";
+    if (level === 14) return "Мудрость Афины? Надеюсь, это не только из-за очков.";
+    if (level === 19) return "Богиня Слов! Ладно, признаю, ты почти так же хороша, как я.";
+    return "Продолжай, я наблюдаю. Пока не впечатлена, но... продолжай.";
+  };
+
+  useEffect(() => {
+    setHermesTalk(getHermesSass(currentLevel));
+  }, [currentLevel]);
 
   const toRoman = (num) => {
     const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
@@ -169,12 +183,16 @@ export default function App() {
   };
 
   const handleCorrect = () => {
+    const sass = ["Неплохо для человека.", "Зевс бы гордился. Наверное.", "Ой, кто-то сегодня выпил амброзии?", "Прямо в яблочко! Золотое, конечно.", "Ты меня пугаешь своей скоростью!"];
+    setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
     setFeedback("Достойна богов! +10 XP 🌿");
     setXp(prev => prev + 10);
     setTimeout(goToNextWord, 1200);
   };
 
   const handleWrong = () => {
+    const sass = ["Мои сандалии соображают быстрее.", "Может, тебе стоит попросить помощи у Афродиты? Мозги — это не твоё.", "Минус десять очков Гриффиндору... Ой, не та сказка. Минус XP!", "Даже минотавр в лабиринте не так сильно тупил.", "Серьезно? Это было позорище."];
+    setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
     setFeedback("Гнев Зевса! -10 XP ⚡");
     setXp(prev => Math.max(0, prev - 10));
     setFehlerListe(prev => !prev.find(f => f.word === currentWord.word) ? [currentWord, ...prev] : prev);
@@ -191,6 +209,31 @@ export default function App() {
       <style>{`
         @keyframes global-particle { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tw), var(--th)) scale(0); opacity: 0; } }
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
+        .speech-bubble {
+          position: absolute;
+          top: -160px;
+          right: 30px;
+          background: #fff;
+          border: 2px solid #4a3f35;
+          border-radius: 15px;
+          padding: 10px 15px;
+          width: 200px;
+          font-size: 0.85rem;
+          line-height: 1.2;
+          color: #4a3f35;
+          box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
+          z-index: 20;
+        }
+        .speech-bubble::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          right: 30px;
+          border-width: 10px 10px 0 0;
+          border-style: solid;
+          border-color: #4a3f35 transparent;
+          display: block; width: 0;
+        }
       `}</style>
 
       {showLevelAnim && (
@@ -212,7 +255,8 @@ export default function App() {
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
           {/* HERMES - Präzise an der oberen rechten Ecke lehnen */}
-          <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          <div style={{ position: "absolute", top: "-110px", right: "-25px", width: "180px", height: "auto", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+            <div className="speech-bubble"><b>Hermes:</b><br/>{hermesTalk}</div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
