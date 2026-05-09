@@ -117,6 +117,15 @@ export default function App() {
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const xpInLevel = xp % xpPerLevel;
 
+  // Hilfsfunktion für römische Zahlen
+  const toRoman = (num) => {
+    const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
+    return Object.entries(map).reduce((acc, [letter, value]) => {
+      while (num >= value) { acc += letter; num -= value; }
+      return acc;
+    }, "");
+  };
+
   useEffect(() => {
     const lastXpString = localStorage.getItem('lebedi_xp_old');
     const lastXp = lastXpString ? parseInt(lastXpString) : xp;
@@ -139,7 +148,7 @@ export default function App() {
     const titles = [
       "Смертная 🌱", "Лесная Нимфа 🍃", "Вестница Гермеса 🪽", "Воительница Спарты 🛡️", 
       "Пифия Аполлона ☀️", "Дочь Посейдона 🌊", "Охотница Артемиды 🏹", "Пламя Гестии 🔥",
-      , "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️",
+      "Героиня Олимпа 🏛️", "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️",
       "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры 🦚",
       "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"
     ];
@@ -241,7 +250,7 @@ export default function App() {
 
           <div style={{ marginBottom: "30px", borderBottom: "1px solid #d4cbb3", paddingBottom: "15px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Level {currentLevel}</span>
+              <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Уровень {toRoman(currentLevel)}</span>
               <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{getTitle()}</span>
             </div>
             <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px", marginTop: "8px" }}>
