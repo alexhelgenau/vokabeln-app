@@ -110,7 +110,7 @@ export default function App() {
   const [showHint, setShowHint] = useState(false);
   const [showLevelAnim, setShowLevelAnim] = useState(false);
   const [mode, setMode] = useState("write");
-  const [hermesTalk, setHermesTalk] = useState("Приветик! Готова попотеть?");
+  const [hermesTalk, setHermesTalk] = useState("Приветик, доченька! Готова попотеть?");
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -121,29 +121,29 @@ export default function App() {
 
   const xpPerLevel = 100;
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
+  const currentTitle = titles[currentLevel-1] || titles[titles.length-1];
 
-  // LEVEL UP LOGIC & SPEECH
+  // LEVEL UP & INITIAL SPEECH
   useEffect(() => {
     const lastLevelSaved = localStorage.getItem('lebedi_last_level');
     const lastLevel = lastLevelSaved ? parseInt(lastLevelSaved) : 1;
 
     if (currentLevel > lastLevel) {
       const levelUpSpeeches = {
-        2: "Ого, теперь ты Лесная Нимфа? Смотри не заблудись в трех соснах! 🍃",
-        3: "Вестница Гермеса? Ну-ну, только не надейся, что я отдам тебе свои крылатые сандалии. 🪽",
-        4: "Воительница Спарты! С таким напором ты скоро завоюешь весь словарь. 🛡️",
-        5: "Пифия Аполлона? И что же нам пророчат звезды... а, точно, еще больше учебы! ☀️",
-        9: "Героиня Олимпа! Почти божественно... для простого человека. 🏛️",
-        14: "Мудрость Афины? Надеюсь, это поможет тебе не делать глупых ошибок. 🦉",
-        19: "Богиня Слов! Ладно, признаю, ты почти так же хороша, как я. Почти. 👑"
+        2: "Ого, доченька, теперь ты Лесная Нимфа? Твой отец гордится тобой! 🍃",
+        3: "Вестница Гермеса? Истинная дочь своего отца! Эти крылья тебе к лицу. 🪽",
+        4: "Воительница Спарты! С таким напором ты скоро завоюешь весь мир. 🛡️",
+        9: "Героиня Олимпа! Моя кровь дает о себе знать, ты великолепна! 🏛️",
+        14: "Мудрость Афины? Ты становишься умнее с каждым днем, радость моя. 🦉",
+        19: "Богиня Слов! Ты превзошла даже меня. Я в восторге! 👑"
       };
       
-      setHermesTalk(levelUpSpeeches[currentLevel] || `Ого, уровень ${currentLevel}! ${titles[currentLevel-1]}. Неплохо!`);
+      setHermesTalk(levelUpSpeeches[currentLevel] || `Поздравляю, доченька! Теперь ты — ${currentTitle}! ✨`);
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
       localStorage.setItem('lebedi_last_level', currentLevel.toString());
     }
-  }, [currentLevel]);
+  }, [currentLevel, currentTitle]);
 
   const toRoman = (num) => {
     const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
@@ -180,16 +180,27 @@ export default function App() {
   };
 
   const handleCorrect = () => {
-    const sass = ["Неплохо для человека.", "Зевс бы гордился. Наверное.", "Ой, кто-то сегодня выпил амброзии?", "Прямо в яблочко!", "Ты меня пугаешь своей скоростью!"];
-    setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
+    const sassByLevel = {
+      1: ["Для начала очень неплохо, доченька!", "Умница, маленькая смертная!"],
+      2: ["Моя нимфа делает успехи!", "Лес шепчет о твоем таланте, радость моя!"],
+      default: ["Блестяще, доченька!", "Ты вся в отца!", "Прямо в яблочко! Золотое, конечно.", "Твои знания растут, я в восторге!"]
+    };
+    const pool = sassByLevel[currentLevel] || sassByLevel.default;
+    setHermesTalk(pool[Math.floor(Math.random() * pool.length)]);
     setFeedback("Достойна богов! +10 XP 🌿");
     setXp(prev => prev + 10);
     setTimeout(goToNextWord, 1200);
   };
 
   const handleWrong = () => {
-    const sass = ["Мои сандалии соображают быстрее.", "Может, попросишь помощи у Афродиты?", "Минус XP! Позор Олимпа.", "Даже минотавр бы догадался.", "Серьезно? Это было позорище."];
-    setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
+    const encourage = [
+      "Ничего страшного, доченька, даже боги ошибаются!",
+      "Не сдавайся, радость моя, ты обязательно запомнишь это.",
+      "Попробуй еще раз, я верю в тебя больше всех на Олимпе!",
+      "Это просто маленькая заминка на твоем великом пути.",
+      "Вдохни поглубже, доченька, ты справишься с этим словом!"
+    ];
+    setHermesTalk(encourage[Math.floor(Math.random() * encourage.length)]);
     setFeedback("Гнев Зевса! -10 XP ⚡");
     setXp(prev => Math.max(0, prev - 10));
   };
@@ -223,14 +234,14 @@ export default function App() {
           background: #fff;
           border: 2px solid #4a3f35;
           border-radius: 15px;
-          padding: 10px 15px;
-          width: 240px; /* Etwas breiter für die längeren Sätze */
-          font-size: 0.9rem;
-          line-height: 1.3;
+          padding: 12px 18px;
+          width: 250px;
+          font-size: 0.95rem;
+          line-height: 1.4;
           color: #4a3f35;
           box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
-          margin-bottom: -40px;
-          margin-right: 220px; /* WEITER LINKS PLATZIERT (vorher 120px) */
+          margin-bottom: -35px;
+          margin-right: 230px; /* NOCHMAL 10PX WEITER LINKS (vorher 220px) */
           z-index: 20;
           pointer-events: auto;
         }
@@ -239,7 +250,7 @@ export default function App() {
           content: '';
           position: absolute;
           bottom: -10px;
-          right: 20px; /* Angepasst an die neue Position */
+          right: 15px;
           border-width: 10px 10px 0 0;
           border-style: solid;
           border-color: #4a3f35 transparent;
@@ -248,9 +259,9 @@ export default function App() {
 
       {showLevelAnim && (
         <>{[...Array(40)].map((_, i) => {
-          const emojis = ["🌿", "📜", "✨", "🏛️", "👑"];
+          const emojis = ["🌿", "📜", "✨", "🏛️", "👑", "💖"];
           const angle = (i / 40) * Math.PI * 2;
-          return <div key={i} className="emoji-particle" style={{ "--tw": `${Math.cos(angle) * 300}px`, "--th": `${Math.sin(angle) * 300}px` }}>{emojis[i % 5]}</div>
+          return <div key={i} className="emoji-particle" style={{ "--tw": `${Math.cos(angle) * 300}px`, "--th": `${Math.sin(angle) * 300}px` }}>{emojis[i % 6]}</div>
         })}</>
       )}
 
@@ -258,7 +269,7 @@ export default function App() {
         <div onClick={() => setIsBookOpen(true)} style={{ width: "300px", height: "450px", background: "#5d3a1a", borderRadius: "5px 20px 20px 5px", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", borderLeft: "10px solid #3e2711", boxShadow: "15px 15px 40px rgba(0,0,0,0.4)" }}>
           <div style={{ border: "2px solid #c5a059", padding: "20px", textAlign: "center", color: "#c5a059" }}>
             <h1 style={{ fontSize: "1.5rem" }}>ЛЕБЕДИНЫЙ СЛОВАРЬ 🦢</h1>
-            <p>Нажми, чтобы открыть</p>
+            <p>Нажми, чтобы открыть, доченька</p>
           </div>
         </div>
       ) : (
@@ -266,7 +277,7 @@ export default function App() {
           
           <div className="hermes-container">
             <div className="speech-bubble">
-              <b>Hermes:</b><br/>{hermesTalk}
+              <b>Твой отец Гермес:</b><br/>{hermesTalk}
             </div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
@@ -281,7 +292,7 @@ export default function App() {
             <div style={{ marginBottom: "30px", borderBottom: "1px solid #d4cbb3", paddingBottom: "15px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Уровень {toRoman(currentLevel)}</span>
-                <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{titles[currentLevel-1] || titles[titles.length-1]}</span>
+                <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{currentTitle}</span>
               </div>
               <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px", marginTop: "8px" }}>
                 <div style={{ width: `${xp % 100}%`, height: "100%", background: vintageTheme.accent, borderRadius: "4px", transition: "width 0.5s" }}></div>
