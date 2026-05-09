@@ -212,7 +212,7 @@ export default function App() {
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
           {/* HERMES - Präzise an der oberen rechten Ecke lehnen */}
-          <div style={{ position: "absolute", top: "-130px", right: "-40px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          <div style={{ position: "absolute", top: "-170px", right: "-80px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
