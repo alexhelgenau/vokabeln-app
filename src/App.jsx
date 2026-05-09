@@ -93,6 +93,14 @@ const vokabelnOriginal = [
   { "word": "böse", "translation": "злой / плохой / шестокий", "hint": "Kai Parker ist vielleicht böse, aber heiß 😉" }
 ];
 
+const titles = [
+  "Смертная 🌱", "Лесная Нимфа 🍃", "Вестница Гермеса 🪽", "Воительница Спарты 🛡️", 
+  "Пифия Аполлона ☀️", "Дочь Посейдона 🌊", "Охотница Артемиды 🏹", "Пламя Гестии 🔥", 
+  "Героиня Олимпа 🏛️", "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️", 
+  "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры 🦚", 
+  "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"
+];
+
 export default function App() {
   const [isBookOpen, setIsBookOpen] = useState(false);
   const [liste, setListe] = useState([]);
@@ -104,7 +112,6 @@ export default function App() {
   const [mode, setMode] = useState("write");
   const [hermesTalk, setHermesTalk] = useState("Приветик! Готова попотеть?");
 
-  const atlasUrl = ""; 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
   const [xp, setXp] = useState(() => {
@@ -112,26 +119,30 @@ export default function App() {
     return saved ? parseInt(saved) : 0;
   });
 
-  const [fehlerListe, setFehlerListe] = useState(() => {
-    const saved = localStorage.getItem('lebedi_fehler');
-    return saved ? JSON.parse(saved) : [];
-  });
-
   const xpPerLevel = 100;
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
-  const xpInLevel = xp % xpPerLevel;
 
-  const getHermesSass = (level) => {
-    if (level <= 1) return "О, смертная пытается читать... Мило.";
-    if (level === 3) return "Вестница Гермеса? Ну, посмотрим, не перепутаешь ли ты письма.";
-    if (level === 9) return "Героиня Олимпа? Не задирай нос, сандалии натри!";
-    if (level === 14) return "Мудрость Афины? Надеюсь, это не только из-за очков.";
-    if (level === 19) return "Богиня Слов! Ладно, признаю, ты почти так же хороша, как я.";
-    return "Продолжай, я наблюдаю. Пока не впечатлена, но... продолжай.";
-  };
-
+  // LEVEL UP LOGIC & SPEECH
   useEffect(() => {
-    setHermesTalk(getHermesSass(currentLevel));
+    const lastLevelSaved = localStorage.getItem('lebedi_last_level');
+    const lastLevel = lastLevelSaved ? parseInt(lastLevelSaved) : 1;
+
+    if (currentLevel > lastLevel) {
+      const levelUpSpeeches = {
+        2: "Ого, теперь ты Лесная Нимфа? Смотри не заблудись в трех соснах! 🍃",
+        3: "Вестница Гермеса? Ну-ну, только не надейся, что я отдам тебе свои крылатые сандалии. 🪽",
+        4: "Воительница Спарты! С таким напором ты скоро завоюешь весь словарь. 🛡️",
+        5: "Пифия Аполлона? И что же нам пророчат звезды... а, точно, еще больше учебы! ☀️",
+        9: "Героиня Олимпа! Почти божественно... для простого человека. 🏛️",
+        14: "Мудрость Афины? Надеюсь, это поможет тебе не делать глупых ошибок. 🦉",
+        19: "Богиня Слов! Ладно, признаю, ты почти так же хороша, как я. Почти. 👑"
+      };
+      
+      setHermesTalk(levelUpSpeeches[currentLevel] || `Ого, уровень ${currentLevel}! ${titles[currentLevel-1]}. Неплохо!`);
+      setShowLevelAnim(true);
+      setTimeout(() => setShowLevelAnim(false), 3000);
+      localStorage.setItem('lebedi_last_level', currentLevel.toString());
+    }
   }, [currentLevel]);
 
   const toRoman = (num) => {
@@ -143,26 +154,12 @@ export default function App() {
   };
 
   useEffect(() => {
-    const lastXpString = localStorage.getItem('lebedi_xp_old');
-    const lastXp = lastXpString ? parseInt(lastXpString) : xp;
-    const lastLevel = Math.floor(lastXp / xpPerLevel) + 1;
-    if (currentLevel > lastLevel) {
-      setShowLevelAnim(true);
-      setTimeout(() => setShowLevelAnim(false), 3000);
-    }
-    localStorage.setItem('lebedi_xp_old', xp.toString());
     localStorage.setItem('lebedi_xp', xp.toString());
-    localStorage.setItem('lebedi_fehler', JSON.stringify(fehlerListe));
-  }, [currentLevel, xp, fehlerListe]);
+  }, [xp]);
 
   useEffect(() => {
     setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5));
   }, []);
-
-  const getTitle = () => {
-    const titles = ["Смертная 🌱", "Лесная Нимфа 🍃", "Вестница Гермеса 🪽", "Воительница Спарты 🛡️", "Пифия Аполлона ☀️", "Дочь Посейдона 🌊", "Охотница Артемиды 🏹", "Пламя Гестии 🔥", "Героиня Олимпа 🏛️", "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️", "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры 🦚", "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"];
-    return titles[currentLevel - 1] || titles[titles.length - 1];
-  };
 
   const currentWord = liste[currentIndex];
 
@@ -183,7 +180,7 @@ export default function App() {
   };
 
   const handleCorrect = () => {
-    const sass = ["Неплохо для человека.", "Зевс бы гордился. Наверное.", "Ой, кто-то сегодня выпил амброзии?", "Прямо в яблочко! Золотое, конечно.", "Ты меня пугаешь своей скоростью!"];
+    const sass = ["Неплохо для человека.", "Зевс бы гордился. Наверное.", "Ой, кто-то сегодня выпил амброзии?", "Прямо в яблочко!", "Ты меня пугаешь своей скоростью!"];
     setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
     setFeedback("Достойна богов! +10 XP 🌿");
     setXp(prev => prev + 10);
@@ -191,16 +188,13 @@ export default function App() {
   };
 
   const handleWrong = () => {
-    const sass = ["Мои сандалии соображают быстрее.", "Может, тебе стоит попросить помощи у Афродиты? Мозги — это не твоё.", "Минус XP! Позор Олимпа.", "Даже минотавр в лабиринте не так сильно тупил.", "Серьезно? Это было позорище."];
+    const sass = ["Мои сандалии соображают быстрее.", "Может, попросишь помощи у Афродиты?", "Минус XP! Позор Олимпа.", "Даже минотавр бы догадался.", "Серьезно? Это было позорище."];
     setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
     setFeedback("Гнев Зевса! -10 XP ⚡");
     setXp(prev => Math.max(0, prev - 10));
-    setFehlerListe(prev => !prev.find(f => f.word === currentWord.word) ? [currentWord, ...prev] : prev);
   };
 
-  const vintageTheme = {
-    bg: "#f4f1ea", paper: "#fffcf5", ink: "#4a3f35", accent: "#8c7e6d", serif: "'Georgia', 'Times New Roman', serif"
-  };
+  const vintageTheme = { bg: "#f4f1ea", paper: "#fffcf5", ink: "#4a3f35", accent: "#8c7e6d", serif: "'Georgia', serif" };
 
   if (liste.length === 0) return null;
 
@@ -230,13 +224,13 @@ export default function App() {
           border: 2px solid #4a3f35;
           border-radius: 15px;
           padding: 10px 15px;
-          width: 220px;
+          width: 240px; /* Etwas breiter für die längeren Sätze */
           font-size: 0.9rem;
           line-height: 1.3;
           color: #4a3f35;
           box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
-          margin-bottom: -40px; /* Schiebt Bubble über Hermes */
-          margin-right: 120px; /* Positioniert Bubble etwas seitlich */
+          margin-bottom: -40px;
+          margin-right: 220px; /* WEITER LINKS PLATZIERT (vorher 120px) */
           z-index: 20;
           pointer-events: auto;
         }
@@ -245,7 +239,7 @@ export default function App() {
           content: '';
           position: absolute;
           bottom: -10px;
-          right: 40px;
+          right: 20px; /* Angepasst an die neue Position */
           border-width: 10px 10px 0 0;
           border-style: solid;
           border-color: #4a3f35 transparent;
@@ -254,9 +248,9 @@ export default function App() {
 
       {showLevelAnim && (
         <>{[...Array(40)].map((_, i) => {
-          const emojis = ["🌿", "📜", "✨", "🏛️"];
+          const emojis = ["🌿", "📜", "✨", "🏛️", "👑"];
           const angle = (i / 40) * Math.PI * 2;
-          return <div key={i} className="emoji-particle" style={{ "--tw": `${Math.cos(angle) * 300}px`, "--th": `${Math.sin(angle) * 300}px` }}>{emojis[i % 4]}</div>
+          return <div key={i} className="emoji-particle" style={{ "--tw": `${Math.cos(angle) * 300}px`, "--th": `${Math.sin(angle) * 300}px` }}>{emojis[i % 5]}</div>
         })}</>
       )}
 
@@ -270,26 +264,11 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
-          {/* HERMES CONTAINER MIT BUBBLE */}
           <div className="hermes-container">
             <div className="speech-bubble">
               <b>Hermes:</b><br/>{hermesTalk}
             </div>
-            <img 
-              src={hermesUrl} 
-              alt="Hermes" 
-              style={{ 
-                width: "100%", 
-                height: "auto", 
-                objectFit: "contain", 
-                transform: "rotate(-5deg)", 
-                filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" 
-              }} 
-            />
-          </div>
-
-          <div style={{ position: "absolute", bottom: "-60px", left: "-50px", width: "180px", height: "180px", zIndex: 10, pointerEvents: "none" }}>
-             {atlasUrl && <img src={atlasUrl} alt="Atlas" style={{ width: "100%", height: "100%", objectFit: "contain" }} />}
+            <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
           <div style={{ position: "relative", background: vintageTheme.paper, minHeight: "600px", border: "1px solid #d4cbb3", padding: "40px 30px", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", zIndex: 5 }}>
@@ -302,10 +281,10 @@ export default function App() {
             <div style={{ marginBottom: "30px", borderBottom: "1px solid #d4cbb3", paddingBottom: "15px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Уровень {toRoman(currentLevel)}</span>
-                <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{getTitle()}</span>
+                <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{titles[currentLevel-1] || titles[titles.length-1]}</span>
               </div>
               <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px", marginTop: "8px" }}>
-                <div style={{ width: `${xpInLevel}%`, height: "100%", background: vintageTheme.accent, borderRadius: "4px", transition: "width 0.5s" }}></div>
+                <div style={{ width: `${xp % 100}%`, height: "100%", background: vintageTheme.accent, borderRadius: "4px", transition: "width 0.5s" }}></div>
               </div>
             </div>
 
@@ -317,7 +296,7 @@ export default function App() {
 
               {mode === "write" ? (
                 <div>
-                  <input placeholder="Переведи..." value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (input.toLowerCase().trim() === "" ? null : (currentWord.translation.toLowerCase().split('/').map(s => s.trim()).some(t => t === input.toLowerCase().trim()) ? handleCorrect() : handleWrong()))} style={{ width: "80%", padding: "10px", border: "none", borderBottom: `1px solid ${vintageTheme.ink}`, background: "transparent", fontSize: "1.3rem", textAlign: "center", outline: "none" }} />
+                  <input placeholder="Переведи..." value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (input.toLowerCase().trim() !== "" && (currentWord.translation.toLowerCase().split('/').map(s => s.trim()).some(t => t === input.toLowerCase().trim()) ? handleCorrect() : handleWrong()))} style={{ width: "80%", padding: "10px", border: "none", borderBottom: `1px solid ${vintageTheme.ink}`, background: "transparent", fontSize: "1.3rem", textAlign: "center", outline: "none" }} />
                   <div style={{ marginTop: "20px" }}>
                     <button onClick={() => (currentWord.translation.toLowerCase().split('/').map(s => s.trim()).some(t => t === input.toLowerCase().trim()) ? handleCorrect() : handleWrong())} style={{ background: vintageTheme.ink, color: "#fff", border: "none", padding: "10px 20px", cursor: "pointer", marginRight: "10px" }}>Проверить</button>
                     <button onClick={goToNextWord} style={{ background: "none", border: "1px solid", padding: "10px 15px", cursor: "pointer" }}>➜</button>
@@ -330,15 +309,6 @@ export default function App() {
               )}
               <p style={{ fontWeight: "bold", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>{feedback}</p>
             </div>
-
-            {fehlerListe.length > 0 && (
-              <details style={{ marginTop: "30px" }}>
-                <summary style={{ cursor: "pointer", color: vintageTheme.accent }}>📜 Свиток ошибок ({fehlerListe.length})</summary>
-                <div style={{ maxHeight: "100px", overflowY: "auto", fontSize: "0.85rem", padding: "10px" }}>
-                  {fehlerListe.map((f, i) => <div key={i} style={{ borderBottom: "1px solid #eee" }}><strong>{f.word}</strong>: {f.translation}</div>)}
-                </div>
-              </details>
-            )}
 
             <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between" }}>
               <span>Стр. {currentIndex + 1} / {liste.length}</span>
