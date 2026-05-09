@@ -70,7 +70,7 @@ const vokabelnOriginal = [
   { "word": "hassen", "translation": "ненавидеть", "hint": "Есть lieben, а есть...?" },
   { "word": "faszinieren", "translation": "очаровывать", "hint": "Du bist fasziniert von Kai Parker 😍" },
   { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale und Crowley sind ein ungewöhnliches Paar 🤨" },
-  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau and Berlin liegt Minsk." },
+  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau und Berlin liegt Minsk." },
   { "word": "Drohung", "translation": "угроза", "hint": "„Если ты решишь меня подставить, я вырву твоё сердце и засуну тебе в глотку.“ - как такое называется?" },
   { "word": "Anruf", "translation": "звонок", "hint": " „Do you like scary movies?“ 📱👻" },
   { "word": "etwas", "translation": "что-то / немного", "hint": "Etwas hier, etwas da 🤏" },
@@ -118,26 +118,44 @@ export default function App() {
   const xpInLevel = xp % xpPerLevel;
 
   useEffect(() => {
-    const gemischt = [...vokabelnOriginal].sort(() => Math.random() - 0.5);
-    setListe(gemischt);
+    const lastXpString = localStorage.getItem('lebedi_xp_old');
+    const lastXp = lastXpString ? parseInt(lastXpString) : xp;
+    const lastLevel = Math.floor(lastXp / xpPerLevel) + 1;
+    
+    if (currentLevel > lastLevel) {
+      setShowLevelAnim(true);
+      setTimeout(() => setShowLevelAnim(false), 3000);
+    }
+    localStorage.setItem('lebedi_xp_old', xp.toString());
+    localStorage.setItem('lebedi_xp', xp.toString());
+    localStorage.setItem('lebedi_fehler', JSON.stringify(fehlerListe));
+  }, [currentLevel, xp, fehlerListe]);
+
+  useEffect(() => {
+    setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5));
   }, []);
+
+  const getTitle = () => {
+    const titles = [
+      "Смертная 🌱", "Лесная Нимфа 🍃", "Вестница Гермеса 🪽", "Воительница Спарты 🛡️", 
+      "Пифия Аполлона ☀️", "Дочь Посейдона 🌊", "Охотница Артемиды 🏹", "Пламя Гестии 🔥",
+      , "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️",
+      "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры 🦚",
+      "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"
+    ];
+    return titles[currentLevel - 1] || titles[titles.length - 1];
+  };
 
   const currentWord = liste[currentIndex];
 
-  // Multiple Choice Optionen generieren
   const options = useMemo(() => {
     if (!currentWord || mode !== "choice") return [];
-    
-    // Die richtige Antwort
     const correct = currentWord.translation;
-    
-    // Falsche Antworten sammeln (ohne die aktuelle)
     const andere = vokabelnOriginal
       .filter(v => v.word !== currentWord.word)
       .map(v => v.translation)
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
-    
     return [correct, ...andere].sort(() => Math.random() - 0.5);
   }, [currentWord, mode]);
 
@@ -156,7 +174,7 @@ export default function App() {
   const handleCorrect = () => {
     setFeedback("Достойна богов! +10 XP 🌿");
     setXp(prev => prev + 10);
-    setTimeout(goToNextWord, 1000);
+    setTimeout(goToNextWord, 1200);
   };
 
   const handleWrong = () => {
@@ -171,19 +189,8 @@ export default function App() {
   const checkInput = () => {
     const userBeant = input.toLowerCase().trim();
     const loesungsTeile = currentWord.translation.toLowerCase().split('/').map(s => s.trim());
-    if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") {
-      handleCorrect();
-    } else {
-      handleWrong();
-    }
-  };
-
-  const checkChoice = (choice) => {
-    if (choice === currentWord.translation) {
-      handleCorrect();
-    } else {
-      handleWrong();
-    }
+    if (loesungsTeile.some(t => t === userBeant) && userBeant !== "") handleCorrect();
+    else handleWrong();
   };
 
   const vintageTheme = {
@@ -199,91 +206,83 @@ export default function App() {
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: vintageTheme.bg, display: "flex", justifyContent: "center", alignItems: "center", fontFamily: vintageTheme.serif, padding: "20px" }}>
-      
+      <style>{`
+        @keyframes global-particle {
+          0% { transform: translate(0, 0) scale(1); opacity: 1; }
+          100% { transform: translate(var(--tw), var(--th)) scale(0); opacity: 0; }
+        }
+        .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
+      `}</style>
+
+      {showLevelAnim && (
+        <>
+          {[...Array(40)].map((_, i) => {
+            const emojis = ["🌿", "📜", "✨", "🏛️"];
+            const angle = (i / 40) * Math.PI * 2;
+            return <div key={i} className="emoji-particle" style={{ "--tw": `${Math.cos(angle) * 300}px`, "--th": `${Math.sin(angle) * 300}px` }}>{emojis[i % 4]}</div>
+          })}
+        </>
+      )}
+
       {!isBookOpen ? (
         <div onClick={() => setIsBookOpen(true)} style={{ width: "300px", height: "450px", background: "#5d3a1a", borderRadius: "5px 20px 20px 5px", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", borderLeft: "10px solid #3e2711", boxShadow: "15px 15px 40px rgba(0,0,0,0.4)" }}>
           <div style={{ border: "2px solid #c5a059", padding: "20px", textAlign: "center", color: "#c5a059" }}>
-            <h1 style={{ fontSize: "1.8rem", textTransform: "uppercase" }}>Лебединый словарь 🦢</h1>
-            <p>Открыть</p>
+            <h1 style={{ fontSize: "1.5rem" }}>ЛЕБЕДИНЫЙ СЛОВАРЬ 🦢</h1>
+            <p style={{ fontStyle: "italic" }}>Нажми, чтобы открыть</p>
           </div>
         </div>
       ) : (
         <div style={{ width: "100%", maxWidth: "600px", background: vintageTheme.paper, minHeight: "600px", border: "1px solid #d4cbb3", padding: "40px 30px", position: "relative", boxShadow: "0 0 20px rgba(0,0,0,0.1)" }}>
           
-          {/* MODUS SCHALTER */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginBottom: "20px" }}>
-             <button 
-              onClick={() => setMode("write")} 
-              style={{ background: mode === "write" ? vintageTheme.ink : "transparent", color: mode === "write" ? "#fff" : vintageTheme.ink, border: `1px solid ${vintageTheme.ink}`, padding: "5px 15px", cursor: "pointer", borderRadius: "15px", fontSize: "0.8rem" }}>
-              Писать ✍️
-            </button>
-            <button 
-              onClick={() => setMode("choice")} 
-              style={{ background: mode === "choice" ? vintageTheme.ink : "transparent", color: mode === "choice" ? "#fff" : vintageTheme.ink, border: `1px solid ${vintageTheme.ink}`, padding: "5px 15px", cursor: "pointer", borderRadius: "15px", fontSize: "0.8rem" }}>
-              Выбор 🎲
-            </button>
+          <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "20px" }}>
+             <button onClick={() => setMode("write")} style={{ background: mode === "write" ? vintageTheme.ink : "transparent", color: mode === "write" ? "#fff" : vintageTheme.ink, border: `1px solid ${vintageTheme.ink}`, padding: "5px 15px", cursor: "pointer", borderRadius: "20px" }}>Писать ✍️</button>
+             <button onClick={() => setMode("choice")} style={{ background: mode === "choice" ? vintageTheme.ink : "transparent", color: mode === "choice" ? "#fff" : vintageTheme.ink, border: `1px solid ${vintageTheme.ink}`, padding: "5px 15px", cursor: "pointer", borderRadius: "20px" }}>Выбор 🎲</button>
           </div>
 
-          {/* HEADER */}
           <div style={{ marginBottom: "30px", borderBottom: "1px solid #d4cbb3", paddingBottom: "15px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Level {currentLevel}</span>
+              <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Level {currentLevel}</span>
+              <span style={{ fontSize: "0.9rem", color: vintageTheme.accent, fontStyle: "italic" }}>{getTitle()}</span>
             </div>
-            <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px", marginTop: "10px" }}>
+            <div style={{ width: "100%", height: "8px", background: "#e8e4d9", borderRadius: "4px", marginTop: "8px" }}>
               <div style={{ width: `${xpInLevel}%`, height: "100%", background: vintageTheme.accent, borderRadius: "4px", transition: "width 0.5s" }}></div>
             </div>
           </div>
 
-          {/* HAUPTINHALT */}
           <div style={{ textAlign: "center" }}>
-            <p style={{ color: vintageTheme.accent, fontStyle: "italic" }}>Как перевести?...</p>
-            <h2 style={{ fontSize: "3rem", margin: "10px 0", color: vintageTheme.ink }}>{currentWord.word}</h2>
-            
-            <div style={{ minHeight: "80px", margin: "20px 0" }}>
-              {showHint ? (
-                <p style={{ fontStyle: "italic", color: vintageTheme.ink }}>{currentWord.hint}</p>
-              ) : (
-                <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px dashed #b5a48b", color: "#b5a48b", padding: "5px 15px", cursor: "pointer" }}>Озарение 💡</button>
-              )}
+            <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: vintageTheme.ink }}>{currentWord.word}</h2>
+            <div style={{ minHeight: "60px", margin: "10px 0" }}>
+              {showHint ? <p style={{ fontStyle: "italic", opacity: 0.8 }}>{currentWord.hint}</p> : <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px dashed #ccc", cursor: "pointer", padding: "5px 10px" }}>Озарение 💡</button>}
             </div>
 
             {mode === "write" ? (
-              <>
-                <input 
-                  placeholder="Переведи..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && checkInput()}
-                  style={{ width: "80%", padding: "12px", border: "none", borderBottom: `1px solid ${vintageTheme.ink}`, background: "transparent", fontSize: "1.4rem", textAlign: "center", outline: "none", marginBottom: "30px" }}
-                />
-                <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-                  <button onClick={checkInput} style={{ background: vintageTheme.ink, color: "#fff", border: "none", padding: "12px 30px", cursor: "pointer", textTransform: "uppercase" }}>Проверить</button>
-                  <button onClick={goToNextWord} style={{ background: "none", border: `1px solid ${vintageTheme.ink}`, padding: "12px 20px", cursor: "pointer" }}>➜</button>
+              <div style={{ marginBottom: "20px" }}>
+                <input placeholder="Переведи..." value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && checkInput()} style={{ width: "80%", padding: "10px", border: "none", borderBottom: `1px solid ${vintageTheme.ink}`, background: "transparent", fontSize: "1.3rem", textAlign: "center", outline: "none" }} />
+                <div style={{ marginTop: "20px" }}>
+                  <button onClick={checkInput} style={{ background: vintageTheme.ink, color: "#fff", border: "none", padding: "10px 20px", cursor: "pointer", marginRight: "10px" }}>Проверить</button>
+                  <button onClick={goToNextWord} style={{ background: "none", border: "1px solid", padding: "10px 15px", cursor: "pointer" }}>➜</button>
                 </div>
-              </>
+              </div>
             ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginBottom: "30px" }}>
-                {options.map((opt, i) => (
-                  <button 
-                    key={i} 
-                    onClick={() => checkChoice(opt)}
-                    style={{ background: "#fff", border: `1px solid ${vintageTheme.ink}`, padding: "15px", cursor: "pointer", fontSize: "1rem", fontFamily: vintageTheme.serif, transition: "all 0.2s" }}
-                    onMouseOver={(e) => e.target.style.background = "#f0ede4"}
-                    onMouseOut={(e) => e.target.style.background = "#fff"}
-                  >
-                    {opt}
-                  </button>
-                ))}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "20px" }}>
+                {options.map((opt, i) => <button key={i} onClick={() => opt === currentWord.translation ? handleCorrect() : handleWrong()} style={{ background: "#fff", border: `1px solid ${vintageTheme.ink}`, padding: "12px", cursor: "pointer", fontSize: "0.9rem" }}>{opt}</button>)}
               </div>
             )}
-
-            <p style={{ marginTop: "20px", fontWeight: "bold", fontStyle: "italic", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>{feedback}</p>
+            <p style={{ fontWeight: "bold", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>{feedback}</p>
           </div>
 
-          {/* FOOTER */}
-          <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between", borderTop: "1px solid #eee", paddingTop: "20px" }}>
+          {fehlerListe.length > 0 && (
+            <details style={{ marginTop: "30px" }}>
+              <summary style={{ cursor: "pointer", color: vintageTheme.accent }}>📜 Свиток ошибок ({fehlerListe.length})</summary>
+              <div style={{ maxHeight: "100px", overflowY: "auto", fontSize: "0.85rem", padding: "10px" }}>
+                {fehlerListe.map((f, i) => <div key={i} style={{ borderBottom: "1px solid #eee" }}><strong>{f.word}</strong>: {f.translation}</div>)}
+              </div>
+            </details>
+          )}
+
+          <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between" }}>
             <span>Стр. {currentIndex + 1} / {liste.length}</span>
-            <span onClick={() => { if(window.confirm("Стереть прогресс?")) { localStorage.clear(); window.location.reload(); } }} style={{ cursor: "pointer", textDecoration: "underline" }}>Сжечь дневник</span>
+            <span onClick={() => window.confirm("Стереть прогресс?") && (localStorage.clear() || window.location.reload())} style={{ cursor: "pointer", textDecoration: "underline" }}>Сжечь дневник</span>
           </div>
         </div>
       )}
