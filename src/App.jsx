@@ -191,7 +191,7 @@ export default function App() {
   };
 
   const handleWrong = () => {
-    const sass = ["Мои сандалии соображают быстрее.", "Может, тебе стоит попросить помощи у Афродиты? Мозги — это не твоё.", "Минус десять очков Гриффиндору... Ой, не та сказка. Минус XP!", "Даже минотавр в лабиринте не так сильно тупил.", "Серьезно? Это было позорище."];
+    const sass = ["Мои сандалии соображают быстрее.", "Может, тебе стоит попросить помощи у Афродиты? Мозги — это не твоё.", "Минус XP! Позор Олимпа.", "Даже минотавр в лабиринте не так сильно тупил.", "Серьезно? Это было позорище."];
     setHermesTalk(sass[Math.floor(Math.random() * sass.length)]);
     setFeedback("Гнев Зевса! -10 XP ⚡");
     setXp(prev => Math.max(0, prev - 10));
@@ -211,28 +211,26 @@ export default function App() {
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
         .speech-bubble {
           position: absolute;
-          top: -160px;
-          right: 30px;
+          top: -70px;
+          right: 50px;
           background: #fff;
           border: 2px solid #4a3f35;
-          border-radius: 15px;
-          padding: 10px 15px;
-          width: 200px;
-          font-size: 0.85rem;
-          line-height: 1.2;
+          border-radius: 12px;
+          padding: 8px 12px;
+          width: 160px;
+          font-size: 0.8rem;
           color: #4a3f35;
-          box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
-          z-index: 20;
+          box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+          z-index: 25;
         }
         .speech-bubble::after {
           content: '';
           position: absolute;
-          bottom: -10px;
-          right: 30px;
-          border-width: 10px 10px 0 0;
+          bottom: -8px;
+          right: 20px;
+          border-width: 8px 8px 0 0;
           border-style: solid;
           border-color: #4a3f35 transparent;
-          display: block; width: 0;
         }
       `}</style>
 
@@ -254,18 +252,16 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
-          {/* HERMES - Präzise an der oberen rechten Ecke lehnen */}
-          <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          {/* HERMES - DEINE ORIGINALWERTE */}
+          <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "180px", height: "auto", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
             <div className="speech-bubble"><b>Hermes:</b><br/>{hermesTalk}</div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
-          {/* ATLAS - Unten Links stemmt er das Buch */}
           <div style={{ position: "absolute", bottom: "-60px", left: "-50px", width: "180px", height: "180px", zIndex: 10, pointerEvents: "none" }}>
              {atlasUrl && <img src={atlasUrl} alt="Atlas" style={{ width: "100%", height: "100%", objectFit: "contain" }} />}
           </div>
 
-          {/* DAS BUCH (ZENTRALES RECHTECK) */}
           <div style={{ position: "relative", background: vintageTheme.paper, minHeight: "600px", border: "1px solid #d4cbb3", padding: "40px 30px", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", zIndex: 5 }}>
             
             <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "20px" }}>
