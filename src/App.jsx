@@ -213,7 +213,7 @@ export default function App() {
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
           {/* HERMES - Oben Rechts lehnt er sich an */}
-          <div style={{ position: "absolute", top: "-80px", right: "-40px", width: "150px", height: "150px", zIndex: 10, pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "-80px", right: "-40px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none" }}>
              <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
 
