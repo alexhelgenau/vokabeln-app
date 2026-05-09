@@ -253,7 +253,7 @@ export default function App() {
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
           {/* HERMES - DEINE ORIGINALWERTE */}
-          <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "180px", height: "auto", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          <div style={{ position: "absolute", top: "-177px", right: "-140px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
             <div className="speech-bubble"><b>Hermes:</b><br/>{hermesTalk}</div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
