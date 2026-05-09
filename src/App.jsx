@@ -105,7 +105,7 @@ export default function App() {
 
   // Atlas bleibt leer, Hermes bekommt deine URL
   const atlasUrl = ""; 
-  const hermesUrl = "https://i.imgur.com/vHqY7R7.png";
+  const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
   const [xp, setXp] = useState(() => {
     const saved = localStorage.getItem('lebedi_xp');
