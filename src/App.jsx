@@ -56,7 +56,7 @@ const vokabelnOriginal = [
   { "word": "gehören", "translation": "принадлежать", "hint": "Sofia gehört jetzt Nicolo." },
   { "word": "holen", "translation": "взять / принести", "hint": "Du hast Persik für 4 Tage geholt." },
   { "word": "beschlossen", "translation": "решил / постановил / решено", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
-  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал планы и устроил хаос там, где обещал порядок." },
+  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал planen и устроил хаос там, где обещал порядок." },
   { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
   { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." },
   { "word": "langweilig", "translation": "скучно", "hint": "Сериал Тьма был langweilig 🥱" },
@@ -103,7 +103,6 @@ export default function App() {
   const [showLevelAnim, setShowLevelAnim] = useState(false);
   const [mode, setMode] = useState("write");
 
-  // Atlas bleibt leer, Hermes bekommt deine URL
   const atlasUrl = ""; 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -212,9 +211,9 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           
-          {/* HERMES - Oben Rechts lehnt er sich an */}
-          <div style={{ position: "absolute", top: "-80px", right: "-40px", width: "450px", height: "450px", zIndex: 10, pointerEvents: "none" }}>
-             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          {/* HERMES - Präzise an der oberen rechten Ecke lehnen */}
+          <div style={{ position: "absolute", top: "-110px", right: "-25px", width: "180px", height: "auto", zIndex: 10, pointerEvents: "none", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+            <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
           {/* ATLAS - Unten Links stemmt er das Buch */}
