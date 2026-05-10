@@ -382,7 +382,7 @@ export default function App() {
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
         .hermes-container { position: absolute; top: -177px; right: -140px; width: 450px; height: 450px; z-index: 10; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
         .speech-bubble {
-          position: relative; background: #fff; border: 2px solid #4a3f35; border-radius: 15px; padding: 14px 20px;
+          position: relative; background: #fff; border: 2px solid #4a3f35; border-radius: 15px; padding: 10px 18px;
           width: 290px; font-size: 0.95rem; line-height: 1.4; color: #4a3f35; box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
           margin-bottom: -15px; margin-right: 310px; z-index: 20; pointer-events: auto;
         }
