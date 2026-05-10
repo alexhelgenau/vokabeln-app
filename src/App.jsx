@@ -5,7 +5,7 @@ const vokabelnOriginal = [
   { "word": "warten", "translation": "ждать", "hint": "Du wartest auf mich in August." },
   { "word": "retten", "translation": "спасать", "hint": "Menschen retten, Dinge jagen, the family business." },
   { "word": "Angst", "translation": "страх", "hint": "Du hast Angst vor Schlangen🐍." },
-  { "word": "Entscheidung", "translation": "решение", "hint": "Elenas Entscheidung zwischen Stefan und Damon." },
+  { "word": "Entscheidung", "translation": "решение", "hint": "Elenas Entscheidung zwischen Stefan and Damon." },
   { "word": "deshalb", "translation": "поэтому", "hint": "Warum machst du das?! Deshalb!" },
   { "word": "übel", "translation": "плохо / тошно", "hint": "Если выпьешь слишком много соленой воды, тебе станет...?" },
   { "word": "einfach", "translation": "просто", "hint": "Есть schwer, а есть...?" },
@@ -13,8 +13,8 @@ const vokabelnOriginal = [
   { "word": "offensichtlich", "translation": "очевидно", "hint": "Es ist offentsichtlich, dass wir heiraten werden😏." },
   { "word": "Fest", "translation": "праздник / бал", "hint": "Der 09.05. ist ein großes Fest in Russland." },
   { "word": "Festung", "translation": "крепость", "hint": "Basgiath ist eine große Festung." },
-  { "word": "Atem", "translation": "дыхание", "hint": "Rikki, Cleo und Emma können unter Wasser atmen." },
-  { "word": "Bewegung", "translation": "дыхание", "hint": "Der Körper bewegt sich viel, wenn man Sport macht." },
+  { "word": "Atem", "translation": "дыхание", "hint": "Rikki, Cleo and Emma können unter Wasser atmen." },
+  { "word": "Bewegung", "translation": "движение", "hint": "Der Körper bewegt sich viel, wenn man Sport macht." },
   { "word": "schlafen", "translation": "спать", "hint": "Ich schlafe normalerweise 9 Stunden 😴." },
   { "word": "Antwort", "translation": "ответ", "hint": "Есть Frage❓, а есть...?" },
   { "word": "Anfang", "translation": "начало", "hint": "Есть Ende, а есть...?" },
@@ -39,7 +39,7 @@ const vokabelnOriginal = [
   { "word": "ändern", "translation": "менять", "hint": "Traditionen ändern sich nicht." },
   { "word": "verhalten", "translation": "вести себя", "hint": "Issi verhält sich sehr gut, weil sie ein guter Hund ist." },
   { "word": "plötzlich", "translation": "внезапно", "hint": "Plötzlich habe ich l'amour de ma vie in HelloTalk gefunden 🤭." },
-  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig und chill 😊." },
+  { "word": "ruhig", "translation": "спокойно", "hint": "Ich bin ruhig and chill 😊." },
   { "word": "gehorchen", "translation": "слушаться / повиноваться", "hint": "Sofia muss Niccolo gehorchen!" },
   { "word": "beherrschen", "translation": "управлять / владеть / контролировать", "hint": "Sie beherrschen den Norden von Palermo." },
   { "word": "makellos", "translation": "безупречный", "hint": "Sie sieht makellos aus! 😳" },
@@ -49,29 +49,29 @@ const vokabelnOriginal = [
   { "word": "richtig", "translation": "правильно", "hint": "Есть falsch, а есть...?'" },
   { "word": "sondern", "translation": "а / но", "hint": "Du liebst nicht Dean, sondern Sam." },
   { "word": "ebenfalls", "translation": "также", "hint": "Synonym auch." },
-  { "word": "bauen", "translation": "строить", "hint": "Wir bauen ein house am meer." },
+  { "word": "bauen", "translation": "строить", "hint": "Wir bauen ein Haus am Meer." },
   { "word": "Mittelalter", "translation": "средневековье", "hint": "Die Epoche war vom Jahr 500-1500." },
-  { "word": "überall", "translation": "везде", "hint": "Hannahs Freunde und Jake suchen Hannah überall." },
+  { "word": "überall", "translation": "везде", "hint": "Hannahs Freunde and Jake suchen Hannah überall." },
   { "word": "Wache", "translation": "стража / страж", "hint": "Die bewaffnete Wache steht regungslos." },
   { "word": "gehören", "translation": "принадлежать", "hint": "Sofia gehört jetzt Nicolo." },
   { "word": "holen", "translation": "взять / принести", "hint": "Du hast Persik für 4 Tage geholt." },
   { "word": "beschlossen", "translation": "решил / постановил / решено", "hint": "Sie hat beschlossen, für ihre Freiheit zu kämpfen." },
-  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал planen и устроил хаос там, где обещал порядок." },
-  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön und unbeschwert." },
+  { "word": "anscheinend", "translation": "видимо / кажется", "hint": "Вельзевул Бредовред, видимо, снова перепутал planen and устроил хаос там, где обещал порядок." },
+  { "word": "unbeschwert", "translation": "беззаботный", "hint": "Meine Kindheit war schön and unbeschwert." },
   { "word": "noch", "translation": "еще", "hint": "Ich bin NOCH nicht in Moskau, aber im August." },
   { "word": "langweilig", "translation": "скучно", "hint": "Сериал Тьма был langweilig 🥱" },
   { "word": "nur", "translation": "только", "hint": "Du gehörst mir, Violet. NUR wenn du mir gehörst." },
   { "word": "beobachten", "translation": "наблюдать", "hint": "Niccolo beobachtet Sofia, seit sie ein kein Kind war." },
   { "word": "riesig", "translation": "огромный", "hint": "Der Riese Gargantua ist riesig!." },
-  { "word": "schenken", "translation": "дарить", "hint": "Was hast du Anya zum Geburstag gesченкт?" },
+  { "word": "schenken", "translation": "дарить", "hint": "Was hast du Anya zum Geburstag geschenkt?" },
   { "word": "schreiten", "translation": "шагать / шествовать", "hint": "Durch den Saal schreiten." },
   { "word": "später", "translation": "позже / потом", "hint": "Nicht jetzt, sondern später." },
   { "word": "verteidigen", "translation": "защищать", "hint": "Edward verteidigt Bella vor einem Auto." },
   { "word": "hassen", "translation": "ненавидеть", "hint": "Есть lieben, а есть...?" },
   { "word": "faszinieren", "translation": "очаровывать", "hint": "Du bist fasziniert von Kai Parker 😍" },
-  { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale und Crowley sind ein ungewöhnliches Paar 🤨" },
-  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau und Berlin liegt Minsk." },
-  { "word": "Drohung", "translation": "угроза", "hint": "„Если ты решишь меня подставить, я вырву твоё сердце и засуну тебе в глотку.“ - как такое называется?" },
+  { "word": "ungewöhnlich", "translation": "необычно", "hint": "Aziraphale and Crowley sind ein ungewöhnliches Paar 🤨" },
+  { "word": "zwischen", "translation": "между", "hint": "Zwischen Moskau and Berlin liegt Minsk." },
+  { "word": "Drohung", "translation": "угроза", "hint": "„Если ты решишь меня подставить, я вырву твоё сердце and засуну тебе в глотку.“ - как такое называется?" },
   { "word": "Anruf", "translation": "звонок", "hint": " „Do you like scary movies?“ 📱👻" },
   { "word": "etwas", "translation": "что-то / немного", "hint": "Etwas hier, etwas da 🤏" },
   { "word": "sanft", "translation": "нежный / мягкий", "hint": "Есть hart, а есть...?" },
@@ -81,7 +81,7 @@ const vokabelnOriginal = [
   { "word": "leise", "translation": "тихо", "hint": "In der Bibliothek muss man leise sein 🤫" },
   { "word": "durcheinanderrennen", "translation": "бегать вперемешку / суетиться", "hint": "🏃🏃🏃😵‍💫😵‍💫😵‍💫" },
   { "word": "Erfolg", "translation": "успех", "hint": "Erfolg im Sport haben 🏅🏆" },
-  { "word": "bestrafen", "translation": "наказывать / карать", "hint": "Verbrechen und Strafe von Fyodor Dostoyevsky." },
+  { "word": "bestrafen", "translation": "наказывать / карать", "hint": "Verbrechen and Strafe von Fyodor Dostoyevsky." },
   { "word": "Nachtisch", "translation": "десерт / сладкое", "hint": "Marzipan ist ein guter Nachtisch 😋" },
   { "word": "klar", "translation": "ясный / понятный / конечно", "hint": "Alles klar, kein Problem!" },
   { "word": "verbergen", "translation": "скрывать / прятать", "hint": "Synonym verstecken 🙈" },
@@ -97,7 +97,7 @@ const titles = [
   "Смертная 🌱", "Лесная Нимфа 🍃", "Вестница Гермеса 🪽", "Воительница Спарты 🛡️", 
   "Пифия Аполлона ☀️", "Дочь Посейдона 🌊", "Охотница Артемиды 🏹", "Пламя Гестии 🔥", 
   "Героиня Олимпа 🏛️", "Менада Диониса 🍷", "Ярость Эринии ⚔️", "Мастерица Гефеста ⚒️", 
-  "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры 🦚", 
+  "Красота Афродиты 🕊️", "Мудрость Афины 🦉", "Титанида знаний 🌍", "Наперсница Геры ОВА", 
   "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"
 ];
 
@@ -110,13 +110,18 @@ export default function App() {
   const [showHint, setShowHint] = useState(false);
   const [showLevelAnim, setShowLevelAnim] = useState(false);
   const [mode, setMode] = useState("write");
-  const [hermesTalk, setHermesTalk] = useState("Смотрю тебе прямо через плечо. Не вздумай ошибиться! 👀");
+  const [hermesTalk, setHermesTalk] = useState("Смотрю тебе прямо через плечо, доченька. Не вздумай ошибиться! 👀");
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
   const [xp, setXp] = useState(() => {
     const saved = localStorage.getItem('lebedi_xp');
     return saved ? parseInt(saved) : 0;
+  });
+
+  const [fehlerListe, setFehlerListe] = useState(() => {
+    const saved = localStorage.getItem('lebedi_fehler');
+    return saved ? JSON.parse(saved) : [];
   });
 
   const xpPerLevel = 100;
@@ -133,7 +138,7 @@ export default function App() {
     const pools = {
       1: { // Смертная
         correct: [
-          "Для простой смертной сойдёт, пока что. Но не обольщайся ;)",
+          "Для простой смертной сойдёт, пока что. Но не обольщайся, это был уровень 'младенец'.",
           "Правильно! Настоящее чудо природы — человек, который задействовал больше одной извилины.",
           "Моя домашняя черепаха ответила бы так же быстро, но я всё равно тебя похвалю. Молодец.",
           "Ого, а ты, оказывается, не совсем безнадёжна! Может, из тебя и выйдет толк через пару веков.",
@@ -169,7 +174,7 @@ export default function App() {
       },
       3: { // Вестница
         correct: [
-          "Моя школа! Сразу видно, гермесовская закалка. Горжусь тобой (совсем чуть-чуть).",
+          "Моя школа! Сразу видно — гермесовская закалка. Горжусь тобой (совсем чуть-чуть).",
           "Почти так же идеально, как я... Ну, ладно, на самом деле нет, но ты очень стараешься.",
           "Знаешь, а ты мне нравишься. У тебя есть потенциал... и, возможно, мои гены. Чуть-чуть ;)",
           "Быстро соображаешь, я ничего другого от своей вестницы и не ожидал! Хватаешь на лету.",
@@ -188,7 +193,7 @@ export default function App() {
       4: { // Воительница
         correct: [
           "Арес бы оценил твой напор, старый кабанчик любит такую дерзость. Точный удар!",
-          "Твой мозг сегодня острый, как мой лучший меч!",
+          "Твой мозг сегодня острый, как мой лучший меч. Ты буквально режешь эти слова пополам.",
           "Враги бегут в страхе, когда видят твой уровень немецкого! Настоящая лингвистическая атака.",
           "Точно в цель! Ты попала в смысл слова быстрее, чем стрела пронзает щит слабака.",
           "Это был настоящий боевой перевод! Ты не просто учишься, ты побеждаешь эти слова.",
@@ -225,7 +230,7 @@ export default function App() {
         correct: [
           "Твои знания глубоки, как бездна океана... Ну, по крайней мере, ты не утонула сразу.",
           "Плывёшь по словарю как дельфин, а не как перепуганная медуза. Впечатляет!",
-          "Ты не утонула в этом слове!",
+          "Ты не утонула в этом слове! Видимо, уроки плавания с Перси не прошли даром.",
           "Волны успеха омывают твой интеллект. Смотри, не захлебнись от гордости!",
           "Это морская истина: ты сегодня на удивление сообразительна, доченька.",
           "Даже Посейдон ставит тебе лайк своим трезубцем. Но до уровня богини тебе ещё грести и грести."
@@ -242,8 +247,8 @@ export default function App() {
       7: { // Охотница
         correct: [
           "Прямо в яблочко! Артемида бы взяла тебя на охоту, но только как носильщика стрел.",
-          "Дичь поймана, слово приручено!",
-          "Хладнокровно и чётко. Ты убиваешь эти тесты так же легко, как я время на Олимпе.",
+          "Дичь поймана, слово приручено. Твои инстинкты сегодня почти не подводят.",
+          "Хладнокровно и чётко. Ты убиваешь эти тесты так же легко, как я — время на Олимпе.",
           "Меткий выстрел! Даже без лука ты умудряешься попадать в цель. Чудо какое-то.",
           "Ни одно немецкое слово не смогло от тебя убежать. Твои сандалии явно быстрее твоих сомнений.",
           "Артемида одобрительно кивает. Только не вздумай подстрелить моё самолюбие!"
@@ -264,7 +269,7 @@ export default function App() {
           "Настоящий костер знаний! Гестия в восторге, а я просто в шоке от твоей гениальности.",
           "Тепло пошло... кажется, твой мозг наконец-то прогрелся до нужной температуры.",
           "Вижу свет в конце этого длинного слова. Ты справляешься лучше, чем я ожидал.",
-          "Согреваешь мой взор своими правильными ответами. Давай в том же духе, пока nicht остыла."
+          "Согреваешь мой взор своими правильными ответами. Давай в том же духе, пока не остыла."
         ],
         wrong: [
           "Твой священный огонь погас. Принеси спички, а лучше — учебник и капельку ума.",
@@ -304,17 +309,17 @@ export default function App() {
     const lastLevelSaved = localStorage.getItem('lebedi_last_level');
     const lastLevel = lastLevelSaved ? parseInt(lastLevelSaved) : 1;
     if (currentLevel > lastLevel) {
-      const levelUpAnnouncements = {
+      const up = {
         2: "О? Теперь мы маленькая лесная нимфа, да? Смотри не застрянь в корнях! 🍃",
         3: "Вестница Гермеса? Ну, до моего стиля тебе ещё далеко, доченька. 🪽",
         4: "О, воительница Спарты! Теперь будешь бить слова щитом? 🛡️",
         5: "Пифия Аполлона? Ну давай, предскажи, сколько ещё ошибок ты сделаешь. ☀️",
-        6: "Дочь Посейдона? Главное, не пускай пузыри вместо ответов. 🌊",
+        6: "Дочь Посейдона? Главное — не пускай пузыри вместо ответов. 🌊",
         7: "Охотница Артемиды? Постарайся не подстрелить мой сандалий! 🏹",
         8: "Пламя Гестии? Смотри, не обожгись о свой собственный интеллект. 🔥",
         9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🏛️"
       };
-      setHermesTalk(levelUpAnnouncements[currentLevel] || `Ого! Новый статус: ${currentTitle}. Корона не жмёт? 👑`);
+      setHermesTalk(up[currentLevel] || `Ого! Новый статус: ${currentTitle}. Корона не жмёт? 👑`);
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
       localStorage.setItem('lebedi_last_level', currentLevel.toString());
@@ -332,9 +337,14 @@ export default function App() {
     setHermesTalk(getLevelSass(currentLevel, 'wrong'));
     setFeedback("Гнев Зевса! -10 XP ⚡");
     setXp(prev => Math.max(0, prev - 10));
+    setFehlerListe(prev => !prev.find(f => f.word === currentWord.word) ? [currentWord, ...prev] : prev);
   };
 
-  useEffect(() => { localStorage.setItem('lebedi_xp', xp.toString()); }, [xp]);
+  useEffect(() => { 
+    localStorage.setItem('lebedi_xp', xp.toString());
+    localStorage.setItem('lebedi_fehler', JSON.stringify(fehlerListe));
+  }, [xp, fehlerListe]);
+
   useEffect(() => { setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5)); }, []);
   
   const toRoman = (n) => {
@@ -343,13 +353,17 @@ export default function App() {
   };
 
   const currentWord = liste[currentIndex];
-  
+
   const options = useMemo(() => {
     if (!currentWord || mode !== "choice") return [];
     const correct = currentWord.translation;
-    const andere = vokabelnOriginal.filter(v => v.word !== currentWord.word).map(v => v.translation).sort(() => Math.random() - 0.5).slice(0, 3);
-    return [correct, ...andere].sort(() => Math.random() - 0.5);
-  }, [currentWord, mode]);
+    const distractors = vokabelnOriginal
+      .filter(v => v.word !== currentWord.word)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3)
+      .map(v => v.translation);
+    return [correct, ...distractors].sort(() => Math.random() - 0.5);
+  }, [currentIndex, mode, currentWord]);
 
   const goToNextWord = () => {
     if (currentIndex < liste.length - 1) setCurrentIndex(currentIndex + 1);
@@ -358,6 +372,7 @@ export default function App() {
   };
 
   const vintageTheme = { bg: "#f4f1ea", paper: "#fffcf5", ink: "#4a3f35", accent: "#8c7e6d", serif: "'Georgia', serif" };
+
   if (liste.length === 0) return null;
 
   return (
@@ -369,7 +384,7 @@ export default function App() {
         .speech-bubble {
           position: relative; background: #fff; border: 2px solid #4a3f35; border-radius: 15px; padding: 14px 20px;
           width: 290px; font-size: 0.95rem; line-height: 1.4; color: #4a3f35; box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
-          margin-bottom: -15px; margin-right: 340px; z-index: 20; pointer-events: auto;
+          margin-bottom: -15px; margin-right: 310px; z-index: 20; pointer-events: auto;
         }
         .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 10px; border-width: 10px 10px 0 0; border-style: solid; border-color: #4a3f35 transparent; }
       `}</style>
@@ -391,7 +406,7 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           <div className="hermes-container">
-            <div className="speech-bubble"><b>Гермес:</b><br/>{hermesTalk}</div>
+            <div className="speech-bubble"><b>Отец Гермес:</b><br/>{hermesTalk}</div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
@@ -432,6 +447,15 @@ export default function App() {
               )}
               <p style={{ fontWeight: "bold", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>{feedback}</p>
             </div>
+
+            {fehlerListe.length > 0 && (
+              <details style={{ marginTop: "30px" }}>
+                <summary style={{ cursor: "pointer", color: vintageTheme.accent }}>📜 Свиток ошибок ({fehlerListe.length})</summary>
+                <div style={{ maxHeight: "100px", overflowY: "auto", fontSize: "0.85rem", padding: "10px" }}>
+                  {fehlerListe.map((f, i) => <div key={i} style={{ borderBottom: "1px solid #eee" }}><strong>{f.word}</strong>: {f.translation}</div>)}
+                </div>
+              </details>
+            )}
 
             <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between" }}>
               <span>Стр. {currentIndex + 1} / {liste.length}</span>
