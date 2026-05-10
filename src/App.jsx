@@ -406,7 +406,7 @@ export default function App() {
       ) : (
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           <div className="hermes-container">
-            <div className="speech-bubble"><b>Отец Гермес:</b><br/>{hermesTalk}</div>
+            <div className="speech-bubble"><b>Гермес:</b><br/>{hermesTalk}</div>
             <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
           </div>
 
