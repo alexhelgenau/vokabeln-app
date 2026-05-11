@@ -393,6 +393,11 @@ export default function App() {
   flex-direction: column;
   align-items: flex-end;
 }
+  .hermes-container img {
+  width: clamp(180px, 22vw, 260px) !important; /* !important zur Sicherheit gegen Browser-Fehler */
+  height: auto;
+  object-fit: contain;
+}
         .speech-bubble {
   position: relative;
   background: #fff;
@@ -414,6 +419,16 @@ export default function App() {
   pointer-events: auto;
 }
         .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 10px; border-width: 10px 10px 0 0; border-style: solid; border-color: #4a3f35 transparent; }
+      @media (max-width: 900px) {
+          .hermes-container {
+            top: -90px !important;   /* Schiebt ihn tiefer, wenn der Bildschirm klein ist */
+            right: -10px !important; 
+          }
+          .speech-bubble {
+            width: 240px !important; 
+            margin-right: 120px !important;
+          }
+        }
       `}</style>
 
       {showLevelAnim && (
@@ -434,7 +449,11 @@ export default function App() {
         <div style={{ position: "relative", width: "100%", maxWidth: "600px" }}>
           <div className="hermes-container">
             <div className="speech-bubble"><b>Гермес:</b><br/>{hermesTalk}</div>
-            <img src={hermesUrl} alt="Hermes" style={{ width: "100%", height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} />
+            <img 
+  src={hermesUrl} 
+  alt="Hermes" 
+  style={{ height: "auto", objectFit: "contain", transform: "rotate(-5deg)", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.1))" }} 
+/>
           </div>
 
           <div style={{ position: "relative", background: vintageTheme.paper, minHeight: "600px", border: "1px solid #d4cbb3", padding: "40px 30px", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", zIndex: 5 }}>
