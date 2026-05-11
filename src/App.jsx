@@ -489,7 +489,27 @@ export default function App() {
                 </div>
               ) : (
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "20px" }}>
-                  {options.map((opt, i) => <button key={i} onClick={() => opt === currentWord.translation ? handleCorrect() : handleWrong()} style={{ background: "#fff", border: `1px solid ${vintageTheme.ink}`, padding: "12px", cursor: "pointer", fontSize: "0.9rem" }}>{opt}</button>)}
+                {options.map((opt, i) => (
+  <button 
+    key={i} 
+    onClick={() => opt === currentWord.translation ? handleCorrect() : handleWrong()} 
+    style={{ 
+      background: "#ffffff", 
+      border: "2px solid #4a3f35", 
+      padding: "12px", 
+      cursor: "pointer", 
+      fontSize: "1rem",
+      fontWeight: "bold",
+      // --- DAS SIND DIE RETTER-ZEILEN GEGEN DIE WEISSEN BOXEN ---
+      color: "#4a3f35", 
+      display: "block",
+      WebkitTextFillColor: "#4a3f35" 
+      // -------------------------------------------------------
+    }}
+  >
+    {opt}
+  </button>
+))}
                 </div>
               )}
               <p style={{ fontWeight: "bold", color: feedback.includes("Достойна") ? "#5c7a5c" : "#a35c5c" }}>{feedback}</p>
