@@ -380,12 +380,39 @@ export default function App() {
       <style>{`
         @keyframes global-particle { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tw), var(--th)) scale(0); opacity: 0; } }
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
-        .hermes-container { position: absolute; top: -177px; right: -140px; width: 450px; height: 450px; z-index: 10; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .hermes-container {
+  position: absolute;
+  top: clamp(-140px, -12vh, -80px);
+  right: clamp(-60px, -4vw, -20px);
+
+  width: clamp(260px, 32vw, 420px);
+
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
         .speech-bubble {
-          position: relative; background: #fff; border: 2px solid #4a3f35; border-radius: 15px; padding: 10px 18px;
-          width: 290px; font-size: 0.95rem; line-height: 1.4; color: #4a3f35; box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
-          margin-bottom: -15px; margin-right: 310px; z-index: 20; pointer-events: auto;
-        }
+  position: relative;
+  background: #fff;
+  border: 2px solid #4a3f35;
+  border-radius: 15px;
+
+  padding: 10px 18px;
+  width: clamp(220px, 24vw, 290px);
+
+  font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+  line-height: 1.4;
+  color: #4a3f35;
+  box-shadow: 4px 4px 0px rgba(74, 63, 53, 0.1);
+
+  margin-bottom: 12px;
+  margin-right: clamp(40px, 8vw, 120px);
+
+  z-index: 20;
+  pointer-events: auto;
+}
         .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 10px; border-width: 10px 10px 0 0; border-style: solid; border-color: #4a3f35 transparent; }
       `}</style>
 
