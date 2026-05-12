@@ -83,14 +83,24 @@ const vokabelnOriginal = [
   { "word": "Erfolg", "translation": "успех", "hint": "Erfolg im Sport haben 🏅🏆" },
   { "word": "bestrafen", "translation": "наказывать / карать", "hint": "Verbrechen and Strafe von Fyodor Dostoyevsky." },
   { "word": "Nachtisch", "translation": "десерт / сладкое", "hint": "Marzipan ist ein guter Nachtisch 😋" },
-  { "word": "klar", "translation": "ясный / понятный / конечно", "hint": "Alles klar, kein Problem!" },
+  { "word": "klar", "translation": "ясный / понятный / понятно / конечно", "hint": "Alles klar, kein Problem!" },
   { "word": "verbergen", "translation": "скрывать / прятать", "hint": "Synonym verstecken 🙈" },
   { "word": "höflich", "translation": "вежливый", "hint": "Aristokraten müssen höflich sein." },
   { "word": "jung", "translation": "молодой", "hint": "Lika ist die Jüngste in der Familie." },
   { "word": "natürlich", "translation": "конечно / естественно", "hint": "Kannst du mir helfen? Natürlich!" },
   { "word": "bleiben", "translation": "оставаться", "hint": "Wir bleiben in Russland für 1 Jahr, danach gehen wir nach Deutschland." },
   { "word": "gegen", "translation": "против", "hint": "Power Rangers gegen Lord Zedd 👊" },
-  { "word": "böse", "translation": "злой / плохой / шестокий", "hint": "Kai Parker ist vielleicht böse, aber heiß 😉" }
+  { "word": "böse", "translation": "злой / плохой / шестокий", "hint": "Kai Parker ist vielleicht böse, aber heiß 😉" },
+  { "word": "wünschen", "translation": "желать / хотеть", "hint": "Aladdin hat 3 Wünsche 🧞✨" },
+  { "word": "peinlich", "translation": "стыдно / неловко", "hint": "Dir ist peinlich, wenn du Englisch sprichst 😳" },
+  { "word": "Lachen", "translation": "смех / смеяться", "hint": "„ahahahahahahaah“ - Hermes, 2023." },
+  { "word": "unangenehm", "translation": "неприятно", "hint": "Salvatore findet Nicolo unangenehm." },
+  { "word": "verlieren", "translation": "терять / проигрывать", "hint": "Der Viscount hat seine Titel verloren." },
+  { "word": "fröhlich", "translation": "веселый / радостный", "hint": "Ich bin immer fröhlich, wenn ich mit dir rede." },
+  { "word": "wunderbar", "translation": "чудесно / замечательно", "hint": "Ok --> gut --> wunderbar!" },
+  { "word": "schweigen", "translation": "молчать", "hint": "Есть reden, а есть...?" },
+  { "word": "strahlend", "translation": "сияющий / лучезарный", "hint": "Edward strahlt in der Sonne." },
+  { "word": "lügen", "translation": "лгать / врать", "hint": "Odysseus lügt sehr viel." }
 ];
 
 const titles = [
@@ -297,7 +307,25 @@ export default function App() {
           "Даже Геракл сделал фейспалм, увидев твой перевод. Это было мощно (в плохом смысле).",
           "Весь Олимп содрогнулся от твоей ошибки. Арес смеется, а мне за тебя стыдно!"
         ]
-      }
+      },
+      10: { // Менада Диониса 🍷
+  correct: [
+    "Божественное попадание! Дионис точно налил бы тебе бокал лучшего вина. 🍇",
+    "Верно! Твой разум остр, как тирс самой неистовой менады.",
+    "Эвоэ! От твоих знаний содрогаются склоны Киферона! ✨",
+    "Фантастика! Ты несешься сквозь слова в танце, словно менада в трансе.",
+    "Правильно! Сам Пан отложил бы флейту, засмотревшись на твой талант.",
+    "Твой ум сегодня по-настоящему опьяняет. Так держать! 🍷"
+  ],
+  wrong: [
+    "Ой! Слишком много нектара пригубила? Это было мимо. 🍷🥴",
+    "Упс, кажется, кто-то потерялся в дионисийском вихре...",
+    "Неверно! Афина хмурится, но Диониса этот хаос только забавляет.",
+    "Сосредоточься! Даже дикой менаде нужно иногда сделать глубокий вдох.",
+    "Мимо! Это вино вскружило тебе голову или слово было слишком коварным?",
+    "Ай! Это было так же путано, как шествие без музыки. Попробуй еще раз!"
+  ]
+},
     };
 
     const currentPool = pools[level] || pools[9];
@@ -317,7 +345,8 @@ export default function App() {
         6: "Дочь Посейдона? Главное — не пускай пузыри вместо ответов. 🌊",
         7: "Охотница Артемиды? Постарайся не подстрелить мой сандалий! 🏹",
         8: "Пламя Гестии? Смотри, не обожгись о свой собственный интеллект. 🔥",
-        9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🏛️"
+        9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🏛️",
+        10: "Осторожно, дорогуша! Ты только что стала Менадой Диониса. С твоими знаниями ты теперь опасна для общества.. или, как минимум, для ближайшего винного погреба."
       };
       setHermesTalk(up[currentLevel] || `Ого! Новый статус: ${currentTitle}. Корона не жмёт? 👑`);
       setShowLevelAnim(true);
