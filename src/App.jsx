@@ -395,7 +395,7 @@ export default function App() {
   align-items: flex-end;
 }
   .hermes-container img {
-  width: clamp(180px, 22vw, 260px) !important; /* !important zur Sicherheit gegen Browser-Fehler */
+  width: clamp(180px, 22vw, 400px) !important; /* !important zur Sicherheit gegen Browser-Fehler */
   height: auto;
   object-fit: contain;
 }
