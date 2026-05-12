@@ -382,7 +382,7 @@ export default function App() {
         .emoji-particle { position: fixed; left: 50%; top: 50%; pointer-events: none; z-index: 9999; animation: global-particle 3s forwards; }
         .hermes-container {
   position: absolute;
-  top: 0;
+  top: 50px;
   right: 0;
   transform: translate(25%, -55%);
 
