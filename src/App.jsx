@@ -383,7 +383,7 @@ export default function App() {
         .hermes-container {
   position: absolute;
   top: 50px;
-  right: -5px;
+  right: -10px;
   transform: translate(25%, -55%);
 
   width: clamp(260px, 32vw, 420px);
