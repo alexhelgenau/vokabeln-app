@@ -476,12 +476,42 @@ export default function App() {
             <div style={{ textAlign: "center" }}>
               <h2 style={{ fontSize: "2.8rem", margin: "10px 0", color: vintageTheme.ink }}>{currentWord.word}</h2>
               <div style={{ minHeight: "60px", margin: "10px 0" }}>
-                {showHint ? <p style={{ fontStyle: "italic", opacity: 0.8 }}>{currentWord.hint}</p> : <button onClick={() => setShowHint(true)} style={{ background: "none", border: "1px dashed #ccc", cursor: "pointer", padding: "5px 10px" }}>Озарение 💡</button>}
+                {showHint ? <p style={{ fontStyle: "italic", opacity: 0.8 }}>{currentWord.hint}</p> : <button 
+  onClick={() => setShowHint(true)} 
+  style={{ 
+    background: "none", 
+    border: "1px dashed #4a3f35", 
+    cursor: "pointer", 
+    padding: "5px 10px",
+    color: "#4a3f35", // Erzwingt die Farbe
+    WebkitTextFillColor: "#4a3f35" // Der "Sprühdosen"-Fix für Opera
+  }}
+>
+  Озарение 💡
+</button>}
               </div>
 
               {mode === "write" ? (
                 <div>
-                  <input placeholder="Переведи..." value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (input.toLowerCase().trim() !== "" && (currentWord.translation.toLowerCase().split('/').map(s => s.trim()).some(t => t === input.toLowerCase().trim()) ? handleCorrect() : handleWrong()))} style={{ width: "80%", padding: "10px", border: "none", borderBottom: `1px solid ${vintageTheme.ink}`, background: "transparent", fontSize: "1.3rem", textAlign: "center", outline: "none" }} />
+                  <input 
+  placeholder="Переведи..." 
+  value={input} 
+  onChange={(e) => setInput(e.target.value)} 
+  onKeyPress={(e) => e.key === 'Enter' && (input.toLowerCase().trim() !== "" && (currentWord.translation.toLowerCase().split('/').map(s => s.trim()).some(t => t === input.toLowerCase().trim()) ? handleCorrect() : handleWrong()))} 
+  style={{ 
+    width: "80%", 
+    padding: "10px", 
+    border: "none", 
+    borderBottom: "1px solid #4a3f35", 
+    background: "transparent", 
+    fontSize: "1.3rem", 
+    textAlign: "center", 
+    outline: "none",
+    // --- HIER DIE FIXES ---
+    color: "#4a3f35", 
+    WebkitTextFillColor: "#4a3f35" 
+  }} 
+/>
                   <div style={{ marginTop: "20px" }}>
                     <button onClick={() => (currentWord.translation.toLowerCase().split('/').map(s => s.trim()).some(t => t === input.toLowerCase().trim()) ? handleCorrect() : handleWrong())} style={{ background: vintageTheme.ink, color: "#fff", border: "none", padding: "10px 20px", cursor: "pointer", marginRight: "10px" }}>Проверить</button>
                     <button onClick={goToNextWord} style={{ background: "none", border: "1px solid", padding: "10px 15px", cursor: "pointer" }}>➜</button>
