@@ -111,6 +111,17 @@ const titles = [
   "Молния Персефоны ⚡", "Пряха Мойр 🎡", "Богиня Слов 👑"
 ];
 
+const levelUpMessages = {
+  2: "О? Теперь мы маленькая лесная нимфа, да? Смотри не застрянь в корнях! 🌲",
+  3: "Вестница Гермеса? Ну, до моего стиля тебе ещё далеко, доченька. 🪽",
+  4: "О, воительница Спарты! Теперь будешь бить слова щитом? 🛡️",
+  5: "Пифий Аполлона? Ну давай, предскажи, сколько ещё ошибок ты сделаешь. ☀️",
+  6: "Дочь Посейдона? Главное — не пускай пузыри вместо ответов. 🌊",
+  7: "Охотница Артемиды? Постарайся не подстрелить мой сандалий! 🏹",
+  8: "Пламя Гестии? Смотри, не обожгись о свой собственный интеллект. 🔥",
+  9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🛡️"
+};
+
 export default function App() {
   const [isBookOpen, setIsBookOpen] = useState(false);
   const [liste, setListe] = useState([]);
@@ -181,6 +192,10 @@ export default function App() {
       localStorage.setItem('lebedi_last_level', nextLevel.toString());
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
+      // Level-Up-Nachricht nach Boss-Sieg
+      setTimeout(() => {
+        setHermesTalk(levelUpMessages[nextLevel] || `Ого! Новый статус: ${titles[nextLevel-1] || titles[titles.length-1]}. Корона не жмёт? 👑`);
+      }, 100);
     }
   };
 
@@ -390,23 +405,11 @@ export default function App() {
     const lastLevelSaved = localStorage.getItem('lebedi_last_level');
     const lastLevel = lastLevelSaved ? parseInt(lastLevelSaved) : 1;
     if (currentLevel > lastLevel) {
-      const up = {
-        2: "О? Теперь мы маленькая лесная нимфа, да? Смотри не застрянь в корнях! 🍃",
-        3: "Вестница Гермеса? Ну, до моего стиля тебе ещё далеко, доченька. 🪽",
-        4: "О, воительница Спарты! Теперь будешь бить слова щитом? 🛡️",
-        5: "Пифия Аполлона? Ну давай, предскажи, сколько ещё ошибок ты сделаешь. ☀️",
-        6: "Дочь Посейдона? Главное — не пускай пузыри вместо ответов. 🌊",
-        7: "Охотница Артемиды? Постарайся не подстрелить мой сандалий! 🏹",
-        8: "Пламя Гестии? Смотри, не обожгись о свой собственный интеллект. 🔥",
-        9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🏛️",
-        10: "Осторожно, дорогуша! Ты только что стала Менадой Диониса. С твоими знаниями ты теперь опасна для общества.. или, как минимум, для ближайшего винного погреба."
-      };
-      setHermesTalk(up[currentLevel] || `Ого! Новый статус: ${currentTitle}. Корона не жмёт? 👑`);
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
       localStorage.setItem('lebedi_last_level', currentLevel.toString());
     }
-  }, [currentLevel, currentTitle]);
+  }, [currentLevel]);
 
   const handleCorrect = () => {
     setHermesTalk(getLevelSass(currentLevel, 'correct'));
@@ -491,7 +494,7 @@ export default function App() {
 
           {/* Boss-Arena */}
           <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative", padding: "0 20px" }}>
-            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "20px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.4", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word" }}>⚔️ ИСПЫТАНИЕ БОССОМ ⚔️</h1>
+            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "20px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.4", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word" }}>⚔️ ЭНДБОСС ⚔️</h1>
             <p style={{ fontSize: "1.2rem", color: "#8c7e6d", marginBottom: "40px", fontStyle: "italic" }}>Слово {bossIndex + 1} из 5</p>
 
             {/* Das Russische Wort (gross) */}
