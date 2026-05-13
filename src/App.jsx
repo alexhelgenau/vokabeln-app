@@ -121,6 +121,12 @@ export default function App() {
   const [showLevelAnim, setShowLevelAnim] = useState(false);
   const [mode, setMode] = useState("write");
   const [hermesTalk, setHermesTalk] = useState("Смотрю тебе прямо через плечо, доченька. Не вздумай ошибиться! 👀");
+  
+  // Boss-System
+  const [bossMode, setBossMode] = useState(false);
+  const [bossWords, setBossWords] = useState([]);
+  const [bossInput, setBossInput] = useState("");
+  const [bossIndex, setBossIndex] = useState(0);
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -137,6 +143,45 @@ export default function App() {
   const xpPerLevel = 100;
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const currentTitle = titles[currentLevel-1] || titles[titles.length-1];
+
+  // Boss-System Funktionen
+  const startBossFight = (nextLevel) => {
+    const levelVocabs = vokabelnOriginal.slice(0, Math.min((nextLevel * 10), vokabelnOriginal.length));
+    const bossWordsSelected = levelVocabs.sort(() => Math.random() - 0.5).slice(0, 5);
+    setBossWords(bossWordsSelected);
+    setBossIndex(0);
+    setBossInput("");
+    setBossMode(true);
+    setHermesTalk("🏛️ Вот и время испытания пришло, смертная! Пять моих самых коварных слов ждут тебя. Сумеешь их покорить — уровень твой. Нет? Ха-ха-ха... 🐉");
+  };
+
+  const handleBossCorrect = () => {
+    if (bossIndex < bossWords.length - 1) {
+      setHermesTalk("Хм, не совсем плохо! Вот такое попадание достойно моего внимания. Покажи мне следующее! 💫");
+      setBossIndex(bossIndex + 1);
+      setBossInput("");
+      setFeedback("Ха! Победила одного врага. Четыре осталось... 🗡️");
+      setTimeout(() => setFeedback(""), 1500);
+    } else {
+      setHermesTalk("🏛️ НЕВОЗМОЖНО! Ты... ты победила? Мои собственные слова против меня? Ладно, доченька, новый уровень твой. Даже я удивлён! 👑");
+      setBossMode(false);
+      setBossWords([]);
+      setBossIndex(0);
+      setBossInput("");
+      setFeedback("УРОВЕНЬ ДОСТИГНУТ! 🌟🌟🌟");
+      const nextLevel = currentLevel + 1;
+      localStorage.setItem('lebedi_last_level', nextLevel.toString());
+      setShowLevelAnim(true);
+      setTimeout(() => setShowLevelAnim(false), 3000);
+    }
+  };
+
+  const handleBossWrong = () => {
+    setHermesTalk("Неверно! Попробуй ещё раз! 😏 Не стоит позорить Олимп!");
+    setBossInput("");
+    setFeedback("❌ Неправильно. Попытайся снова!");
+    setTimeout(() => setFeedback(""), 1500);
+  };
 
   const getLevelSass = (level, type) => {
     const specialShared = [
@@ -358,8 +403,18 @@ export default function App() {
   const handleCorrect = () => {
     setHermesTalk(getLevelSass(currentLevel, 'correct'));
     setFeedback("Достойна богов! +10 XP 🌿");
-    setXp(prev => prev + 10);
-    setTimeout(goToNextWord, 1300);
+    const newXp = xp + 10;
+    setXp(newXp);
+    
+    // Boss-Trigger: Wenn neuer XP-Threshold erreicht (100, 200, 300, etc.)
+    if (newXp % xpPerLevel === 0 && newXp > 0) {
+      setTimeout(() => {
+        const nextLevel = Math.floor(newXp / xpPerLevel) + 1;
+        startBossFight(nextLevel);
+      }, 1300);
+    } else {
+      setTimeout(goToNextWord, 1300);
+    }
   };
 
   const handleWrong = () => {
@@ -403,6 +458,117 @@ export default function App() {
   const vintageTheme = { bg: "#f4f1ea", paper: "#fffcf5", ink: "#4a3f35", accent: "#8c7e6d", serif: "'Georgia', serif" };
 
   if (liste.length === 0) return null;
+
+  // Boss-UI Render
+  if (bossMode && bossWords.length > 0) {
+    const currentBossWord = bossWords[bossIndex];
+    return (
+      <div style={{ minHeight: "100vh", backgroundColor: "#f4f1ea", display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "'Georgia', serif", padding: "20px", position: "fixed", top: 0, left: 0, width: "100%", zIndex: 9999 }}>
+        <style>{`
+          @keyframes boss-entrance { 
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+          .boss-overlay {
+            animation: boss-entrance 0.8s ease-out;
+          }
+        `}</style>
+        
+        <div className="boss-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #fffcf5 0%, #f4f1ea 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px" }}>
+          {/* Hermes Boss-Reaktion */}
+          <div style={{ position: "absolute", top: "40px", right: "40px", maxWidth: "300px", background: "#fff", border: "3px solid #4a3f35", borderRadius: "15px", padding: "15px 20px", boxShadow: "8px 8px 0px rgba(74, 63, 53, 0.2)" }}>
+            <b style={{ color: "#4a3f35", fontSize: "1.1rem" }}>Гермес:</b>
+            <p style={{ color: "#4a3f35", fontSize: "0.95rem", marginTop: "8px", lineHeight: "1.5" }}>{hermesTalk}</p>
+          </div>
+
+          {/* Boss-Arena */}
+          <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative" }}>
+            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "10px", textShadow: "2px 2px 4px rgba(0,0,0,0.1)" }}>⚔️ ИСПЫТАНИЕ БОССОМ ⚔️</h1>
+            <p style={{ fontSize: "1.2rem", color: "#8c7e6d", marginBottom: "40px", fontStyle: "italic" }}>Слово {bossIndex + 1} из 5</p>
+
+            {/* Das Russische Wort (gross) */}
+            <div style={{ background: "#fff", border: "4px solid #4a3f35", borderRadius: "20px", padding: "40px 30px", marginBottom: "40px", boxShadow: "10px 10px 0px rgba(74, 63, 53, 0.15)" }}>
+              <p style={{ fontSize: "1.1rem", color: "#8c7e6d", marginBottom: "15px" }}>Переведи с русского:</p>
+              <h2 style={{ fontSize: "4rem", color: "#4a3f35", margin: "0", wordBreak: "break-word", lineHeight: "1.2" }}>{currentBossWord.translation}</h2>
+            </div>
+
+            {/* Input-Feld */}
+            <input 
+              placeholder="Напиши немецкое слово..." 
+              value={bossInput} 
+              onChange={(e) => setBossInput(e.target.value)} 
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && bossInput.toLowerCase().trim() !== "") {
+                  if (currentBossWord.word.toLowerCase() === bossInput.toLowerCase().trim()) {
+                    handleBossCorrect();
+                  } else {
+                    handleBossWrong();
+                  }
+                }
+              }}
+              style={{ 
+                width: "80%", 
+                maxWidth: "400px",
+                padding: "15px", 
+                fontSize: "1.3rem", 
+                border: "3px solid #4a3f35", 
+                borderRadius: "10px", 
+                textAlign: "center", 
+                outline: "none",
+                background: "#fffcf5",
+                color: "#4a3f35",
+                WebkitTextFillColor: "#4a3f35",
+                marginBottom: "20px"
+              }} 
+              autoFocus
+            />
+
+            {/* Buttons */}
+            <div style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
+              <button 
+                onClick={() => {
+                  if (bossInput.toLowerCase().trim() !== "") {
+                    if (currentBossWord.word.toLowerCase() === bossInput.toLowerCase().trim()) {
+                      handleBossCorrect();
+                    } else {
+                      handleBossWrong();
+                    }
+                  }
+                }}
+                style={{ 
+                  background: "#4a3f35", 
+                  color: "#fff", 
+                  border: "none", 
+                  padding: "12px 30px", 
+                  fontSize: "1.1rem", 
+                  cursor: "pointer", 
+                  borderRadius: "10px",
+                  boxShadow: "4px 4px 0px rgba(74, 63, 53, 0.3)",
+                  fontWeight: "bold",
+                  transition: "transform 0.1s"
+                }}
+                onMouseDown={(e) => e.target.style.transform = "scale(0.95)"}
+                onMouseUp={(e) => e.target.style.transform = "scale(1)"}
+              >
+                ⚔️ Ответить
+              </button>
+            </div>
+
+            {/* Feedback */}
+            {feedback && <p style={{ fontSize: "1.3rem", fontWeight: "bold", color: feedback.includes("❌") ? "#a35c5c" : "#5c7a5c", marginTop: "20px" }}>{feedback}</p>}
+
+            {/* Progress Bar */}
+            <div style={{ marginTop: "40px", width: "100%", maxWidth: "400px", margin: "40px auto 0" }}>
+              <div style={{ width: "100%", height: "12px", background: "#e8e4d9", borderRadius: "6px", overflow: "hidden" }}>
+                <div style={{ width: `${(bossIndex / 5) * 100}%`, height: "100%", background: "#4a3f35", borderRadius: "6px", transition: "width 0.5s" }}></div>
+              </div>
+              <p style={{ fontSize: "0.9rem", color: "#8c7e6d", marginTop: "10px" }}>Враги повержены: {bossIndex} / 5</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: vintageTheme.bg, display: "flex", justifyContent: "center", alignItems: "center", fontFamily: vintageTheme.serif, padding: "60px 20px" }}>
