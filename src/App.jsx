@@ -120,7 +120,7 @@ const levelUpMessages = {
   7: "Охотница Артемиды? Постарайся не подстрелить мой сандалий! 🏹",
   8: "Пламя Гестии? Смотри, не обожгись о свой собственный интеллект. 🔥",
   9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🛡️",
-  10: "Осторожно, дорогуша! Ты только что стала Менадой Диониса. С твоими знаниями ты теперь опасна для общества.. или, как минимум, для ближайшего винного погреба."
+  10: "Осторожно, дорогуша! Ты только что стала Менадой Диониса. С твоими знаниями ты теперь опасна для общества или, как минимум, для ближайшего винного погреба. 🍷✨"
 };
 
 export default function App() {
@@ -502,10 +502,16 @@ export default function App() {
         `}</style>
         
         <div className="boss-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #fffcf5 0%, #f4f1ea 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px" }}>
-          {/* Hermes Boss-Reaktion */}
-          <div style={{ position: "absolute", top: "40px", right: "40px", maxWidth: "300px", background: "#fff", border: "3px solid #4a3f35", borderRadius: "15px", padding: "15px 20px", boxShadow: "8px 8px 0px rgba(74, 63, 53, 0.2)" }}>
-            <b style={{ color: "#4a3f35", fontSize: "1.1rem" }}>Гермес:</b>
-            <p style={{ color: "#4a3f35", fontSize: "0.95rem", marginTop: "8px", lineHeight: "1.5" }}>{hermesTalk}</p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "center", gap: "20px", marginBottom: "30px", width: "100%", maxWidth: "700px" }}>
+            <img
+              src="https://i.postimg.cc/3R1tPDmC/hermes-6-removebg-preview.png"
+              alt="Hermes"
+              style={{ width: "180px", maxWidth: "200px", objectFit: "contain", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.12))" }}
+            />
+            <div style={{ background: "#fff", border: "3px solid #4a3f35", borderRadius: "20px", padding: "18px 22px", boxShadow: "8px 8px 0px rgba(74, 63, 53, 0.15)", maxWidth: "420px", color: "#4a3f35", lineHeight: "1.4" }}>
+              <b style={{ display: "block", fontSize: "1.1rem", marginBottom: "8px" }}>Гермес:</b>
+              <p style={{ margin: 0, fontSize: "0.95rem", lineHeight: "1.5" }}>{hermesTalk}</p>
+            </div>
           </div>
 
           {/* Boss-Arena */}
