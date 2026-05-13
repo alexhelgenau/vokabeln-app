@@ -125,7 +125,6 @@ const levelUpMessages = {
 
 export default function App() {
   const [isBookOpen, setIsBookOpen] = useState(false);
-  const [liste, setListe] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [input, setInput] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -140,7 +139,7 @@ export default function App() {
   const [bossInput, setBossInput] = useState("");
   const [bossIndex, setBossIndex] = useState(0);
   const [bossTargetLevel, setBossTargetLevel] = useState(null);
-  const [currentLevelPool, setCurrentLevelPool] = useState([]);
+  const [currentLevelWords, setCurrentLevelWords] = useState([]);
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -155,24 +154,36 @@ export default function App() {
   });
 
   const xpPerLevel = 100;
-  const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
+  const [level, setLevel] = useState(() => {
+    const saved = localStorage.getItem('lebedi_level');
+    return saved ? parseInt(saved, 10) : 1;
+  });
+  const currentLevel = Math.min(level, 20);
   const currentTitle = titles[currentLevel-1] || titles[titles.length-1];
 
   useEffect(() => {
-    const levelIndex = (currentLevel - 1) * 10;
-    const endIndex = Math.min(levelIndex + 10, vokabelnOriginal.length);
-    setCurrentLevelPool(vokabelnOriginal.slice(levelIndex, endIndex));
+    const shuffled = [...vokabelnOriginal].sort(() => 0.5 - Math.random());
+    const newLevelWords = shuffled.slice(0, Math.min(10, shuffled.length));
+    setCurrentLevelWords(newLevelWords);
+    setCurrentIndex(0);
+    setInput("");
+    setFeedback("");
+    setShowHint(false);
+  }, [currentLevel]);
+
+  useEffect(() => {
+    localStorage.setItem('lebedi_level', currentLevel.toString());
   }, [currentLevel]);
 
   // Boss-System Funktionen
   const startBossFight = () => {
-    // Wähle 5 Zufallswörter nur aus dem aktuell gespeicherten Level-Pool
-    const shuffled = [...currentLevelPool].sort(() => 0.5 - Math.random());
+    // Wähle 5 Zufallswörter nur aus der Liste des gerade beendeten Levels
+    const shuffled = [...currentLevelWords].sort(() => 0.5 - Math.random());
     setBossWords(shuffled.slice(0, Math.min(5, shuffled.length)));
     setBossIndex(0);
     setBossInput("");
     setBossMode(true);
-    setHermesTalk("🏛️ Вот и время испытания пришло, доченька! Сумеешь их покорить, твоё имя впишут в легенды, а сама ты поднимешься на уровень ближе к богам. Нет? ХаХаХаХаХаХа");
+    setHermesTalk("🏛️ Вот и время испытания пришло, смертная! Пять моих самых коварных слов ждут тебя. Сумеешь их покорить — уровень твой. Нет? Ха-ха-ха... 🐉");
   };
 
   const handleBossCorrect = () => {
@@ -189,8 +200,9 @@ export default function App() {
       setBossIndex(0);
       setBossInput("");
       setFeedback("УРОВЕНЬ ДОСТИГНУТ! 🌟🌟🌟");
-      const nextLevel = bossTargetLevel || currentLevel + 1;
+      const nextLevel = bossTargetLevel || level + 1;
       setBossTargetLevel(null);
+      setLevel(nextLevel);
       localStorage.setItem('lebedi_last_level', nextLevel.toString());
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
@@ -414,7 +426,7 @@ export default function App() {
   }, [currentLevel]);
 
   const handleCorrect = () => {
-    setHermesTalk(getLevelSass(currentLevel, 'correct'));
+    setHermesTalk(getLevelSass(level, 'correct'));
     setFeedback("Достойна богов! +10 XP 🌿");
     const newXp = xp + 10;
     setXp(newXp);
@@ -422,8 +434,7 @@ export default function App() {
     // Boss-Trigger: Wenn neuer XP-Threshold erreicht (100, 200, 300, etc.)
     if (newXp % xpPerLevel === 0 && newXp > 0) {
       setTimeout(() => {
-        const nextLevel = Math.floor(newXp / xpPerLevel) + 1;
-        setBossTargetLevel(nextLevel);
+        setBossTargetLevel(level + 1);
         startBossFight();
       }, 1300);
     } else {
@@ -443,35 +454,33 @@ export default function App() {
     localStorage.setItem('lebedi_fehler', JSON.stringify(fehlerListe));
   }, [xp, fehlerListe]);
 
-  useEffect(() => { setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5)); }, []);
-  
   const toRoman = (n) => {
     const m = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
     return Object.entries(m).reduce((a,[k,v])=>{while(n>=v){a+=k;n-=v}return a},"");
   };
 
-  const currentWord = liste[currentIndex];
+  const currentWord = currentLevelWords[currentIndex];
 
   const options = useMemo(() => {
     if (!currentWord || mode !== "choice") return [];
     const correct = currentWord.translation;
-    const distractors = vokabelnOriginal
+    const distractors = currentLevelWords
       .filter(v => v.word !== currentWord.word)
       .sort(() => Math.random() - 0.5)
       .slice(0, 3)
       .map(v => v.translation);
     return [correct, ...distractors].sort(() => Math.random() - 0.5);
-  }, [currentIndex, mode, currentWord]);
+  }, [currentIndex, mode, currentWord, currentLevelWords]);
 
   const goToNextWord = () => {
-    if (currentIndex < liste.length - 1) setCurrentIndex(currentIndex + 1);
-    else { setListe([...vokabelnOriginal].sort(() => Math.random() - 0.5)); setCurrentIndex(0); }
+    if (currentIndex < currentLevelWords.length - 1) setCurrentIndex(currentIndex + 1);
+    else { setCurrentIndex(0); }
     setInput(""); setFeedback(""); setShowHint(false);
   };
 
   const vintageTheme = { bg: "#f4f1ea", paper: "#fffcf5", ink: "#4a3f35", accent: "#8c7e6d", serif: "'Georgia', serif" };
 
-  if (liste.length === 0) return null;
+  if (currentLevelWords.length === 0) return null;
 
   // Boss-UI Render
   if (bossMode && bossWords.length > 0) {
@@ -486,6 +495,10 @@ export default function App() {
           .boss-overlay {
             animation: boss-entrance 0.8s ease-out;
           }
+          .boss-input {
+            color: #4a3f35 !important;
+            -webkit-text-fill-color: #4a3f35 !important;
+          }
         `}</style>
         
         <div className="boss-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #fffcf5 0%, #f4f1ea 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px" }}>
@@ -497,7 +510,7 @@ export default function App() {
 
           {/* Boss-Arena */}
           <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative", padding: "0 20px" }}>
-            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "20px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.4", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word" }}>⚔️ ЭНДБОСС ⚔️</h1>
+            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "25px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.2", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word" }}>⚔️ ЭНДБОСС ⚔️</h1>
             <p style={{ fontSize: "1.2rem", color: "#8c7e6d", marginBottom: "40px", fontStyle: "italic" }}>Слово {bossIndex + 1} из 5</p>
 
             {/* Das Russische Wort (gross) */}
@@ -508,6 +521,7 @@ export default function App() {
 
             {/* Input-Feld */}
             <input 
+              className="boss-input"
               placeholder="Напиши немецкое слово..." 
               value={bossInput} 
               onChange={(e) => setBossInput(e.target.value)} 
@@ -764,7 +778,7 @@ export default function App() {
             )}
 
             <div style={{ marginTop: "40px", fontSize: "0.8rem", color: vintageTheme.accent, display: "flex", justifyContent: "space-between" }}>
-              <span>Стр. {currentIndex + 1} / {liste.length}</span>
+              <span>Стр. {currentIndex + 1} / {currentLevelWords.length}</span>
               <span onClick={() => window.confirm("Стереть прогресс?") && (localStorage.clear() || window.location.reload())} style={{ cursor: "pointer", textDecoration: "underline" }}>Сжечь дневник</span>
             </div>
           </div>
