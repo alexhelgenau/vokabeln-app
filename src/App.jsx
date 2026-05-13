@@ -138,6 +138,7 @@ export default function App() {
   const [bossWords, setBossWords] = useState([]);
   const [bossInput, setBossInput] = useState("");
   const [bossIndex, setBossIndex] = useState(0);
+  const [bossTargetLevel, setBossTargetLevel] = useState(null);
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -157,8 +158,10 @@ export default function App() {
 
   // Boss-System Funktionen
   const startBossFight = (nextLevel) => {
-    // Nur Wörter des gerade abgeschlossenen Levels für den Boss
-    const levelIndex = (nextLevel - 1) * 10;
+    setBossTargetLevel(nextLevel);
+    // Wörter des gerade abgeschlossenen Levels für den Boss (Level vor dem Aufstieg)
+    const completedLevel = Math.max(nextLevel - 1, 1);
+    const levelIndex = (completedLevel - 1) * 10;
     const endIndex = Math.min(levelIndex + 10, vokabelnOriginal.length);
     const levelVocabs = vokabelnOriginal.slice(levelIndex, endIndex);
     
@@ -188,7 +191,8 @@ export default function App() {
       setBossIndex(0);
       setBossInput("");
       setFeedback("УРОВЕНЬ ДОСТИГНУТ! 🌟🌟🌟");
-      const nextLevel = currentLevel + 1;
+      const nextLevel = bossTargetLevel || currentLevel + 1;
+      setBossTargetLevel(null);
       localStorage.setItem('lebedi_last_level', nextLevel.toString());
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
