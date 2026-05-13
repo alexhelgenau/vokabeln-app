@@ -146,8 +146,16 @@ export default function App() {
 
   // Boss-System Funktionen
   const startBossFight = (nextLevel) => {
-    const levelVocabs = vokabelnOriginal.slice(0, Math.min((nextLevel * 10), vokabelnOriginal.length));
-    const bossWordsSelected = levelVocabs.sort(() => Math.random() - 0.5).slice(0, 5);
+    // Nur Wörter des gerade abgeschlossenen Levels für den Boss
+    const levelIndex = (nextLevel - 1) * 10;
+    const endIndex = Math.min(levelIndex + 10, vokabelnOriginal.length);
+    const levelVocabs = vokabelnOriginal.slice(levelIndex, endIndex);
+    
+    // Wenn nicht genug Wörter vorhanden sind, nimm verfügbare
+    const bossWordsSelected = levelVocabs.length > 0 
+      ? levelVocabs.sort(() => Math.random() - 0.5).slice(0, Math.min(5, levelVocabs.length))
+      : vokabelnOriginal.sort(() => Math.random() - 0.5).slice(0, 5);
+    
     setBossWords(bossWordsSelected);
     setBossIndex(0);
     setBossInput("");
@@ -482,8 +490,8 @@ export default function App() {
           </div>
 
           {/* Boss-Arena */}
-          <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative" }}>
-            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "10px", textShadow: "2px 2px 4px rgba(0,0,0,0.1)" }}>⚔️ ИСПЫТАНИЕ БОССОМ ⚔️</h1>
+          <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative", padding: "0 20px" }}>
+            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "20px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.4", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word" }}>⚔️ ИСПЫТАНИЕ БОССОМ ⚔️</h1>
             <p style={{ fontSize: "1.2rem", color: "#8c7e6d", marginBottom: "40px", fontStyle: "italic" }}>Слово {bossIndex + 1} из 5</p>
 
             {/* Das Russische Wort (gross) */}
