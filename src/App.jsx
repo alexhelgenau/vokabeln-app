@@ -502,6 +502,7 @@ export default function App() {
         `}</style>
         
         <div className="boss-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #fffcf5 0%, #f4f1ea 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px" }}>
+          <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "25px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.2", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word", textAlign: "center" }}>⚔️ ЭНДБОСС ⚔️</h1>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "center", gap: "20px", marginBottom: "30px", width: "100%", maxWidth: "700px" }}>
             <img
               src="https://i.postimg.cc/3R1tPDmC/hermes-6-removebg-preview.png"
@@ -516,8 +517,6 @@ export default function App() {
 
           {/* Boss-Arena */}
           <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative", padding: "0 20px" }}>
-            <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "25px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.2", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word" }}>⚔️ ЭНДБОСС ⚔️</h1>
-            <p style={{ fontSize: "1.2rem", color: "#8c7e6d", marginBottom: "40px", fontStyle: "italic" }}>Слово {bossIndex + 1} из 5</p>
 
             {/* Das Russische Wort (gross) */}
             <div style={{ background: "#fff", border: "4px solid #4a3f35", borderRadius: "20px", padding: "40px 30px", marginBottom: "40px", boxShadow: "10px 10px 0px rgba(74, 63, 53, 0.15)" }}>
