@@ -119,7 +119,8 @@ const levelUpMessages = {
   6: "Дочь Посейдона? Главное — не пускай пузыри вместо ответов. 🌊",
   7: "Охотница Артемиды? Постарайся не подстрелить мой сандалий! 🏹",
   8: "Пламя Гестии? Смотри, не обожгись о свой собственный интеллект. 🔥",
-  9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🛡️"
+  9: "Героиня Олимпа? Пафоса много, а слов пока маловато. Продолжай! 🛡️",
+  10: "Осторожно, дорогуша! Ты только что стала Менадой Диониса. С твоими знаниями ты теперь опасна для общества.. или, как минимум, для ближайшего винного погреба."
 };
 
 export default function App() {
@@ -139,6 +140,7 @@ export default function App() {
   const [bossInput, setBossInput] = useState("");
   const [bossIndex, setBossIndex] = useState(0);
   const [bossTargetLevel, setBossTargetLevel] = useState(null);
+  const [currentLevelPool, setCurrentLevelPool] = useState([]);
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -156,25 +158,21 @@ export default function App() {
   const currentLevel = Math.min(Math.floor(xp / xpPerLevel) + 1, 20);
   const currentTitle = titles[currentLevel-1] || titles[titles.length-1];
 
-  // Boss-System Funktionen
-  const startBossFight = (nextLevel) => {
-    setBossTargetLevel(nextLevel);
-    // Wörter des gerade abgeschlossenen Levels für den Boss (Level vor dem Aufstieg)
-    const completedLevel = Math.max(nextLevel - 1, 1);
-    const levelIndex = (completedLevel - 1) * 10;
+  useEffect(() => {
+    const levelIndex = (currentLevel - 1) * 10;
     const endIndex = Math.min(levelIndex + 10, vokabelnOriginal.length);
-    const levelVocabs = vokabelnOriginal.slice(levelIndex, endIndex);
-    
-    // Wenn nicht genug Wörter vorhanden sind, nimm verfügbare
-    const bossWordsSelected = levelVocabs.length > 0 
-      ? levelVocabs.sort(() => Math.random() - 0.5).slice(0, Math.min(5, levelVocabs.length))
-      : vokabelnOriginal.sort(() => Math.random() - 0.5).slice(0, 5);
-    
-    setBossWords(bossWordsSelected);
+    setCurrentLevelPool(vokabelnOriginal.slice(levelIndex, endIndex));
+  }, [currentLevel]);
+
+  // Boss-System Funktionen
+  const startBossFight = () => {
+    // Wähle 5 Zufallswörter nur aus dem aktuell gespeicherten Level-Pool
+    const shuffled = [...currentLevelPool].sort(() => 0.5 - Math.random());
+    setBossWords(shuffled.slice(0, Math.min(5, shuffled.length)));
     setBossIndex(0);
     setBossInput("");
     setBossMode(true);
-    setHermesTalk("🏛️ Вот и время испытания пришло, смертная! Пять моих самых коварных слов ждут тебя. Сумеешь их покорить — уровень твой. Нет? Ха-ха-ха... 🐉");
+    setHermesTalk("🏛️ Вот и время испытания пришло, доченька! Сумеешь их покорить, твоё имя впишут в легенды, а сама ты поднимешься на уровень ближе к богам. Нет? ХаХаХаХаХаХа");
   };
 
   const handleBossCorrect = () => {
@@ -425,7 +423,8 @@ export default function App() {
     if (newXp % xpPerLevel === 0 && newXp > 0) {
       setTimeout(() => {
         const nextLevel = Math.floor(newXp / xpPerLevel) + 1;
-        startBossFight(nextLevel);
+        setBossTargetLevel(nextLevel);
+        startBossFight();
       }, 1300);
     } else {
       setTimeout(goToNextWord, 1300);
@@ -577,7 +576,7 @@ export default function App() {
               <div style={{ width: "100%", height: "12px", background: "#e8e4d9", borderRadius: "6px", overflow: "hidden" }}>
                 <div style={{ width: `${(bossIndex / 5) * 100}%`, height: "100%", background: "#4a3f35", borderRadius: "6px", transition: "width 0.5s" }}></div>
               </div>
-              <p style={{ fontSize: "0.9rem", color: "#8c7e6d", marginTop: "10px" }}>Враги повержены: {bossIndex} / 5</p>
+              <p style={{ fontSize: "0.9rem", color: "#8c7e6d", marginTop: "10px" }}>Слова: {bossIndex} / 5</p>
             </div>
           </div>
         </div>
