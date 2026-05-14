@@ -158,13 +158,15 @@ export default function App() {
     const saved = localStorage.getItem('lebedi_level');
     return saved ? parseInt(saved, 10) : 1;
   });
-  const currentLevel = Math.min(level, 20);
+  const currentLevel = Math.min(level, 10);
   const currentTitle = titles[currentLevel-1] || titles[titles.length-1];
 
   useEffect(() => {
-    const shuffled = [...vokabelnOriginal].sort(() => 0.5 - Math.random());
-    const newLevelWords = shuffled.slice(0, Math.min(10, shuffled.length));
-    setCurrentLevelWords(newLevelWords);
+    const startIndex = (currentLevel - 1) * 10;
+    const endIndex = Math.min(startIndex + 10, vokabelnOriginal.length);
+    const levelWords = vokabelnOriginal.slice(startIndex, endIndex);
+    const shuffled = [...levelWords].sort(() => 0.5 - Math.random());
+    setCurrentLevelWords(shuffled);
     setCurrentIndex(0);
     setInput("");
     setFeedback("");
@@ -202,7 +204,7 @@ export default function App() {
       setFeedback("УРОВЕНЬ ДОСТИГНУТ! 🌟🌟🌟");
       const nextLevel = bossTargetLevel || level + 1;
       setBossTargetLevel(null);
-      setLevel(nextLevel);
+      setLevel(Math.min(nextLevel, 10));
       localStorage.setItem('lebedi_last_level', nextLevel.toString());
       setShowLevelAnim(true);
       setTimeout(() => setShowLevelAnim(false), 3000);
