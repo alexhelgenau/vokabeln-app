@@ -586,15 +586,18 @@ export default function App() {
               autoFocus
             />
 
-            {/* Hint */}
-            <div style={{ marginBottom: "20px", textAlign: "center" }}>
+            {/* Hint & Buttons */}
+            <div style={{ marginBottom: "20px", display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap", alignItems: "flex-start", width: "100%" }}>
               <button 
                 onClick={() => setShowBossHint(!showBossHint)}
                 style={{ 
+                  flex: "1 1 auto",
+                  minWidth: "140px",
+                  maxWidth: "200px",
                   background: "#8c7e6d", 
                   color: "#fff", 
                   border: "none", 
-                  padding: "8px 20px", 
+                  padding: "12px 20px", 
                   fontSize: "1rem", 
                   cursor: "pointer", 
                   borderRadius: "10px",
@@ -607,15 +610,7 @@ export default function App() {
               >
                 Подсказка
               </button>
-              {showBossHint && (
-                <p style={{ fontSize: "1.2rem", color: "#4a3f35", marginTop: "10px", fontWeight: "bold" }}>
-                  {generateHint(currentBossWord.word)}
-                </p>
-              )}
-            </div>
-
-            {/* Buttons */}
-            <div style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
+              
               <button 
                 onClick={() => {
                   if (bossInput.toLowerCase().trim() !== "") {
@@ -627,11 +622,14 @@ export default function App() {
                   }
                 }}
                 style={{ 
+                  flex: "1 1 auto",
+                  minWidth: "140px",
+                  maxWidth: "200px",
                   background: "#4a3f35", 
                   color: "#fff", 
                   border: "none", 
-                  padding: "12px 30px", 
-                  fontSize: "1.1rem", 
+                  padding: "12px 20px", 
+                  fontSize: "1rem", 
                   cursor: "pointer", 
                   borderRadius: "10px",
                   boxShadow: "4px 4px 0px rgba(74, 63, 53, 0.3)",
@@ -644,6 +642,12 @@ export default function App() {
                 ⚔️ Ответить
               </button>
             </div>
+
+            {showBossHint && (
+              <p style={{ fontSize: "1.2rem", color: "#4a3f35", marginBottom: "20px", fontWeight: "bold" }}>
+                {generateHint(currentBossWord.word)}
+              </p>
+            )}
 
             {/* Feedback */}
             {feedback && <p style={{ fontSize: "1.3rem", fontWeight: "bold", color: feedback.includes("❌") ? "#a35c5c" : "#5c7a5c", marginTop: "20px" }}>{feedback}</p>}
