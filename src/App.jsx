@@ -505,7 +505,7 @@ export default function App() {
           <h1 style={{ fontSize: "3rem", color: "#4a3f35", marginBottom: "25px", marginTop: "0", textShadow: "2px 2px 4px rgba(0,0,0,0.1)", lineHeight: "1.2", letterSpacing: "1px", wordWrap: "break-word", wordBreak: "break-word", textAlign: "center" }}>⚔️ ЭНДБОСС ⚔️</h1>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "center", gap: "20px", marginBottom: "30px", width: "100%", maxWidth: "700px" }}>
             <img
-              src={hermesUrl}
+              src="https://i.postimg.cc/3R1tPDmC/hermes-6-removebg-preview.png"
               alt="Hermes"
               style={{ display: "block", width: "180px", maxWidth: "200px", objectFit: "contain", filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.12))" }}
             />
