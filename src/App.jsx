@@ -226,6 +226,13 @@ export default function App() {
     setTimeout(() => setFeedback(""), 1500);
   };
 
+  const insertUmlaut = (char) => {
+    setBossInput(prev => prev + char);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(char).catch(() => {});
+    }
+  };
+
   const generateHint = (word) => {
     const letters = word.split('');
     const shuffled = [...letters].sort(() => 0.5 - Math.random());
@@ -585,6 +592,33 @@ export default function App() {
               }} 
               autoFocus
             />
+
+            {/* Umlaut buttons */}
+            <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "20px", flexWrap: "wrap" }}>
+              {['ä', 'ü', 'ö'].map((char) => (
+                <button
+                  key={char}
+                  onClick={() => insertUmlaut(char)}
+                  style={{
+                    minWidth: "60px",
+                    padding: "10px 12px",
+                    fontSize: "1.1rem",
+                    background: "#f4f1ea",
+                    border: "2px solid #4a3f35",
+                    color: "#4a3f35",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    boxShadow: "2px 2px 0px rgba(74,63,53,0.2)",
+                    fontWeight: "bold",
+                    transition: "transform 0.1s"
+                  }}
+                  onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.95)"}
+                  onMouseUp={(e) => e.currentTarget.style.transform = "scale(1)"}
+                >
+                  {char}
+                </button>
+              ))}
+            </div>
 
             {/* Hint & Buttons */}
             <div style={{ marginBottom: "20px", display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap", alignItems: "flex-start", width: "100%" }}>
