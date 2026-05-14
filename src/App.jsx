@@ -140,6 +140,7 @@ export default function App() {
   const [bossIndex, setBossIndex] = useState(0);
   const [bossTargetLevel, setBossTargetLevel] = useState(null);
   const [currentLevelWords, setCurrentLevelWords] = useState([]);
+  const [showBossHint, setShowBossHint] = useState(false);
 
   const hermesUrl = "https://i.postimg.cc/q7sL8Z9p/hermeeeesss-removebg-preview.png";
 
@@ -185,6 +186,7 @@ export default function App() {
     setBossIndex(0);
     setBossInput("");
     setBossMode(true);
+    setShowBossHint(false);
     setHermesTalk("🏛️ Ну что, доченька, вот и пробил твой час испытания! Сумеешь покорить эти вершины, твоё имя впишут в легенды, а сама ты поднимешься на уровень ближе к богам. Ну а если нет? Ха-ха-ха-ха-ха");
   };
 
@@ -193,6 +195,7 @@ export default function App() {
       setHermesTalk("Хм, не совсем плохо! Вот такое попадание достойно моего внимания. Покажи мне следующее! 💫");
       setBossIndex(bossIndex + 1);
       setBossInput("");
+      setShowBossHint(false);
       setFeedback("Ха! Победила одного врага. Четыре осталось... 🗡️");
       setTimeout(() => setFeedback(""), 1500);
     } else {
@@ -218,8 +221,15 @@ export default function App() {
   const handleBossWrong = () => {
     setHermesTalk("Неверно! Попробуй ещё раз! 😏 Не стоит позорить Олимп!");
     setBossInput("");
+    setShowBossHint(false);
     setFeedback("❌ Неправильно. Попытайся снова!");
     setTimeout(() => setFeedback(""), 1500);
+  };
+
+  const generateHint = (word) => {
+    const letters = word.split('');
+    const shuffled = [...letters].sort(() => 0.5 - Math.random());
+    return shuffled.join('-');
   };
 
   const getLevelSass = (level, type) => {
@@ -230,6 +240,24 @@ export default function App() {
     ];
 
     const pools = {
+      1: { // Смертная
+        correct: [
+          "Для простой смертной сойдёт, пока что. Но не обольщайся, это был уровень 'младенец'.",
+          "Правильно! Настоящее чудо природы — человек, который задействовал больше одной извилины.",
+          "Моя домашняя черепаха ответила бы так же быстро, но я всё равно тебя похвалю. Молодец.",
+          "Ого, а ты, оказывается, не совсем безнадёжна! Может, из тебя и выйдет толк через пару веков.",
+          "Чисто случайно угадала, признайся? Ладно-ладно, записываю тебе один балл, везучая ты наша.",
+          "Ладно, это было верно. Я даже почти впечатлён. Хочешь кексик? Ой, подожди, я его уже съел."
+        ],
+        wrong: [
+          "Ох уж эта смертная тупость... Мне больно на это смотреть, честное слово!",
+          "Даже улитка под транквилизаторами соображает быстрее, чем ты сейчас. Соберись!",
+          "Ты что, прогуляла школу для героев? Или просто решила сегодня не включать мозг?",
+          "Слишком самоуверенно для той, кто путает элементарные слова. Спустись на землю!",
+          "Включи мозг, если он у тебя там вообще предусмотрен конструкцией! Это же было просто.",
+          "Зевс уже в ярости от твоих ошибок. Ты слышишь гром? Это он смеётся над твоим переводом."
+        ]
+      },
       1: { // Смертная
         correct: [
           "Для простой смертной сойдёт, пока что. Но не обольщайся, это был уровень 'младенец'.",
@@ -557,6 +585,34 @@ export default function App() {
               }} 
               autoFocus
             />
+
+            {/* Hint */}
+            <div style={{ marginBottom: "20px", textAlign: "center" }}>
+              <button 
+                onClick={() => setShowBossHint(!showBossHint)}
+                style={{ 
+                  background: "#8c7e6d", 
+                  color: "#fff", 
+                  border: "none", 
+                  padding: "8px 20px", 
+                  fontSize: "1rem", 
+                  cursor: "pointer", 
+                  borderRadius: "10px",
+                  boxShadow: "2px 2px 0px rgba(74, 63, 53, 0.2)",
+                  fontWeight: "bold",
+                  transition: "transform 0.1s"
+                }}
+                onMouseDown={(e) => e.target.style.transform = "scale(0.95)"}
+                onMouseUp={(e) => e.target.style.transform = "scale(1)"}
+              >
+                Подсказка
+              </button>
+              {showBossHint && (
+                <p style={{ fontSize: "1.2rem", color: "#4a3f35", marginTop: "10px", fontWeight: "bold" }}>
+                  {generateHint(currentBossWord.word)}
+                </p>
+              )}
+            </div>
 
             {/* Buttons */}
             <div style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
