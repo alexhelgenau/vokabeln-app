@@ -556,9 +556,9 @@ export default function App() {
           <div style={{ textAlign: "center", maxWidth: "500px", zIndex: 10, position: "relative", padding: "0 20px" }}>
 
             {/* Das Russische Wort (gross) */}
-            <div style={{ background: "#fff", border: "4px solid #4a3f35", borderRadius: "20px", padding: "40px 30px", marginBottom: "40px", boxShadow: "10px 10px 0px rgba(74, 63, 53, 0.15)" }}>
-              <p style={{ fontSize: "1.1rem", color: "#8c7e6d", marginBottom: "15px" }}>Переведи с русского:</p>
-              <h2 style={{ fontSize: "4rem", color: "#4a3f35", margin: "0", wordBreak: "break-word", lineHeight: "1.2" }}>{currentBossWord.translation}</h2>
+            <div style={{ background: "#fff", border: "4px solid #4a3f35", borderRadius: "20px", padding: "28px 24px", marginBottom: "30px", boxShadow: "10px 10px 0px rgba(74, 63, 53, 0.15)", maxWidth: "380px", marginLeft: "auto", marginRight: "auto" }}>
+              <p style={{ fontSize: "1rem", color: "#8c7e6d", marginBottom: "12px" }}>Переведи с русского:</p>
+              <h2 style={{ fontSize: "3rem", color: "#4a3f35", margin: "0", wordBreak: "break-word", lineHeight: "1.2" }}>{currentBossWord.translation}</h2>
             </div>
 
             {/* Input-Feld */}
